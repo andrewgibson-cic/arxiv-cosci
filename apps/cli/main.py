@@ -25,7 +25,7 @@ structlog.configure(
     ],
     wrapper_class=structlog.stdlib.BoundLogger,
     context_class=dict,
-    logger_factory=structlog.PrintLoggerFactory(),
+    logger_factory=structlog.stdlib.LoggerFactory(),
     cache_logger_on_first_use=True,
 )
 
@@ -285,6 +285,25 @@ def check() -> None:
         table.add_row("Docker", "[yellow]MISSING[/yellow]", "Install Docker Desktop")
 
     console.print(table)
+
+
+@app.command()
+def init_db() -> None:
+    """Initialize the Neo4j database schema."""
+    from packages.knowledge.neo4j_client import neo4j_client
+
+    async def run_init() -> None:
+        try:
+            console.print("[bold]Initializing Neo4j schema...[/bold]")
+            await neo4j_client.init_schema()
+            console.print("[green]Schema initialization complete![/green]")
+        except Exception as e:
+            console.print(f"[red]Failed to initialize schema: {e}[/red]")
+            console.print("[yellow]Ensure Neo4j is running: docker compose up -d[/yellow]")
+        finally:
+            await neo4j_client.close()
+
+    asyncio.run(run_init())
 
 
 if __name__ == "__main__":

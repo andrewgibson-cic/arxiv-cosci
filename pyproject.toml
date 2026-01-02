@@ -126,4 +126,4 @@ ignore_missing_imports = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"
-addopts = "-v --cov=packages --cov=apps --cov-report=term-missing"
+# addopts = "-v --cov=packages --cov=apps --cov-report=term-missing"
