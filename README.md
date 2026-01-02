@@ -86,6 +86,32 @@ poetry run arxiv-cosci parse \
   -o data/processed
 ```
 
+### Knowledge Graph & Search
+```bash
+# Initialize Neo4j schema
+poetry run arxiv-cosci init-db
+
+# Ingest papers into Neo4j and ChromaDB
+poetry run arxiv-cosci ingest \
+  -i data/processed \
+  --to-neo4j --to-chroma
+
+# Semantic search
+poetry run arxiv-cosci search "topological quantum computing"
+```
+
+### AI Analysis (Requires Ollama)
+```bash
+# Check AI system status
+poetry run arxiv-cosci ai-check
+
+# Summarize a paper
+poetry run arxiv-cosci summarize 0704.0001 --level detailed
+
+# Extract entities
+poetry run arxiv-cosci extract 0704.0001 --use-llm
+```
+
 ## Project Structure
 
 ```

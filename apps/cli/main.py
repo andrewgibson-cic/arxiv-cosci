@@ -306,5 +306,362 @@ def init_db() -> None:
     asyncio.run(run_init())
 
 
+@app.command()
+@click.option(
+    "--input",
+    "-i",
+    "input_dir",
+    type=click.Path(exists=True, path_type=Path),
+    default=Path("data/processed"),
+    help="Directory containing parsed JSON files",
+)
+@click.option("--to-neo4j/--no-neo4j", default=True, help="Ingest to Neo4j graph")
+@click.option("--to-chroma/--no-chroma", default=True, help="Ingest to ChromaDB vectors")
+@click.option("--limit", "-n", type=int, default=None, help="Maximum papers to ingest")
+def ingest(
+    input_dir: Path,
+    to_neo4j: bool,
+    to_chroma: bool,
+    limit: int | None,
+) -> None:
+    """Ingest parsed papers into Neo4j and/or ChromaDB.
+
+    Reads JSON files from the processed directory and ingests them
+    into the knowledge graph and vector store.
+    """
+    import json
+
+    from packages.ingestion.models import ParsedPaper
+    from packages.knowledge.neo4j_client import neo4j_client
+    from packages.knowledge.chromadb_client import chromadb_client
+
+    json_files = list(input_dir.glob("*.json"))
+    if limit:
+        json_files = json_files[:limit]
+
+    if not json_files:
+        console.print(f"[yellow]No JSON files found in {input_dir}[/yellow]")
+        return
+
+    console.print(f"\n[bold]Ingesting {len(json_files)} papers from:[/bold] {input_dir}")
+    console.print(f"[bold]Neo4j:[/bold] {'Yes' if to_neo4j else 'No'}")
+    console.print(f"[bold]ChromaDB:[/bold] {'Yes' if to_chroma else 'No'}\n")
+
+    # Load papers
+    papers: list[ParsedPaper] = []
+    with Progress(console=console) as progress:
+        task = progress.add_task("Loading papers...", total=len(json_files))
+        for json_file in json_files:
+            try:
+                data = json.loads(json_file.read_text())
+                paper = ParsedPaper.model_validate(data)
+                papers.append(paper)
+            except Exception as e:
+                logger.warning("load_failed", file=str(json_file), error=str(e))
+            progress.update(task, advance=1)
+
+    console.print(f"[green]Loaded {len(papers)} papers[/green]\n")
+
+    # Ingest to Neo4j
+    if to_neo4j and papers:
+        async def ingest_neo4j() -> dict[str, int]:
+            try:
+                await neo4j_client.connect()
+                stats = await neo4j_client.ingest_batch(papers, include_citations=True)
+                return stats
+            finally:
+                await neo4j_client.close()
+
+        console.print("[bold]Ingesting to Neo4j...[/bold]")
+        try:
+            stats = asyncio.run(ingest_neo4j())
+            console.print(f"  Papers: [green]{stats['papers_ingested']}[/green]")
+            console.print(f"  Citations: [green]{stats['citations_created']}[/green]")
+        except Exception as e:
+            console.print(f"[red]Neo4j ingest failed: {e}[/red]")
+            console.print("[yellow]Ensure Neo4j is running: docker compose up -d[/yellow]")
+
+    # Ingest to ChromaDB
+    if to_chroma and papers:
+        console.print("\n[bold]Ingesting to ChromaDB...[/bold]")
+        try:
+            count = chromadb_client.add_papers_batch(papers)
+            console.print(f"  Embedded: [green]{count}[/green] papers")
+        except Exception as e:
+            console.print(f"[red]ChromaDB ingest failed: {e}[/red]")
+
+    console.print("\n[green]Ingestion complete![/green]")
+
+
+@app.command()
+@click.argument("query")
+@click.option("--limit", "-n", type=int, default=10, help="Maximum results")
+@click.option("--category", "-c", default=None, help="Filter by category")
+def search(query: str, limit: int, category: str | None) -> None:
+    """Search papers by semantic similarity.
+
+    QUERY: Natural language search query
+    """
+    from packages.knowledge.chromadb_client import chromadb_client
+
+    console.print(f"\n[bold]Searching:[/bold] {query}\n")
+
+    try:
+        results = chromadb_client.search_papers(
+            query, n_results=limit, category_filter=category
+        )
+
+        if not results:
+            console.print("[yellow]No results found[/yellow]")
+            return
+
+        table = Table(title=f"Search Results ({len(results)} found)")
+        table.add_column("arXiv ID", style="cyan")
+        table.add_column("Title", max_width=60)
+        table.add_column("Category")
+        table.add_column("Similarity", justify="right", style="green")
+
+        for paper in results:
+            similarity = f"{paper.get('similarity', 0):.3f}" if paper.get('similarity') else "-"
+            table.add_row(
+                paper["arxiv_id"],
+                paper.get("title", "")[:60],
+                paper.get("primary_category", ""),
+                similarity,
+            )
+
+        console.print(table)
+
+    except Exception as e:
+        console.print(f"[red]Search failed: {e}[/red]")
+
+
+@app.command()
+@click.argument("arxiv_id")
+@click.option(
+    "--level",
+    "-l",
+    type=click.Choice(["brief", "standard", "detailed"]),
+    default="standard",
+    help="Summary detail level",
+)
+def summarize(arxiv_id: str, level: str) -> None:
+    """Summarize a paper using local LLM.
+
+    ARXIV_ID: Paper ID or path to parsed JSON file
+    """
+    import json
+    from pathlib import Path
+
+    from packages.ai.ollama_client import ollama_client
+    from packages.ai.summarizer import summarize_paper, SummaryLevel
+    from packages.ingestion.models import ParsedPaper
+
+    # Load paper
+    json_path = Path(f"data/processed/{arxiv_id.replace('/', '_')}.json")
+    if not json_path.exists():
+        json_path = Path(arxiv_id)
+
+    if not json_path.exists():
+        console.print(f"[red]Paper not found: {arxiv_id}[/red]")
+        console.print("[yellow]Ensure paper is parsed: arxiv-cosci parse[/yellow]")
+        return
+
+    paper = ParsedPaper.model_validate_json(json_path.read_text())
+
+    console.print(f"\n[bold]Summarizing:[/bold] {paper.title[:60]}...")
+    console.print(f"[bold]Level:[/bold] {level}\n")
+
+    async def run_summarize() -> None:
+        # Check Ollama
+        if not await ollama_client.is_available():
+            console.print("[red]Ollama not available[/red]")
+            console.print("[yellow]Start Ollama: ollama serve[/yellow]")
+            return
+
+        summary_level = SummaryLevel(level)
+        summary = await summarize_paper(paper, summary_level)
+
+        if isinstance(summary, str):
+            console.print("[bold]Summary:[/bold]")
+            console.print(summary)
+        else:
+            console.print("[bold]One-liner:[/bold]")
+            console.print(summary.one_liner)
+            console.print("\n[bold]Key Contribution:[/bold]")
+            console.print(summary.key_contribution)
+            console.print("\n[bold]Methodology:[/bold]")
+            console.print(summary.methodology)
+            if summary.key_findings:
+                console.print("\n[bold]Key Findings:[/bold]")
+                for finding in summary.key_findings:
+                    console.print(f"  • {finding}")
+
+        await ollama_client.close()
+
+    asyncio.run(run_summarize())
+
+
+@app.command()
+@click.argument("arxiv_id")
+@click.option("--use-llm/--no-llm", default=True, help="Use LLM for extraction (slower)")
+def extract(arxiv_id: str, use_llm: bool) -> None:
+    """Extract entities from a paper.
+
+    ARXIV_ID: Paper ID or path to parsed JSON file
+    """
+    import json
+    from pathlib import Path
+
+    from packages.ai.entity_extractor import extract_entities, extract_entities_regex
+    from packages.ai.ollama_client import ollama_client
+    from packages.ingestion.models import ParsedPaper
+
+    # Load paper
+    json_path = Path(f"data/processed/{arxiv_id.replace('/', '_')}.json")
+    if not json_path.exists():
+        json_path = Path(arxiv_id)
+
+    if not json_path.exists():
+        console.print(f"[red]Paper not found: {arxiv_id}[/red]")
+        return
+
+    paper = ParsedPaper.model_validate_json(json_path.read_text())
+
+    console.print(f"\n[bold]Extracting entities from:[/bold] {paper.title[:60]}...")
+    console.print(f"[bold]Using LLM:[/bold] {use_llm}\n")
+
+    async def run_extract() -> None:
+        if use_llm:
+            if not await ollama_client.is_available():
+                console.print("[yellow]Ollama not available, using regex only[/yellow]")
+                entities = extract_entities_regex(paper)
+            else:
+                entities = await extract_entities(paper, use_llm=True)
+        else:
+            entities = extract_entities_regex(paper)
+
+        # Display results
+        categories = [
+            ("Methods", entities.methods),
+            ("Theorems", entities.theorems),
+            ("Equations", entities.equations),
+            ("Constants", entities.constants),
+            ("Datasets", entities.datasets),
+            ("Conjectures", entities.conjectures),
+        ]
+
+        for name, items in categories:
+            if items:
+                console.print(f"\n[bold]{name}:[/bold]")
+                for item in items:
+                    conf = f"({item.confidence:.0%})" if item.confidence < 1 else ""
+                    console.print(f"  • {item.name} {conf}")
+
+        if use_llm:
+            await ollama_client.close()
+
+    asyncio.run(run_extract())
+
+
+@app.command()
+def ai_check() -> None:
+    """Check AI/LLM system status."""
+    import shutil
+
+    from packages.ai.ollama_client import ollama_client
+
+    table = Table(title="AI System Status")
+    table.add_column("Component", style="cyan")
+    table.add_column("Status", justify="center")
+    table.add_column("Details")
+
+    # Check Ollama binary
+    ollama_path = shutil.which("ollama")
+    if ollama_path:
+        table.add_row("Ollama Binary", "[green]OK[/green]", ollama_path)
+    else:
+        table.add_row("Ollama Binary", "[red]MISSING[/red]", "brew install ollama")
+
+    # Check Ollama server
+    async def check_server() -> tuple[bool, list[str]]:
+        available = await ollama_client.is_available()
+        models = await ollama_client.list_models() if available else []
+        await ollama_client.close()
+        return available, models
+
+    available, models = asyncio.run(check_server())
+
+    if available:
+        table.add_row("Ollama Server", "[green]RUNNING[/green]", "http://localhost:11434")
+        if models:
+            table.add_row("Models", "[green]OK[/green]", ", ".join(models[:3]))
+        else:
+            table.add_row("Models", "[yellow]NONE[/yellow]", "ollama pull llama3.2:8b")
+    else:
+        table.add_row("Ollama Server", "[red]STOPPED[/red]", "Run: ollama serve")
+        table.add_row("Models", "[dim]-[/dim]", "Start server first")
+
+    console.print(table)
+
+
+@app.command()
+def db_stats() -> None:
+    """Show database statistics."""
+    from packages.knowledge.neo4j_client import neo4j_client
+    from packages.knowledge.chromadb_client import chromadb_client
+
+    table = Table(title="Database Statistics")
+    table.add_column("Metric", style="cyan")
+    table.add_column("Neo4j", justify="right")
+    table.add_column("ChromaDB", justify="right")
+
+    # Get ChromaDB stats (sync)
+    try:
+        chroma_stats = chromadb_client.get_stats()
+    except Exception:
+        chroma_stats = {"papers": "-", "concepts": "-"}
+
+    # Get Neo4j stats (async)
+    async def get_neo4j_stats() -> dict[str, int]:
+        try:
+            await neo4j_client.connect()
+            return await neo4j_client.get_stats()
+        except Exception:
+            return {}
+        finally:
+            await neo4j_client.close()
+
+    neo4j_stats = asyncio.run(get_neo4j_stats())
+
+    table.add_row(
+        "Papers",
+        str(neo4j_stats.get("papers", "-")),
+        str(chroma_stats.get("papers", "-")),
+    )
+    table.add_row(
+        "Authors",
+        str(neo4j_stats.get("authors", "-")),
+        "-",
+    )
+    table.add_row(
+        "Categories",
+        str(neo4j_stats.get("categories", "-")),
+        "-",
+    )
+    table.add_row(
+        "Citations",
+        str(neo4j_stats.get("citations", "-")),
+        "-",
+    )
+    table.add_row(
+        "Concepts",
+        "-",
+        str(chroma_stats.get("concepts", "-")),
+    )
+
+    console.print(table)
+
+
 if __name__ == "__main__":
     app()
