@@ -1,0 +1,129 @@
+[tool.poetry]
+name = "arxiv-cosci"
+version = "0.1.0"
+description = "ArXiv AI Co-Scientist: A Scientific Intelligence Engine for physics and mathematics research"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+license = "MIT"
+packages = [
+    { include = "packages" },
+    { include = "apps" },
+]
+
+[tool.poetry.scripts]
+arxiv-cosci = "apps.cli.main:app"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+
+# Data ingestion
+aiohttp = "^3.9"
+aiofiles = "^24.1"
+arxiv = "^2.1"
+requests = "^2.31"
+kaggle = "^1.6"
+
+# PDF parsing
+pymupdf = "^1.24"
+
+# Data validation
+pydantic = "^2.9"
+pydantic-settings = "^2.6"
+
+# CLI
+click = "^8.1"
+rich = "^13.9"
+
+# Utilities
+python-dotenv = "^1.0"
+structlog = "^24.4"
+tenacity = "^9.0"
+tqdm = "^4.66"
+
+[tool.poetry.group.ml.dependencies]
+# ML dependencies - require Python <3.13
+torch = { version = ">=2.0,<3.0", python = "<3.13" }
+torchvision = { version = ">=0.15,<1.0", python = "<3.13" }
+sentence-transformers = { version = "^2.2", python = "<3.13" }
+
+[tool.poetry.group.graph.dependencies]
+# Graph and vector databases
+chromadb = "^0.5"
+neo4j = "^5.23"
+
+[tool.poetry.group.llm.dependencies]
+# LLM orchestration
+langchain = "^0.3"
+langchain-community = "^0.3"
+langchain-ollama = "^0.2"
+
+[tool.poetry.group.api.dependencies]
+# API
+fastapi = "^0.115"
+uvicorn = { extras = ["standard"], version = "^0.32" }
+strawberry-graphql = { extras = ["fastapi"], version = "^0.252" }
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.3"
+pytest-asyncio = "^0.24"
+pytest-cov = "^5.0"
+mypy = "^1.13"
+ruff = "^0.7"
+pre-commit = "^4.0"
+
+[tool.poetry.group.parsing.dependencies]
+# Optional: Advanced PDF parsing (requires separate installation)
+# marker-pdf = "^0.2"  # Uncomment when needed
+# nougat-ocr = "^0.1"  # Uncomment when needed
+
+[tool.poetry.group.gnn.dependencies]
+# Graph Neural Networks - require Python <3.13
+torch-geometric = { version = "^2.6", python = "<3.13" }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # Pyflakes
+    "I",   # isort
+    "B",   # flake8-bugbear
+    "C4",  # flake8-comprehensions
+    "UP",  # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (handled by formatter)
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["packages", "apps"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_return_any = true
+warn_unused_ignores = true
+disallow_untyped_defs = true
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = [
+    "chromadb.*",
+    "sentence_transformers.*",
+    "neo4j.*",
+    "langchain.*",
+    "torch.*",
+]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-v --cov=packages --cov=apps --cov-report=term-missing"
