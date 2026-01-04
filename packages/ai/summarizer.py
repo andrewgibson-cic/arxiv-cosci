@@ -12,7 +12,7 @@ from typing import Any
 import structlog
 from pydantic import BaseModel, Field
 
-from packages.ai.ollama_client import ollama_client
+from packages.ai.factory import get_llm_client
 from packages.ingestion.models import ParsedPaper
 
 logger = structlog.get_logger()
@@ -106,7 +106,7 @@ async def summarize_paper(
             title=paper.title,
             abstract=paper.abstract,
         )
-        return await ollama_client.generate(
+        return await get_llm_client().generate(
             prompt,
             system=SYSTEM_PROMPT,
             temperature=0.3,
@@ -120,7 +120,7 @@ async def summarize_paper(
             abstract=paper.abstract,
             text_excerpt=text_excerpt,
         )
-        return await ollama_client.generate(
+        return await get_llm_client().generate(
             prompt,
             system=SYSTEM_PROMPT,
             temperature=0.5,
@@ -134,7 +134,7 @@ async def summarize_paper(
             abstract=paper.abstract,
             text_excerpt=text_excerpt,
         )
-        return await ollama_client.generate_structured(
+        return await get_llm_client().generate_structured(
             prompt,
             PaperSummary,
             system=SYSTEM_PROMPT,
@@ -204,7 +204,7 @@ Provide a comparative analysis covering:
 
 Analysis:"""
 
-    return await ollama_client.generate(
+    return await get_llm_client().generate(
         prompt,
         system=SYSTEM_PROMPT,
         temperature=0.6,

@@ -15,7 +15,7 @@ from typing import Any
 import structlog
 from pydantic import BaseModel, Field
 
-from packages.ai.ollama_client import ollama_client
+from packages.ai.factory import get_llm_client
 from packages.ingestion.models import ConceptType, ParsedPaper
 
 logger = structlog.get_logger()
@@ -171,7 +171,7 @@ async def extract_entities_llm(paper: ParsedPaper) -> PaperEntities:
     )
 
     try:
-        return await ollama_client.generate_structured(
+        return await get_llm_client().generate_structured(
             prompt,
             PaperEntities,
             system=SYSTEM_PROMPT,
@@ -239,7 +239,7 @@ Text excerpt:
 List the key findings as a JSON array of strings:"""
 
     try:
-        result = await ollama_client.generate_json(
+        result = await get_llm_client().generate_json(
             prompt,
             system=SYSTEM_PROMPT,
         )
@@ -269,7 +269,7 @@ Abstract: {paper.abstract}
 List the methods as a JSON array of strings (just names, no descriptions):"""
 
     try:
-        result = await ollama_client.generate_json(prompt, system=SYSTEM_PROMPT)
+        result = await get_llm_client().generate_json(prompt, system=SYSTEM_PROMPT)
         if isinstance(result, list):
             return result
         return result.get("methods", [])

@@ -453,7 +453,7 @@ def summarize(arxiv_id: str, level: str) -> None:
     import json
     from pathlib import Path
 
-    from packages.ai.ollama_client import ollama_client
+    from packages.ai.factory import close_client, get_llm_client
     from packages.ai.summarizer import summarize_paper, SummaryLevel
     from packages.ingestion.models import ParsedPaper
 
@@ -473,10 +473,10 @@ def summarize(arxiv_id: str, level: str) -> None:
     console.print(f"[bold]Level:[/bold] {level}\n")
 
     async def run_summarize() -> None:
-        # Check Ollama
-        if not await ollama_client.is_available():
-            console.print("[red]Ollama not available[/red]")
-            console.print("[yellow]Start Ollama: ollama serve[/yellow]")
+        # Check LLM availability
+        if not await get_llm_client().is_available():
+            console.print("[red]LLM service not available[/red]")
+            console.print("[yellow]Check configuration (Ollama running? API key set?)[/yellow]")
             return
 
         summary_level = SummaryLevel(level)
@@ -497,7 +497,7 @@ def summarize(arxiv_id: str, level: str) -> None:
                 for finding in summary.key_findings:
                     console.print(f"  • {finding}")
 
-        await ollama_client.close()
+        await close_client()
 
     asyncio.run(run_summarize())
 
@@ -514,7 +514,7 @@ def extract(arxiv_id: str, use_llm: bool) -> None:
     from pathlib import Path
 
     from packages.ai.entity_extractor import extract_entities, extract_entities_regex
-    from packages.ai.ollama_client import ollama_client
+    from packages.ai.factory import close_client, get_llm_client
     from packages.ingestion.models import ParsedPaper
 
     # Load paper
@@ -533,8 +533,8 @@ def extract(arxiv_id: str, use_llm: bool) -> None:
 
     async def run_extract() -> None:
         if use_llm:
-            if not await ollama_client.is_available():
-                console.print("[yellow]Ollama not available, using regex only[/yellow]")
+            if not await get_llm_client().is_available():
+                console.print("[yellow]LLM service not available, using regex only[/yellow]")
                 entities = extract_entities_regex(paper)
             else:
                 entities = await extract_entities(paper, use_llm=True)
@@ -559,7 +559,7 @@ def extract(arxiv_id: str, use_llm: bool) -> None:
                     console.print(f"  • {item.name} {conf}")
 
         if use_llm:
-            await ollama_client.close()
+            await close_client()
 
     asyncio.run(run_extract())
 
@@ -567,40 +567,40 @@ def extract(arxiv_id: str, use_llm: bool) -> None:
 @app.command()
 def ai_check() -> None:
     """Check AI/LLM system status."""
+    import asyncio
+    import os
     import shutil
 
-    from packages.ai.ollama_client import ollama_client
+    from packages.ai.factory import close_client, get_llm_client
 
     table = Table(title="AI System Status")
     table.add_column("Component", style="cyan")
     table.add_column("Status", justify="center")
     table.add_column("Details")
 
-    # Check Ollama binary
-    ollama_path = shutil.which("ollama")
-    if ollama_path:
-        table.add_row("Ollama Binary", "[green]OK[/green]", ollama_path)
-    else:
-        table.add_row("Ollama Binary", "[red]MISSING[/red]", "brew install ollama")
+    provider = os.getenv("LLM_PROVIDER", "ollama").lower()
+    table.add_row("Provider", "[green]CONFIGURED[/green]", provider)
 
-    # Check Ollama server
-    async def check_server() -> tuple[bool, list[str]]:
-        available = await ollama_client.is_available()
-        models = await ollama_client.list_models() if available else []
-        await ollama_client.close()
-        return available, models
+    if provider == "ollama":
+        # Check Ollama binary
+        ollama_path = shutil.which("ollama")
+        if ollama_path:
+            table.add_row("Ollama Binary", "[green]OK[/green]", ollama_path)
+        else:
+            table.add_row("Ollama Binary", "[red]MISSING[/red]", "brew install ollama")
 
-    available, models = asyncio.run(check_server())
+    # Check Service
+    async def check_service() -> bool:
+        available = await get_llm_client().is_available()
+        await close_client()
+        return available
+
+    available = asyncio.run(check_service())
 
     if available:
-        table.add_row("Ollama Server", "[green]RUNNING[/green]", "http://localhost:11434")
-        if models:
-            table.add_row("Models", "[green]OK[/green]", ", ".join(models[:3]))
-        else:
-            table.add_row("Models", "[yellow]NONE[/yellow]", "ollama pull llama3.2:8b")
+        table.add_row("Service", "[green]RUNNING[/green]", "Connected")
     else:
-        table.add_row("Ollama Server", "[red]STOPPED[/red]", "Run: ollama serve")
-        table.add_row("Models", "[dim]-[/dim]", "Start server first")
+        table.add_row("Service", "[red]UNAVAILABLE[/red]", "Check logs/config")
 
     console.print(table)
 
