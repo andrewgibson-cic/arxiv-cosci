@@ -111,14 +111,15 @@ async def test_ollama_client_generate_json():
 @pytest.mark.asyncio
 async def test_summarize_brief(sample_paper):
     """Test brief summarization."""
-    with patch("packages.ai.summarizer.ollama_client.generate", new_callable=AsyncMock) as mock_gen:
-        mock_gen.return_value = "A concise summary."
-        
+    mock_client = AsyncMock()
+    mock_client.generate.return_value = "A concise summary."
+
+    with patch("packages.ai.summarizer.get_llm_client", return_value=mock_client):
         summary = await summarize_paper(sample_paper, SummaryLevel.BRIEF)
         
         assert summary == "A concise summary."
-        mock_gen.assert_called_once()
-        args, kwargs = mock_gen.call_args
+        mock_client.generate.assert_called_once()
+        args, kwargs = mock_client.generate.call_args
         assert kwargs["max_tokens"] == 100
 
 @pytest.mark.asyncio
@@ -133,9 +134,10 @@ async def test_summarize_detailed(sample_paper):
         future_work="Future."
     )
     
-    with patch("packages.ai.summarizer.ollama_client.generate_structured", new_callable=AsyncMock) as mock_gen:
-        mock_gen.return_value = expected_summary
-        
+    mock_client = AsyncMock()
+    mock_client.generate_structured.return_value = expected_summary
+
+    with patch("packages.ai.summarizer.get_llm_client", return_value=mock_client):
         summary = await summarize_paper(sample_paper, SummaryLevel.DETAILED)
         
         assert isinstance(summary, PaperSummary)
@@ -173,9 +175,10 @@ def test_extract_entities_regex(sample_paper):
 @pytest.mark.asyncio
 async def test_extract_entities_llm_fallback(sample_paper):
     """Test LLM extraction falling back to regex on error."""
-    with patch("packages.ai.entity_extractor.ollama_client.generate_structured", new_callable=AsyncMock) as mock_gen:
-        mock_gen.side_effect = Exception("LLM failed")
-        
+    mock_client = AsyncMock()
+    mock_client.generate_structured.side_effect = Exception("LLM failed")
+
+    with patch("packages.ai.entity_extractor.get_llm_client", return_value=mock_client):
         entities = await extract_entities(sample_paper, use_llm=True)
         
         # Should still have regex results
@@ -189,9 +192,10 @@ async def test_extract_entities_llm_success(sample_paper):
         theorems=[]
     )
     
-    with patch("packages.ai.entity_extractor.ollama_client.generate_structured", new_callable=AsyncMock) as mock_gen:
-        mock_gen.return_value = llm_entities
-        
+    mock_client = AsyncMock()
+    mock_client.generate_structured.return_value = llm_entities
+
+    with patch("packages.ai.entity_extractor.get_llm_client", return_value=mock_client):
         entities = await extract_entities(sample_paper, use_llm=True)
         
         # Should have LLM entity
@@ -202,9 +206,10 @@ async def test_extract_entities_llm_success(sample_paper):
 @pytest.mark.asyncio
 async def test_extract_key_findings(sample_paper):
     """Test key finding extraction."""
-    with patch("packages.ai.entity_extractor.ollama_client.generate_json", new_callable=AsyncMock) as mock_gen:
-        mock_gen.return_value = ["Finding 1", "Finding 2"]
-        
+    mock_client = AsyncMock()
+    mock_client.generate_json.return_value = ["Finding 1", "Finding 2"]
+
+    with patch("packages.ai.entity_extractor.get_llm_client", return_value=mock_client):
         findings = await extract_key_findings(sample_paper)
         
         assert len(findings) == 2

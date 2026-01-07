@@ -100,16 +100,23 @@ poetry run arxiv-cosci ingest \
 poetry run arxiv-cosci search "topological quantum computing"
 ```
 
-### AI Analysis (Requires Ollama)
+### AI Analysis (Local or Cloud)
+The engine supports multiple LLM providers. Configure your choice in `.env`.
+
+**Options:**
+- **Gemini (Recommended)**: Best for whole-paper context (1M tokens).
+- **Groq**: Fastest inference speeds for real-time extraction.
+- **Ollama**: 100% local and private.
+
 ```bash
 # Check AI system status
 poetry run arxiv-cosci ai-check
 
-# Summarize a paper
-poetry run arxiv-cosci summarize 0704.0001 --level detailed
+# Set provider dynamically (or via .env)
+LLM_PROVIDER=gemini poetry run arxiv-cosci summarize 0704.0001 --level detailed
 
-# Extract entities
-poetry run arxiv-cosci extract 0704.0001 --use-llm
+# Extract entities using Groq speed
+LLM_PROVIDER=groq poetry run arxiv-cosci extract 0704.0001 --use-llm
 ```
 
 ## Project Structure
