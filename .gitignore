@@ -62,6 +62,8 @@ dmypy.json
 
 # =============================================================================
 # Data (large files - do not commit)
+# NOTE: API-first architecture means we fetch from Semantic Scholar on-demand
+#       No need for bulk metadata dumps (arxiv-metadata-oai-snapshot.json, etc.)
 # =============================================================================
 data/raw/
 data/processed/
@@ -69,6 +71,7 @@ data/models/
 *.pdf
 *.jsonl
 arxiv-metadata-oai-snapshot.json
+*.zip
 
 # Keep directory structure
 !data/.gitkeep

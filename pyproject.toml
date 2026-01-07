@@ -21,7 +21,7 @@ aiohttp = "^3.9"
 aiofiles = "^24.1"
 arxiv = "^2.1"
 requests = "^2.31"
-kaggle = "^1.6"
+semanticscholar = "^0.8"
 
 # PDF parsing
 pymupdf = "^1.24"

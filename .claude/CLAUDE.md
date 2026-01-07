@@ -8,9 +8,11 @@ This file extends ~/.claude/CLAUDE.md with project-specific context.
 
 ### Stack
 - **Language**: Python 3.11+
-- **Frameworks**: FastAPI, LangChain, Strawberry GraphQL
+- **Data Source**: Semantic Scholar API (free tier)
+- **LLM**: Gemini 1.5 Flash/Pro (free tier: 1M tokens/day), Groq (backup)
 - **Database/ORM**: Neo4j (graph), ChromaDB (vectors)
 - **ML**: PyTorch, PyTorch Geometric, sentence-transformers
+- **Frameworks**: FastAPI (planned), LangChain, Strawberry GraphQL (planned)
 - **Testing**: pytest
 - **Build Tools**: Poetry, Docker Compose
 
@@ -45,16 +47,18 @@ This file extends ~/.claude/CLAUDE.md with project-specific context.
 - Index on frequently queried properties (arxiv_id, category)
 
 ### ML/AI Patterns
-- Ollama client with retry logic for LLM calls
-- Batch embedding generation (device="mps")
+- Gemini API with retry logic and exponential backoff
+- Batch embedding generation (device="mps" on Apple Silicon, "cuda" elsewhere)
 - Checkpoint model training (PyTorch state_dict)
 - Structured output parsing for entity extraction
+- Multi-provider LLM support (Gemini, Groq, Ollama)
 
-### PDF Parsing Patterns
-- Fallback chain: Nougat -> Marker -> PyMuPDF
-- Validate LaTeX extraction with regex
-- Store parsing metadata (parser used, confidence)
-- Queue-based processing with Celery
+### API Integration Patterns
+- Semantic Scholar client with rate limiting (10 req/sec with API key)
+- Exponential backoff retry logic for API failures
+- Batch processing with async/await
+- Cache responses in Neo4j to minimize API calls
+- PDF parsing (optional): PyMuPDF for on-demand full-text extraction
 
 ---
 
@@ -77,16 +81,18 @@ This project extracts physics/math entities:
 ### Delegate These Operations
 - `pytest` -> `mcp__ultra-mcp__debug-issue`
 - Neo4j query debugging -> `mcp__ultra-mcp__debug-issue`
-- PDF parsing batch runs -> `mcp__ultra-mcp__analyze-code`
+- Gemini API batch runs -> `mcp__ultra-mcp__analyze-code`
 - Large embedding logs -> `mcp__ultra-mcp__analyze-code`
 - GNN training output -> `mcp__ultra-mcp__analyze-code`
+- S2 API response analysis -> `mcp__ultra-mcp__analyze-code`
 
 ### Files to Skip Reading
-- `data/raw/` (PDFs)
-- `data/processed/` (large JSON/markdown)
+- `data/raw/pdfs/` (PDF cache)
+- `data/processed/` (parsed papers)
 - `data/models/` (PyTorch checkpoints)
 - `.venv/`, `__pycache__/`
 - `*.log`, `*.jsonl` (logs)
+- Large metadata dumps (removed from project)
 
 ### Context-Heavy Operations
 When working with this project, prefer:
@@ -111,17 +117,17 @@ poetry run pytest -k "test_neo4j" # Specific tests
 poetry run mypy .                 # Type check
 
 # Data Pipeline
-poetry run arxiv-cosci download --category quant-ph
-poetry run arxiv-cosci parse --limit 100
-poetry run arxiv-cosci ingest --to-neo4j
+poetry run arxiv-cosci fetch 2401.12345          # Fetch single paper
+poetry run arxiv-cosci ingest --category quant-ph --limit 100
+poetry run arxiv-cosci search "quantum computing"
 
 # Neo4j
 docker compose up neo4j           # Start Neo4j
 docker compose exec neo4j cypher-shell  # Interactive shell
 
-# Ollama
-ollama serve                      # Start server
-ollama run llama3.2:8b            # Interactive LLM
+# API Keys (in .env)
+# GEMINI_API_KEY=your_key
+# S2_API_KEY=your_key (optional)
 ```
 
 ---
@@ -131,11 +137,12 @@ ollama run llama3.2:8b            # Interactive LLM
 | Purpose | File |
 |---------|------|
 | Paper data model | packages/ingestion/models.py |
+| Semantic Scholar client | packages/ingestion/s2_client.py |
+| Gemini client | packages/ai/gemini_client.py |
 | Neo4j connection | packages/knowledge/neo4j_client.py |
 | LLM prompts | packages/ai/prompts/ |
 | Entity extraction | packages/ai/entity_extractor.py |
 | GraphSAGE model | packages/ml/link_predictor.py |
-| API routes | apps/api/routes/ |
 | CLI commands | apps/cli/main.py |
 
 ---

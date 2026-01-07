@@ -1,16 +1,16 @@
 # ArXiv AI Co-Scientist
 
-A Scientific Intelligence Engine for physics and mathematics research. This tool scrapes, interprets, categorizes, connects, and predicts scientific content from arXiv - entirely cost-free using local computation and open-source tools.
+A Scientific Intelligence Engine for physics and mathematics research. This tool discovers, interprets, categorizes, connects, and predicts scientific content from arXiv - entirely cost-free using Semantic Scholar API and Gemini for AI analysis.
 
 ## Features
 
-- **Data Ingestion**: Bulk download from Kaggle + incremental sync via OAI-PMH
-- **PDF Parsing**: Extract text, equations, and citations from scientific PDFs
-- **Knowledge Graph**: Store papers and concepts in Neo4j with citation relationships
+- **Rich Metadata**: Fetch comprehensive paper data from Semantic Scholar API (citations, influence metrics, TLDR)
+- **AI Analysis**: Gemini API for summarization, entity extraction, and hypothesis generation
+- **Knowledge Graph**: Store papers and concepts in Neo4j with rich citation relationships
 - **Semantic Search**: Vector similarity search using ChromaDB
-- **AI Analysis**: Local LLM-powered summarization and entity extraction
 - **Link Prediction**: GraphSAGE-based prediction of future citations
-- **Visualization**: Interactive graph UI with React + Sigma.js
+- **Real-time Data**: Always current via API (no static snapshots)
+- **Visualization**: Interactive graph UI with React + Sigma.js (planned)
 
 ## Target Domain
 
@@ -25,9 +25,10 @@ Physics & Mathematics papers from arXiv:
 ## Requirements
 
 - Python 3.11+
-- Apple Silicon Mac (M1/M2/M3) recommended for local LLM inference
+- Gemini API key (free tier: 1M tokens/day)
+- Semantic Scholar API key (optional, for 10 req/sec vs 1 req/sec)
 - Docker (for Neo4j)
-- ~100GB storage for papers and models
+- ~10GB storage for graph database and vector embeddings
 
 ## Quick Start
 
@@ -38,66 +39,60 @@ cd arxiv-cosci
 # Install dependencies
 poetry install
 
-# Check system requirements
-poetry run arxiv-cosci check
-
-# Install Ollama for local LLM
-brew install ollama
-ollama pull llama3.2:8b
+# Create .env file with API keys
+cp .env.example .env
+# Edit .env and add:
+# GEMINI_API_KEY=your_gemini_key_here
+# S2_API_KEY=your_s2_key_here (optional, for higher rate limits)
 
 # Start Neo4j
-docker run -d --name neo4j \
-  -p 7474:7474 -p 7687:7687 \
-  -e NEO4J_AUTH=neo4j/password \
-  neo4j:community
+docker compose up -d neo4j
 
-# Download Kaggle arXiv metadata
-# (Requires Kaggle API credentials)
-kaggle datasets download -d Cornell-University/arxiv
-unzip arxiv.zip -d data/raw/
+# Initialize database schema
+poetry run arxiv-cosci init-db
 ```
 
 ## Usage
 
-### View dataset statistics
+### Fetch a single paper
 ```bash
-poetry run arxiv-cosci stats data/raw/arxiv-metadata-oai-snapshot.json
+poetry run arxiv-cosci fetch 2401.12345
+# Fetches metadata from Semantic Scholar
+# Analyzes with Gemini
+# Stores in Neo4j + ChromaDB
 ```
 
-### Create a filtered subset
+### Bulk ingestion by category
 ```bash
-poetry run arxiv-cosci subset data/raw/arxiv-metadata-oai-snapshot.json \
-  -o data/raw/quant-ph-subset.jsonl \
-  -c quant-ph \
-  --limit 10000
+poetry run arxiv-cosci ingest --category quant-ph --limit 1000
+# Searches S2 for quantum physics papers
+# Processes in batches with rate limiting
+# Enriches with Gemini analysis
 ```
 
-### Download PDFs
+### Semantic search
 ```bash
-poetry run arxiv-cosci download data/raw/quant-ph-subset.jsonl \
-  -o data/raw/pdfs \
-  --limit 100
-```
-
-### Parse PDFs
-```bash
-poetry run arxiv-cosci parse \
-  -i data/raw/pdfs \
-  -o data/processed
-```
-
-### Knowledge Graph & Search
-```bash
-# Initialize Neo4j schema
-poetry run arxiv-cosci init-db
-
-# Ingest papers into Neo4j and ChromaDB
-poetry run arxiv-cosci ingest \
-  -i data/processed \
-  --to-neo4j --to-chroma
-
-# Semantic search
 poetry run arxiv-cosci search "topological quantum computing"
+# Vector search in ChromaDB
+# Returns ranked papers with relevance scores
+```
+
+### Explore citations
+```bash
+poetry run arxiv-cosci citations 2401.12345
+# Fetches citation network from S2
+# Displays influential citations
+# Shows citation context
+```
+
+### Generate insights
+```bash
+poetry run arxiv-cosci analyze 2401.12345
+# Gemini-powered analysis:
+# - Paper summary (TLDR + detailed)
+# - Extracted entities (theorems, methods, concepts)
+# - Related work recommendations
+# - Hypothesis generation
 ```
 
 ### AI Analysis (Local or Cloud)
@@ -146,14 +141,14 @@ arxiv-cosci/
 | Layer | Technology |
 |-------|------------|
 | Language | Python 3.11+ |
-| PDF Parsing | PyMuPDF, Nougat (equations), Grobid (citations) |
+| Metadata Source | Semantic Scholar API (free tier) |
+| LLM Analysis | Gemini 1.5 Flash/Pro (free tier: 1M tokens/day) |
 | Embeddings | sentence-transformers (all-mpnet-base-v2) |
-| LLM | Ollama + Llama 3.2 (8B) |
 | Vector DB | ChromaDB |
 | Graph DB | Neo4j Community Edition |
 | GNN | PyTorch Geometric (GraphSAGE) |
-| API | FastAPI + Strawberry GraphQL |
-| Frontend | React + Vite + Sigma.js |
+| API | FastAPI + Strawberry GraphQL (planned) |
+| Frontend | React + Vite + Sigma.js (planned) |
 
 ## Development
 
