@@ -44,6 +44,106 @@ def app() -> None:
 
 
 @app.command()
+@click.argument("arxiv_ids", nargs=-1, required=True)
+@click.option(
+    "--output",
+    "-o",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Output file for metadata (JSON). If not provided, prints to stdout",
+)
+@click.option(
+    "--with-citations",
+    is_flag=True,
+    default=False,
+    help="Fetch incoming citations for each paper",
+)
+@click.option(
+    "--with-references",
+    is_flag=True,
+    default=False,
+    help="Fetch outgoing references for each paper",
+)
+def fetch(
+    arxiv_ids: tuple[str, ...],
+    output: Path | None,
+    with_citations: bool,
+    with_references: bool,
+) -> None:
+    """Fetch paper metadata from Semantic Scholar API.
+
+    ARXIV_IDS: One or more arXiv identifiers (e.g., 2401.12345 or 2401.12345 2402.13579)
+    """
+    import json
+    import os
+
+    from packages.ingestion.s2_client import S2Client
+
+    async def run_fetch() -> None:
+        api_key = os.getenv("S2_API_KEY")
+        client = S2Client(api_key=api_key)
+
+        results = []
+        with Progress(console=console) as progress:
+            task = progress.add_task("Fetching papers...", total=len(arxiv_ids))
+
+            for arxiv_id in arxiv_ids:
+                paper = await client.get_paper_by_arxiv_id(arxiv_id)
+                if paper:
+                    metadata = client.paper_to_metadata(paper)
+                    result = metadata.model_dump()
+
+                    if with_citations:
+                        citations = await client.get_paper_citations(arxiv_id, limit=20)
+                        result["citations"] = citations
+
+                    if with_references:
+                        references = await client.get_paper_references(arxiv_id, limit=20)
+                        result["references"] = references
+
+                    results.append(result)
+                    progress.update(task, advance=1)
+                else:
+                    console.print(f"[yellow]Paper not found: {arxiv_id}[/yellow]")
+                    progress.update(task, advance=1)
+
+        if not results:
+            console.print("[red]No papers found[/red]")
+            return
+
+        # Output results
+        if output:
+            output.parent.mkdir(parents=True, exist_ok=True)
+            output.write_text(json.dumps(results, indent=2))
+            console.print(f"\n[green]Saved {len(results)} papers to {output}[/green]")
+        else:
+            # Display in table
+            table = Table(title=f"Fetched Papers ({len(results)} found)")
+            table.add_column("arXiv ID", style="cyan")
+            table.add_column("Title", max_width=50)
+            table.add_column("Authors", max_width=40)
+            table.add_column("Year")
+
+            for result in results:
+                table.add_row(
+                    result.get("id", "-"),
+                    result.get("title", "")[:50],
+                    result.get("authors", "")[:40],
+                    result.get("update_date", "-"),
+                )
+
+            console.print(table)
+
+            # Show abstract if available
+            for result in results:
+                if result.get("abstract"):
+                    console.print(f"\n[bold]{result['id']}:[/bold]")
+                    console.print(result["abstract"][:300] + "...")
+
+    asyncio.run(run_fetch())
+
+
+@app.command()
 @click.argument("metadata_file", type=click.Path(exists=True, path_type=Path))
 @click.option("--top", default=20, help="Number of top categories to show")
 def stats(metadata_file: Path, top: int) -> None:

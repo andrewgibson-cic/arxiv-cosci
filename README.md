@@ -54,45 +54,54 @@ poetry run arxiv-cosci init-db
 
 ## Usage
 
-### Fetch a single paper
+### Fetch papers from Semantic Scholar API
 ```bash
+# Single paper
 poetry run arxiv-cosci fetch 2401.12345
-# Fetches metadata from Semantic Scholar
-# Analyzes with Gemini
-# Stores in Neo4j + ChromaDB
+
+# Multiple papers with citations and references
+poetry run arxiv-cosci fetch 2401.12345 2402.13579 \
+  -o data/papers.json \
+  --with-citations \
+  --with-references
 ```
 
-### Bulk ingestion by category
+### Summarize papers
 ```bash
-poetry run arxiv-cosci ingest --category quant-ph --limit 1000
-# Searches S2 for quantum physics papers
-# Processes in batches with rate limiting
-# Enriches with Gemini analysis
+# Brief summary
+poetry run arxiv-cosci summarize 2401.12345 --level brief
+
+# Detailed summary with key findings
+poetry run arxiv-cosci summarize 2401.12345 --level detailed
+```
+
+### Extract entities
+```bash
+# Extract methods, theorems, datasets, constants, equations
+poetry run arxiv-cosci extract 2401.12345 --use-llm
+
+# Regex-only extraction (fast, no LLM)
+poetry run arxiv-cosci extract 2401.12345 --no-llm
 ```
 
 ### Semantic search
 ```bash
-poetry run arxiv-cosci search "topological quantum computing"
-# Vector search in ChromaDB
-# Returns ranked papers with relevance scores
+poetry run arxiv-cosci search "topological quantum computing" --limit 10
+
+# Filter by category
+poetry run arxiv-cosci search "quantum error correction" \
+  --limit 20 \
+  --category quant-ph
 ```
 
-### Explore citations
+### Ingest papers to knowledge graph
 ```bash
-poetry run arxiv-cosci citations 2401.12345
-# Fetches citation network from S2
-# Displays influential citations
-# Shows citation context
-```
+# From processed JSON files (after parsing)
+poetry run arxiv-cosci ingest -i data/processed \
+  --to-neo4j --to-chroma
 
-### Generate insights
-```bash
-poetry run arxiv-cosci analyze 2401.12345
-# Gemini-powered analysis:
-# - Paper summary (TLDR + detailed)
-# - Extracted entities (theorems, methods, concepts)
-# - Related work recommendations
-# - Hypothesis generation
+# Limit number of papers
+poetry run arxiv-cosci ingest -i data/processed --limit 100
 ```
 
 ### AI Analysis (Local or Cloud)
@@ -150,21 +159,57 @@ arxiv-cosci/
 | API | FastAPI + Strawberry GraphQL (planned) |
 | Frontend | React + Vite + Sigma.js (planned) |
 
-## Development
+## Development & Documentation
 
+### System Health
 ```bash
-# Run tests
+# Check dependencies and system setup
+poetry run arxiv-cosci check
+
+# Check LLM/AI system status
+poetry run arxiv-cosci ai-check
+
+# Show database statistics
+poetry run arxiv-cosci db-stats
+```
+
+### Testing & Code Quality
+```bash
+# Run all tests
 poetry run pytest
+
+# Run specific test file
+poetry run pytest tests/test_ai.py -v
 
 # Type checking
 poetry run mypy .
 
-# Linting
-poetry run ruff check .
-
-# Format code
-poetry run ruff format .
+# Coverage report
+poetry run pytest --cov=packages tests/
 ```
+
+### Project Documentation
+
+See [.claude/plan.md](.claude/plan.md) for:
+- Comprehensive implementation roadmap
+- Architecture decisions and rationale
+- Phase-by-phase breakdown
+- Technology stack details
+- Success metrics and KPIs
+- Risk management and mitigation
+
+## Status
+
+**Current:** Phase 1-4 Complete (API-First Architecture)
+- ✅ Semantic Scholar API client (S2Client)
+- ✅ Multi-provider LLM support (Gemini, Groq, Ollama)
+- ✅ Neo4j knowledge graph setup
+- ✅ ChromaDB semantic search
+- ✅ CLI commands for fetch, search, summarize, extract, ingest
+- ⏳ Phase 2: PDF parsing pipeline (Marker + Grobid integration)
+- ⏳ Phase 3: Knowledge graph queries and hybrid search
+- ⏳ Phase 5: Link prediction and hypothesis generation
+- ⏳ Phase 6-7: Frontend and production hardening
 
 ## License
 
