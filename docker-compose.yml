@@ -22,8 +22,25 @@ services:
       timeout: 3s
       retries: 5
 
+  grobid:
+    image: lfoppiano/grobid:0.8.0
+    container_name: arxiv-grobid
+    ports:
+      - "8070:8070"
+    environment:
+      - GROBID_HEAP_SIZE=4096m
+    volumes:
+      - grobid_tmp:/opt/grobid/grobid-home/tmp
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8070/api/isalive || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+
 volumes:
   neo4j_data:
   neo4j_logs:
   neo4j_import:
   neo4j_plugins:
+  grobid_tmp:

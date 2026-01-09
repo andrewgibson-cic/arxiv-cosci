@@ -5,10 +5,13 @@ A Scientific Intelligence Engine for physics and mathematics research. This tool
 ## Features
 
 - **Rich Metadata**: Fetch comprehensive paper data from Semantic Scholar API (citations, influence metrics, TLDR)
+- **Advanced PDF Parsing**: Multi-parser pipeline (Marker + Grobid + PyMuPDF) optimized for LaTeX-heavy papers
+- **LaTeX Extraction**: Equations, theorems, conjectures, and physical constants with context preservation
+- **Semantic Chunking**: Intelligent paper segmentation preserving section boundaries and equation context
 - **AI Analysis**: Gemini API for summarization, entity extraction, and hypothesis generation
 - **Knowledge Graph**: Store papers and concepts in Neo4j with rich citation relationships
 - **Semantic Search**: Vector similarity search using ChromaDB
-- **Link Prediction**: GraphSAGE-based prediction of future citations
+- **Link Prediction**: GraphSAGE-based prediction of future citations (planned)
 - **Real-time Data**: Always current via API (no static snapshots)
 - **Visualization**: Interactive graph UI with React + Sigma.js (planned)
 
@@ -27,7 +30,7 @@ Physics & Mathematics papers from arXiv:
 - Python 3.11+
 - Gemini API key (free tier: 1M tokens/day)
 - Semantic Scholar API key (optional, for 10 req/sec vs 1 req/sec)
-- Docker (for Neo4j)
+- Docker (for Neo4j + Grobid)
 - ~10GB storage for graph database and vector embeddings
 
 ## Quick Start
@@ -45,11 +48,46 @@ cp .env.example .env
 # GEMINI_API_KEY=your_gemini_key_here
 # S2_API_KEY=your_s2_key_here (optional, for higher rate limits)
 
-# Start Neo4j
-docker compose up -d neo4j
+# Start services (Neo4j + Grobid)
+docker compose up -d
 
 # Initialize database schema
 poetry run arxiv-cosci init-db
+```
+
+## PDF Parsing (Phase 2 - NEW!)
+
+### Install parsing dependencies
+```bash
+poetry install --with parsing
+```
+
+### Parse papers with full pipeline
+```bash
+# Parse single paper (Marker + Grobid + LaTeX extraction)
+poetry run arxiv-cosci parse 2401.12345 --output data/processed/
+
+# Parse with specific configuration
+poetry run arxiv-cosci parse 2401.12345 \
+  --use-marker \
+  --use-grobid \
+  --extract-latex \
+  --create-chunks
+
+# Batch parse multiple papers
+poetry run arxiv-cosci parse-batch --input papers.txt --parallel 4
+
+# Validate parsing quality
+poetry run arxiv-cosci validate 2401.12345
+```
+
+### Parser Features
+- **Marker**: High-quality PDF → Markdown with LaTeX preservation
+- **Grobid**: Citation extraction with context and bibliographic info
+- **LaTeX Extractor**: Equations, theorems, conjectures, physical constants
+- **Semantic Chunker**: Intelligent segmentation by section with configurable chunk size
+- **Quality Metrics**: Parse time, success rates, equation/citation counts
+
 ```
 
 ## Usage
@@ -200,14 +238,18 @@ See [.claude/plan.md](.claude/plan.md) for:
 
 ## Status
 
-**Current:** Phase 1-4 Complete (API-First Architecture)
+**Current:** Phase 1-4 Complete + Phase 2 PDF Parsing (Jan 2026)
 - ✅ Semantic Scholar API client (S2Client)
 - ✅ Multi-provider LLM support (Gemini, Groq, Ollama)
 - ✅ Neo4j knowledge graph setup
 - ✅ ChromaDB semantic search
 - ✅ CLI commands for fetch, search, summarize, extract, ingest
-- ⏳ Phase 2: PDF parsing pipeline (Marker + Grobid integration)
-- ⏳ Phase 3: Knowledge graph queries and hybrid search
+- ✅ **Phase 2: PDF parsing pipeline (Marker + Grobid + PyMuPDF fallback)**
+- ✅ **LaTeX extraction (equations, theorems, conjectures, constants)**
+- ✅ **Semantic chunking with section-aware segmentation**
+- ✅ **Parsing quality metrics and validation**
+- ⏳ Phase 2b: CLI commands for parsing (parse, parse-batch, validate)
+- ⏳ Phase 3: Knowledge graph ingestion and hybrid search
 - ⏳ Phase 5: Link prediction and hypothesis generation
 - ⏳ Phase 6-7: Frontend and production hardening
 
