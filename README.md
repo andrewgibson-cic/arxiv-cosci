@@ -53,70 +53,402 @@ A zero-cost Scientific Intelligence Engine for physics and mathematics research.
 
 See [docs/GAP_ANALYSIS.md](docs/GAP_ANALYSIS.md) for remaining 3% (polish & enhancements).
 
-## Requirements
+## 📋 Requirements
 
-- Python 3.11+
-- Node.js 20+ (for frontend)
-- Docker & Docker Compose
-- Gemini API key (free tier: 1M tokens/day)
-- Semantic Scholar API key (optional: 10 req/sec vs 1 req/sec)
-- ~15GB storage
+### System Requirements
+- **OS**: macOS, Linux, or Windows (WSL2 recommended)
+- **RAM**: 8GB minimum, 16GB recommended
+- **Storage**: 15GB free space
+- **CPU**: 4+ cores recommended
 
-## Quick Start
+### Software Requirements
+- **Python**: 3.11 or higher
+- **Node.js**: 20 or higher (for frontend)
+- **Poetry**: 1.7+ (Python dependency manager)
+- **Docker**: 24+ with Docker Compose v2
+- **Git**: 2.40+
 
-### Development Setup
+### API Keys (Free Tier)
+- **Gemini API**: Required ([get key](https://makersuite.google.com/app/apikey))
+  - Free tier: 60 requests/minute, 1M tokens/day
+- **Semantic Scholar**: Optional but recommended ([request key](https://www.semanticscholar.org/product/api))
+  - Without key: 1 req/sec
+  - With key: 10 req/sec
+
+## 🚀 Complete Local Setup Guide
+
+### Step 1: Install Prerequisites
+
+#### macOS
+```bash
+# Install Homebrew (if not installed)
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Install required software
+brew install python@3.11 node@20 poetry docker git
+
+# Start Docker Desktop
+open -a Docker
+```
+
+#### Linux (Ubuntu/Debian)
+```bash
+# Update system
+sudo apt update && sudo apt upgrade -y
+
+# Install Python 3.11
+sudo apt install python3.11 python3.11-venv python3-pip -y
+
+# Install Node.js 20
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt install nodejs -y
+
+# Install Poetry
+curl -sSL https://install.python-poetry.org | python3 -
+
+# Install Docker
+curl -fsSL https://get.docker.com | sudo sh
+sudo usermod -aG docker $USER
+newgrp docker
+
+# Install Git
+sudo apt install git -y
+```
+
+#### Windows (WSL2)
+```powershell
+# Install WSL2 with Ubuntu
+wsl --install -d Ubuntu
+
+# Then follow Linux instructions inside WSL
+```
+
+### Step 2: Clone Repository
 
 ```bash
-# Clone repository
-git clone https://github.com/yourusername/arxiv-cosci.git
+# Clone the repository
+git clone https://github.com/pythymcpyface/arxiv-cosci.git
 cd arxiv-cosci
 
-# Install Python dependencies
+# Verify you're on the main branch
+git branch
+```
+
+### Step 3: Setup Python Environment
+
+```bash
+# Install all Python dependencies (this may take 5-10 minutes)
 poetry install
 
-# Setup environment
-cp .env.example .env
-# Edit .env and add your API keys:
-# GEMINI_API_KEY=your_key
-# S2_API_KEY=your_key (optional)
+# Verify installation
+poetry run python --version  # Should show Python 3.11+
+poetry run arxiv-cosci --version  # Should show 0.1.0
 
-# Start services
+# Check all dependencies
+poetry run arxiv-cosci check
+```
+
+**Expected output:**
+```
+System Check
+┌─────────────────────┬────────┬───────────────┐
+│ Component           │ Status │ Details       │
+├─────────────────────┼────────┼───────────────┤
+│ Python              │ OK     │ 3.11.x        │
+│ PyMuPDF (fitz)      │ OK     │ Installed     │
+│ ChromaDB            │ OK     │ Installed     │
+│ Neo4j               │ OK     │ Installed     │
+│ Docker              │ OK     │ /usr/bin/...  │
+└─────────────────────┴────────┴───────────────┘
+```
+
+### Step 4: Configure Environment
+
+```bash
+# Copy development environment template
+cp .env.development .env
+
+# Open in your preferred editor
+nano .env  # or vim, code, etc.
+```
+
+**Required Configuration:**
+```bash
+# REQUIRED: Add your Gemini API key
+GEMINI_API_KEY=your_actual_gemini_api_key_here
+
+# OPTIONAL: Add Semantic Scholar key for higher rate limits
+S2_API_KEY=your_s2_api_key_here
+
+# These are fine as defaults for local development:
+NEO4J_URI=bolt://localhost:7687
+NEO4J_USER=neo4j
+NEO4J_PASSWORD=development-password
+REDIS_URL=redis://localhost:6379
+LLM_PROVIDER=gemini
+```
+
+**Get Gemini API Key:**
+1. Visit https://makersuite.google.com/app/apikey
+2. Sign in with Google account
+3. Click "Create API Key"
+4. Copy key and paste into `.env`
+
+### Step 5: Start Database Services
+
+```bash
+# Start Neo4j and Redis with Docker Compose
 docker compose up -d
 
-# Initialize database
+# Verify services are running
+docker compose ps
+
+# Expected output:
+# NAME                IMAGE            STATUS
+# neo4j               neo4j:5.23       Up (healthy)
+# redis               redis:7-alpine   Up
+```
+
+**Wait for Neo4j to be ready** (usually 30-60 seconds):
+```bash
+# Check Neo4j logs
+docker compose logs -f neo4j
+
+# Look for: "Remote interface available at http://localhost:7474/"
+# Press Ctrl+C to exit logs
+```
+
+### Step 6: Initialize Database
+
+```bash
+# Initialize Neo4j schema and constraints
 poetry run arxiv-cosci init-db
+```
 
-# Start API server
-poetry run uvicorn apps.api.main:app --reload
+**Expected output:**
+```
+Initializing Neo4j schema...
+Schema initialization complete!
+```
 
-# Start frontend (new terminal)
-cd apps/web
+**Verify Neo4j is working:**
+```bash
+# Open Neo4j Browser
+open http://localhost:7474  # macOS
+# or visit http://localhost:7474 in browser
+
+# Login with:
+# Username: neo4j
+# Password: development-password
+```
+
+### Step 7: Test the System
+
+```bash
+# Check AI/LLM status
+poetry run arxiv-cosci ai-check
+
+# Expected output:
+# AI System Status
+# ┌──────────┬───────────────┬────────────┐
+# │ Component│ Status        │ Details    │
+# ├──────────┼───────────────┼────────────┤
+# │ Provider │ CONFIGURED    │ gemini     │
+# │ Service  │ RUNNING       │ Connected  │
+# └──────────┴───────────────┴────────────┘
+
+# Test database connection
+poetry run arxiv-cosci db-stats
+
+# Fetch a test paper
+poetry run arxiv-cosci fetch 2401.00001
+```
+
+### Step 8: Start API Server
+
+Open a **new terminal** window:
+
+```bash
+cd arxiv-cosci
+
+# Start FastAPI development server
+poetry run uvicorn apps.api.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+**Expected output:**
+```
+INFO:     Uvicorn running on http://0.0.0.0:8000
+INFO:     Application startup complete.
+```
+
+**Test API:**
+```bash
+# In another terminal:
+curl http://localhost:8000/api/health
+
+# Expected: {"status":"healthy","database":"connected"}
+
+# Open API docs in browser:
+open http://localhost:8000/docs  # Interactive Swagger UI
+```
+
+### Step 9: Start Frontend (Optional)
+
+Open **another new terminal** window:
+
+```bash
+cd arxiv-cosci/apps/web
+
+# Install Node.js dependencies
 npm install
+
+# Start development server
 npm run dev
 ```
 
-Access the application:
-- **Frontend**: http://localhost:5173
-- **API**: http://localhost:8000
-- **API Docs**: http://localhost:8000/docs
-- **Neo4j**: http://localhost:7474
-
-### Production Deployment
-
-```bash
-# Configure production environment
-cp .env.example .env.prod
-# Edit .env.prod with production values
-
-# Deploy with Docker Compose
-docker compose -f docker-compose.prod.yml --env-file .env.prod up -d
-
-# Check health
-curl http://localhost:8000/api/health
-curl http://localhost:8000/metrics
+**Expected output:**
+```
+VITE v5.x.x  ready in xxx ms
+➜  Local:   http://localhost:5173/
+➜  Network: http://192.168.x.x:5173/
 ```
 
-See [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) for complete deployment guide.
+**Access the application:**
+- Frontend: http://localhost:5173
+- API: http://localhost:8000
+- API Docs: http://localhost:8000/docs
+- Neo4j Browser: http://localhost:7474
+
+### Step 10: Load Sample Data
+
+```bash
+# Fetch some papers
+poetry run arxiv-cosci fetch 2401.12345 2401.12346 2401.12347 \
+  --with-citations \
+  -o data/papers.json
+
+# Ingest into databases
+poetry run arxiv-cosci ingest \
+  -i data/processed \
+  --to-neo4j \
+  --to-chroma
+
+# Try semantic search
+poetry run arxiv-cosci search "quantum error correction" --limit 10
+
+# View in Neo4j Browser (http://localhost:7474):
+# MATCH (p:Paper) RETURN p LIMIT 25
+```
+
+## 🔧 Troubleshooting
+
+### Common Issues
+
+**1. "Command not found: poetry"**
+```bash
+# Add Poetry to PATH
+export PATH="$HOME/.local/bin:$PATH"
+# Add to ~/.bashrc or ~/.zshrc to make permanent
+```
+
+**2. "Docker daemon is not running"**
+```bash
+# macOS: Start Docker Desktop
+open -a Docker
+
+# Linux: Start Docker service
+sudo systemctl start docker
+```
+
+**3. "Neo4j connection refused"**
+```bash
+# Check if Neo4j is running
+docker compose ps neo4j
+
+# Restart Neo4j
+docker compose restart neo4j
+
+# Check logs
+docker compose logs neo4j
+```
+
+**4. "Python version 3.11 not found"**
+```bash
+# macOS:
+brew install python@3.11
+
+# Linux:
+sudo apt install python3.11 python3.11-venv
+
+# Tell Poetry to use correct Python
+poetry env use python3.11
+```
+
+**5. "API key invalid"**
+```bash
+# Verify your .env file has the correct key
+cat .env | grep GEMINI_API_KEY
+
+# Test the key directly
+poetry run python -c "import os; print(os.getenv('GEMINI_API_KEY'))"
+```
+
+**6. "Port already in use"**
+```bash
+# Find what's using the port
+lsof -i :8000  # for API
+lsof -i :7474  # for Neo4j
+
+# Kill the process or use different ports
+docker compose down  # stops all services
+```
+
+### Getting Help
+
+If you encounter issues:
+
+1. **Check logs:**
+   ```bash
+   # Docker services
+   docker compose logs -f
+   
+   # API server (in terminal where it's running)
+   # Frontend (in terminal where it's running)
+   ```
+
+2. **Reset everything:**
+   ```bash
+   # Stop all services
+   docker compose down -v  # -v removes volumes
+   
+   # Clear data
+   rm -rf data/chroma/*
+   
+   # Restart from Step 5
+   ```
+
+3. **Check system resources:**
+   ```bash
+   # Docker resource usage
+   docker stats
+   
+   # Ensure you have enough disk space
+   df -h
+   ```
+
+4. **Open an issue:** [GitHub Issues](https://github.com/pythymcpyface/arxiv-cosci/issues)
+
+## 📚 Next Steps
+
+After successful setup:
+
+1. **Try the examples** in the "Usage Examples" section below
+2. **Read the documentation** in `docs/` directory
+3. **Run the tests**: `poetry run pytest tests/ -v`
+4. **Explore the API**: http://localhost:8000/docs
+5. **View the architecture** in this README
+
+## 💡 Usage Examples
 
 ## 📚 Usage Examples
 
