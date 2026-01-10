@@ -419,6 +419,35 @@ Frontend (React)
 
 ## 5. CLI Commands Reference
 
+### Phase 5: ML Predictions ✨ NEW (Jan 10, 2026)
+
+```bash
+# Train GraphSAGE link prediction model
+poetry run arxiv-cosci train-predictor --node-limit 1000 --epochs 50
+
+# Custom training configuration
+poetry run arxiv-cosci train-predictor \
+  --node-limit 2000 \
+  --epochs 100 \
+  --hidden 256 \
+  --output 128 \
+  --checkpoint-dir data/models
+
+# Find structural holes (research gaps)
+poetry run arxiv-cosci find-gaps --type all --limit 50
+poetry run arxiv-cosci find-gaps --type paper --limit 100
+poetry run arxiv-cosci find-gaps --type concept --output data/gaps.json
+
+# Available gap types: paper, concept, temporal, cross-domain, all
+
+# Generate research hypotheses from gaps
+poetry run arxiv-cosci generate-hypotheses --max 10
+poetry run arxiv-cosci generate-hypotheses \
+  --gaps-file data/gaps.json \
+  --max 20 \
+  --output data/hypotheses.md
+```
+
 ### Data Fetching
 
 ```bash

@@ -92,6 +92,64 @@ poetry run arxiv-cosci validate 2401.12345
 
 ```
 
+## Phase 5: ML Predictions & Hypothesis Generation ✨ NEW!
+
+### Train Link Prediction Model
+```bash
+# Train GraphSAGE model on citation network
+poetry run arxiv-cosci train-predictor --node-limit 1000 --epochs 50
+
+# Custom configuration
+poetry run arxiv-cosci train-predictor \
+  --node-limit 2000 \
+  --epochs 100 \
+  --hidden 256 \
+  --output 128 \
+  --checkpoint-dir data/models
+```
+
+### Find Research Gaps
+```bash
+# Find all types of structural holes
+poetry run arxiv-cosci find-gaps --type all
+
+# Find specific gap type
+poetry run arxiv-cosci find-gaps --type paper --limit 100
+
+# Save results to JSON
+poetry run arxiv-cosci find-gaps \
+  --type all \
+  --limit 50 \
+  --output data/gaps.json
+
+# Available gap types:
+# - paper: Paper-to-paper (shared citations)
+# - concept: Concept-to-concept (co-occurrence)
+# - temporal: Missing historical citations  
+# - cross-domain: Inter-field connections
+# - all: All of the above
+```
+
+### Generate Research Hypotheses
+```bash
+# Generate from detected gaps (auto-detect)
+poetry run arxiv-cosci generate-hypotheses --max 10
+
+# Generate from saved gaps file
+poetry run arxiv-cosci generate-hypotheses \
+  --gaps-file data/gaps.json \
+  --max 20 \
+  --output data/hypotheses.md
+
+# The markdown file includes:
+# - Hypothesis statements
+# - Rationale and reasoning
+# - 3 research questions
+# - Potential impact
+# - Suggested methods
+# - Confidence scores
+```
+
 ## Usage
 
 ### Fetch papers from Semantic Scholar API
