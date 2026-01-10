@@ -4,9 +4,11 @@
 
 The ArXiv Co-Scientist project has comprehensive test coverage across multiple layers:
 
-- **Total Tests**: 66
-- **Unit Tests**: 58 (passing)
+- **Total Tests**: 190+ (Phase 7 expansion)
+- **Unit Tests**: 160+ (passing)
 - **Integration Tests**: 8 (require live database)
+- **CLI Tests**: 70+ (all commands covered)
+- **API Client Tests**: 25+ (S2 client fully tested)
 
 ## Running Tests
 
@@ -221,28 +223,95 @@ def test_arxiv_id_validation(input, expected):
     assert is_valid_arxiv_id(input) == expected
 ```
 
-## Continuous Integration
+## Continuous Integration (Phase 7) ✅
 
-### GitHub Actions (Recommended)
-```yaml
-name: Tests
-on: [push, pull_request]
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    services:
-      neo4j:
-        image: neo4j:5.13-community
-      chromadb:
-        image: chromadb/chroma:latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version: '3.11'
-      - run: poetry install
-      - run: poetry run pytest tests/ --cov
+### GitHub Actions Workflow
+
+The project includes a comprehensive CI/CD pipeline at `.github/workflows/tests.yml`:
+
+**Features:**
+- ✅ Automated testing on every push and PR
+- ✅ Neo4j service container for integration tests
+- ✅ Separate jobs for tests, linting, and security
+- ✅ Coverage reporting with Codecov
+- ✅ Poetry dependency caching for faster builds
+- ✅ Parallel job execution
+
+**Workflow Jobs:**
+
+1. **Test Job** - Runs all tests with live Neo4j
+   - Unit tests (no external dependencies)
+   - Integration tests (with Neo4j service)
+   - Coverage report generation
+   - Codecov upload
+
+2. **Lint Job** - Code quality checks
+   - Ruff linting
+   - Ruff formatting verification
+   - MyPy type checking (non-blocking)
+
+3. **Security Job** - Vulnerability scanning
+   - Safety dependency checks
+   - Security advisory scanning
+
+### Running CI Locally
+
+To simulate CI environment locally:
+
+```bash
+# Start services like CI does
+docker compose up -d
+
+# Run tests with coverage
+poetry run pytest tests/ -v \
+  --cov=packages \
+  --cov=apps \
+  --cov-report=term \
+  --cov-report=html
+
+# Run linting
+poetry run ruff check packages/ apps/ tests/
+poetry run ruff format --check packages/ apps/ tests/
+
+# Run type checking
+poetry run mypy packages/ apps/ --ignore-missing-imports
+
+# Security scanning
+poetry run safety check
 ```
+
+### Viewing CI Results
+
+After pushing to the `phase-7-testing` branch:
+
+1. **GitHub Actions Tab**: View workflow runs
+2. **Codecov Dashboard**: View coverage reports  
+3. **Pull Request Checks**: See status in PR
+
+### CI Configuration
+
+The workflow is configured to run on:
+- Push to `main` branch
+- Push to `phase-7-testing` branch
+- All pull requests to `main`
+
+**Environment Variables in CI:**
+```yaml
+env:
+  NEO4J_URI: bolt://localhost:7687
+  NEO4J_USER: neo4j
+  NEO4J_PASSWORD: testpassword
+```
+
+### Coverage Tracking
+
+Coverage reports are automatically uploaded to Codecov:
+- View detailed coverage at codecov.io
+- See coverage changes in PR comments
+- Track coverage trends over time
+
+**Target:** 80% code coverage (Phase 7 goal)
+**Current:** ~32% → expanding with new tests
 
 ## Troubleshooting
 
