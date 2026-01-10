@@ -135,3 +135,10 @@ temp/
 # =============================================================================
 # Keep project-specific CLAUDE.md
 !.claude/CLAUDE.md
+
+# Coverage files
+.coverage*
+
+# Node modules
+apps/web/node_modules/
+apps/web/package-lock.json
