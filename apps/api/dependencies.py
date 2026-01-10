@@ -31,8 +31,7 @@ async def get_neo4j_client() -> Neo4jClient:
         settings = get_settings_cached()
         _neo4j_client = Neo4jClient(
             uri=settings.neo4j_uri,
-            user=settings.neo4j_user,
-            password=settings.neo4j_password,
+            auth=(settings.neo4j_user, settings.neo4j_password),
         )
     
     return _neo4j_client
@@ -47,8 +46,9 @@ async def get_chromadb_client() -> ChromaDBClient:
     
     if _chromadb_client is None:
         settings = get_settings_cached()
+        from pathlib import Path
         _chromadb_client = ChromaDBClient(
-            persist_directory=settings.chroma_persist_dir,
+            persist_dir=Path(settings.chroma_persist_dir),
         )
     
     return _chromadb_client

@@ -274,6 +274,53 @@ class ChromaDBClient:
         collection.delete(ids=[arxiv_id])
         logger.info("paper_deleted", arxiv_id=arxiv_id)
 
+    def get_or_create_collection(self, name: str | None = None) -> str:
+        """Get or create a collection by name.
+        
+        Args:
+            name: Collection name (defaults to papers collection)
+            
+        Returns:
+            Collection name
+        """
+        if name == CONCEPTS_COLLECTION:
+            self._get_concepts_collection()
+            return CONCEPTS_COLLECTION
+        else:
+            self._get_papers_collection()
+            return PAPERS_COLLECTION
+
+    def search(
+        self,
+        query_text: str,
+        n_results: int = 10,
+        category_filter: str | None = None,
+    ) -> dict[str, Any]:
+        """Search for similar items (alias for search_papers).
+        
+        Args:
+            query_text: Natural language search query
+            n_results: Maximum results to return
+            category_filter: Optional category to filter by
+            
+        Returns:
+            Dict with ids, distances, documents, metadatas
+        """
+        collection = self._get_papers_collection()
+
+        where = None
+        if category_filter:
+            where = {"primary_category": category_filter}
+
+        results = collection.query(
+            query_texts=[query_text],
+            n_results=n_results,
+            where=where,
+            include=["documents", "metadatas", "distances"],
+        )
+
+        return results
+
 
 # Global client instance
 chromadb_client = ChromaDBClient()
