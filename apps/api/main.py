@@ -2,7 +2,7 @@
 ArXiv Co-Scientist API Server
 FastAPI backend for scientific paper exploration and ML predictions.
 """
-import logging
+import os
 from contextlib import asynccontextmanager
 from typing import AsyncGenerator
 
@@ -12,13 +12,21 @@ from fastapi.responses import JSONResponse
 
 from apps.api.routers import papers, search, graph, predictions, health
 from apps.api.dependencies import get_neo4j_client, get_chromadb_client
-
-# Configure logging
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+from packages.observability import (
+    configure_logging,
+    get_logger,
+    RequestLoggingMiddleware,
+    PerformanceMonitoringMiddleware,
+    HealthCheckMiddleware,
 )
-logger = logging.getLogger(__name__)
+
+# Configure structured logging
+configure_logging(
+    level=os.getenv("LOG_LEVEL", "INFO"),
+    json_logs=os.getenv("LOG_FORMAT", "console") == "json",
+    development=os.getenv("ENVIRONMENT", "development") == "development",
+)
+logger = get_logger(__name__)
 
 
 @asynccontextmanager
@@ -67,6 +75,11 @@ app = FastAPI(
     redoc_url="/redoc",
     lifespan=lifespan,
 )
+
+# Add observability middleware (order matters - applied in reverse)
+app.add_middleware(HealthCheckMiddleware)  # Skip logging for health checks
+app.add_middleware(RequestLoggingMiddleware)  # Log all requests
+app.add_middleware(PerformanceMonitoringMiddleware, slow_request_threshold_ms=1000.0)  # Monitor performance
 
 # Configure CORS
 app.add_middleware(

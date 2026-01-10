@@ -1,13 +1,16 @@
 """
 Health Check Router
-Endpoints for service health monitoring.
+Endpoints for service health monitoring and metrics.
 """
+from typing import Any
+
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from apps.api.dependencies import get_neo4j_client, get_chromadb_client
 from packages.knowledge.neo4j_client import Neo4jClient
 from packages.knowledge.chromadb_client import ChromaDBClient
+from packages.observability import get_metrics_summary
 
 
 router = APIRouter()
@@ -91,3 +94,42 @@ async def database_health_check(
         neo4j=neo4j_status,
         chromadb=chromadb_status,
     )
+
+
+@router.get("/health/ready")
+async def readiness_check(
+    neo4j: Neo4jClient = Depends(get_neo4j_client),
+    chroma: ChromaDBClient = Depends(get_chromadb_client),
+) -> dict[str, str]:
+    """
+    Kubernetes readiness probe endpoint.
+    Returns 200 if service is ready to accept traffic.
+    """
+    try:
+        # Quick connectivity checks
+        await neo4j.verify_connection()
+        chroma.get_or_create_collection()
+        return {"status": "ready"}
+    except Exception as e:
+        raise HTTPException(
+            status_code=503,
+            detail=f"Service not ready: {str(e)}",
+        )
+
+
+@router.get("/health/live")
+async def liveness_check() -> dict[str, str]:
+    """
+    Kubernetes liveness probe endpoint.
+    Returns 200 if service is alive (not deadlocked).
+    """
+    return {"status": "alive"}
+
+
+@router.get("/metrics")
+async def metrics_endpoint() -> dict[str, Any]:
+    """
+    Metrics endpoint for monitoring.
+    Returns performance metrics, counters, and system stats.
+    """
+    return get_metrics_summary()

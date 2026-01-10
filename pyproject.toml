@@ -41,6 +41,7 @@ tenacity = "^9.0"
 tqdm = "^4.66"
 groq = "^1.0.0"
 google-generativeai = "^0.8.6"
+python-json-logger = "^4.0.0"
 
 [tool.poetry.group.ml.dependencies]
 # ML dependencies - require Python <3.13

@@ -1,0 +1,60 @@
+# Multi-stage build for ArXiv Co-Scientist API
+FROM python:3.11-slim as base
+
+# Set environment variables
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    PIP_NO_CACHE_DIR=1 \
+    PIP_DISABLE_PIP_VERSION_CHECK=1
+
+# Install system dependencies
+RUN apt-get update && apt-get install -y \
+    curl \
+    build-essential \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+
+
+# Stage 2: Dependencies
+FROM base as dependencies
+
+# Install Poetry
+RUN pip install poetry==1.7.1
+
+# Copy dependency files
+COPY pyproject.toml poetry.lock ./
+
+# Install dependencies (without dev dependencies for production)
+RUN poetry config virtualenvs.create false \
+    && poetry install --no-interaction --no-ansi --no-root --only main
+
+
+# Stage 3: Production
+FROM base as production
+
+# Copy installed dependencies from dependencies stage
+COPY --from=dependencies /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+COPY --from=dependencies /usr/local/bin /usr/local/bin
+
+# Copy application code
+COPY packages/ /app/packages/
+COPY apps/api/ /app/apps/api/
+COPY apps/cli/ /app/apps/cli/
+
+# Create necessary directories
+RUN mkdir -p /app/data /app/logs
+
+# Create non-root user
+RUN useradd -m -u 1000 arxiv && chown -R arxiv:arxiv /app
+USER arxiv
+
+# Expose port
+EXPOSE 8000
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD curl -f http://localhost:8000/api/health/live || exit 1
+
+# Run the API with production settings
+CMD ["uvicorn", "apps.api.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]

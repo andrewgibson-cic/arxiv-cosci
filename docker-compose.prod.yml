@@ -1,0 +1,158 @@
+version: '3.8'
+
+services:
+  # Neo4j Graph Database
+  neo4j:
+    image: neo4j:5.15-community
+    container_name: arxiv-neo4j-prod
+    restart: unless-stopped
+    ports:
+      - "7474:7474" # HTTP
+      - "7687:7687" # Bolt
+    environment:
+      - NEO4J_AUTH=neo4j/${NEO4J_PASSWORD:-SecurePassword123!}
+      - NEO4J_PLUGINS=["apoc"]
+      - NEO4J_server_memory_heap_initial__size=1g
+      - NEO4J_server_memory_heap_max__size=2g
+      - NEO4J_server_memory_pagecache_size=1g
+      - NEO4J_dbms_security_procedures_unrestricted=apoc.*
+      - NEO4J_dbms_security_procedures_allowlist=apoc.*
+    volumes:
+      - neo4j_/data
+      - neo4j_logs:/logs
+      - neo4j_import:/var/lib/neo4j/import
+      - neo4j_plugins:/plugins
+    healthcheck:
+      test: ["CMD-SHELL", "wget --no-verbose --tries=1 --spider localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    networks:
+      - arxiv-network
+
+  # Grobid PDF Parser
+  grobid:
+    image: lfoppiano/grobid:0.8.0
+    container_name: arxiv-grobid-prod
+    restart: unless-stopped
+    ports:
+      - "8070:8070"
+    environment:
+      - GROBID_HEAP_SIZE=4096m
+    volumes:
+      - grobid_tmp:/opt/grobid/grobid-home/tmp
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8070/api/isalive || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 3
+      start_period: 90s
+    networks:
+      - arxiv-network
+
+  # FastAPI Backend
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: arxiv-api-prod
+    restart: unless-stopped
+    ports:
+      - "8000:8000"
+    environment:
+      # Service Configuration
+      - ENVIRONMENT=production
+      - LOG_LEVEL=INFO
+      - LOG_FORMAT=json
+      
+      # Database Connections
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USER=neo4j
+      - NEO4J_PASSWORD=${NEO4J_PASSWORD:-SecurePassword123!}
+      
+      # API Keys (set in .env.prod)
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - S2_API_KEY=${S2_API_KEY}
+      - GROQ_API_KEY=${GROQ_API_KEY}
+      
+      # LLM Configuration
+      - LLM_PROVIDER=${LLM_PROVIDER:-gemini}
+      
+      # GROBID Configuration
+      - GROBID_URL=http://grobid:8070
+    volumes:
+      - ./data:/app/data
+      - api_logs:/app/logs
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      grobid:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/api/health/live || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    networks:
+      - arxiv-network
+
+  # React Frontend (Production Build)
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile.prod
+    container_name: arxiv-web-prod
+    restart: unless-stopped
+    ports:
+      - "3000:80"
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    depends_on:
+      - api
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:80 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - arxiv-network
+
+  # Nginx Reverse Proxy (Optional - for production routing)
+  nginx:
+    image: nginx:alpine
+    container_name: arxiv-nginx-prod
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/ssl:/etc/nginx/ssl:ro
+      - nginx_logs:/var/log/nginx
+    depends_on:
+      - api
+      - web
+    networks:
+      - arxiv-network
+
+volumes:
+  neo4j_data:
+    driver: local
+  neo4j_logs:
+    driver: local
+  neo4j_import:
+    driver: local
+  neo4j_plugins:
+    driver: local
+  grobid_tmp:
+    driver: local
+  api_logs:
+    driver: local
+  nginx_logs:
+    driver: local
+
+networks:
+  arxiv-network:
+    driver: bridge
