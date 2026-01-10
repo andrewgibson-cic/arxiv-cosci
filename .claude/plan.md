@@ -5,7 +5,7 @@
 **Project:** Build an open-source "Scientific Intelligence Engine" that discovers, interprets, categorizes, connects, and predicts scientific content from arXiv entirely cost-free.
 
 **Architecture:** API-First (Semantic Scholar + Gemini)
-**Status:** ✅ Phases 1-4 Complete | Phase 3 ML Validated (Jan 2026)
+**Status:** ✅ Phases 1-5 Complete | ML Predictions Operational (Jan 2026)
 **Cost:** $0 (all free-tier APIs and open-source)
 **Target Domain:** Physics & Mathematics (~1.4M papers)
 **Initial Focus:** Quantum Physics (quant-ph) + Quantum Algebra (math.QA) - ~100k papers with dense cross-references
@@ -215,25 +215,43 @@ CREATE (p1)-[:CITES {
 - `packages/ai/entity_extractor.py` - Entity extraction with Pydantic validation
 - `packages/ai/citation_classifier.py` - Citation intent classification
 
-### Phase 5: Predictions (NEXT)
+### Phase 5: Predictions ✅ COMPLETE (Jan 9-10, 2026)
 
 **Goal:** Link prediction and hypothesis generation
 
-| Task | Priority | Effort |
-|------|----------|--------|
-| GraphSAGE model training | P0 | 2d |
-| Link prediction pipeline | P0 | 1d |
-| Structural hole detection | P1 | 1d |
-| Hypothesis generation agent | P1 | 2d |
-| Prediction scoring API | P2 | 0.5d |
+| Task | Priority | Effort | Status |
+|------|----------|--------|--------|
+| GraphSAGE model training | P0 | 2d | ✅ Done |
+| Link prediction pipeline | P0 | 1d | ✅ Done |
+| Structural hole detection | P1 | 1d | ✅ Done |
+| Hypothesis generation agent | P1 | 2d | ✅ Done |
+| Prediction scoring API | P2 | 0.5d | ✅ Done |
 
-**Deliverable:** System predicts future connections, generates hypotheses
+**Deliverable:** ✅ System predicts missing citations, detects research gaps, generates hypotheses
 
-**Approach:**
-- Train GraphSAGE on citation network (papers + concepts)
-- Predict missing edges between papers sharing methods/datasets
-- Detect "structural holes" (disconnect concepts that should be linked)
-- Use Gemini agent to generate hypotheses from gaps
+**Implementation Details:**
+- **link_predictor.py**: GraphSAGE neural network for link prediction (473 lines)
+- **prediction_pipeline.py**: End-to-end Neo4j→Train→Predict pipeline (448 lines)
+- **structural_holes.py**: Multi-strategy gap detection (469 lines)
+- **hypothesis_gen.py**: LLM-powered hypothesis generation (436 lines)
+
+**Implemented Approaches:**
+- ✅ GraphSAGE training on citation network with negative sampling
+- ✅ Missing edge prediction with top-k scoring
+- ✅ Structural hole detection (4 types):
+  - Paper-to-paper gaps (shared citations)
+  - Concept-to-concept gaps (co-occurrence)
+  - Temporal gaps (missing historical citations)
+  - Cross-domain gaps (inter-field connections)
+- ✅ LLM-based hypothesis generation with confidence scoring
+- ✅ Prediction storage in Neo4j as PREDICTED_CITATION edges
+
+**Key Features:**
+- Device-agnostic (CPU/CUDA/MPS)
+- Early stopping with model checkpointing
+- Precision/coverage evaluation metrics
+- Batch hypothesis generation
+- Markdown export for hypotheses
 
 ### Phase 6: Frontend (PLANNED)
 
@@ -400,6 +418,35 @@ Frontend (React)
 ---
 
 ## 5. CLI Commands Reference
+
+### Phase 5: ML Predictions ✨ NEW (Jan 10, 2026)
+
+```bash
+# Train GraphSAGE link prediction model
+poetry run arxiv-cosci train-predictor --node-limit 1000 --epochs 50
+
+# Custom training configuration
+poetry run arxiv-cosci train-predictor \
+  --node-limit 2000 \
+  --epochs 100 \
+  --hidden 256 \
+  --output 128 \
+  --checkpoint-dir data/models
+
+# Find structural holes (research gaps)
+poetry run arxiv-cosci find-gaps --type all --limit 50
+poetry run arxiv-cosci find-gaps --type paper --limit 100
+poetry run arxiv-cosci find-gaps --type concept --output data/gaps.json
+
+# Available gap types: paper, concept, temporal, cross-domain, all
+
+# Generate research hypotheses from gaps
+poetry run arxiv-cosci generate-hypotheses --max 10
+poetry run arxiv-cosci generate-hypotheses \
+  --gaps-file data/gaps.json \
+  --max 20 \
+  --output data/hypotheses.md
+```
 
 ### Data Fetching
 
@@ -682,6 +729,7 @@ Results: 40 passed, 3 skipped
 
 | Date | Version | Change |
 |------|---------|--------|
+| Jan 10, 2026 | 0.3.0 | **Phase 5 complete:** ML predictions (GraphSAGE, structural holes, hypotheses) |
 | Jan 9, 2026 | 0.2.0 | **Phase 2 complete:** PDF parsing pipeline (Marker + Grobid + LaTeX + Chunking) |
 | Jan 7, 2026 | 0.1.0 | **Architecture migration:** Kaggle → Semantic Scholar API, Ollama → Gemini |
 | Jan 4, 2026 | 0.0.4 | **Phase 4 complete:** Multi-provider LLM support implemented |
@@ -714,7 +762,7 @@ Results: 40 passed, 3 skipped
 
 ---
 
-**Last Updated:** January 9, 2026
-**Project Status:** Active Development
+**Last Updated:** January 10, 2026
+**Project Status:** Active Development (71% Complete - 5/7 Phases)
 **Maintainer:** Andrew Gibson
 **License:** MIT (planned)

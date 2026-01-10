@@ -54,6 +54,38 @@ class Neo4jClient:
             self.driver = None
             logger.info("neo4j_closed")
 
+    async def verify_connection(self) -> bool:
+        """Verify the connection to Neo4j is working.
+        
+        Returns:
+            True if connection is successful, False otherwise
+        """
+        try:
+            if not self.driver:
+                await self.connect()
+            
+            assert self.driver is not None
+            await self.driver.verify_connectivity()
+            return True
+        except Exception as e:
+            logger.error("connection_verification_failed", error=str(e))
+            return False
+
+    async def execute_query(self, query: str, parameters: dict[str, Any] | None = None) -> list[dict[str, Any]]:
+        """Execute a Cypher query and return results as a list of dicts.
+        
+        Args:
+            query: Cypher query string
+            parameters: Query parameters
+            
+        Returns:
+            List of result records as dictionaries
+        """
+        async with self.session() as session:
+            result = await session.run(query, parameters or {})
+            records = await result.data()
+            return records
+
     @asynccontextmanager
     async def session(self) -> AsyncGenerator[AsyncSession, None]:
         """Get an async session context."""
