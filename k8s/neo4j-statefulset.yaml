@@ -1,0 +1,94 @@
+apiVersion: v1
+kind: ConfigMap
+meta
+  name: neo4j-config
+  namespace: arxiv-cosci
+
+  NEO4J_AUTH: "neo4j/arxiv-cosci-password"
+  NEO4J_PLUGINS: '["apoc", "graph-data-science"]'
+  NEO4J_dbms_memory_heap_initial__size: "512M"
+  NEO4J_dbms_memory_heap_max__size: "2G"
+  NEO4J_dbms_memory_pagecache_size: "1G"
+---
+apiVersion: v1
+kind: Service
+meta
+  name: neo4j
+  namespace: arxiv-cosci
+spec:
+  ports:
+    - name: bolt
+      port: 7687
+      targetPort: 7687
+    - name: http
+      port: 7474
+      targetPort: 7474
+  selector:
+    app: neo4j
+  clusterIP: None  # Headless service for StatefulSet
+---
+apiVersion: apps/v1
+kind: StatefulSet
+meta
+  name: neo4j
+  namespace: arxiv-cosci
+spec:
+  serviceName: neo4j
+  replicas: 1
+  selector:
+    matchLabels:
+      app: neo4j
+  template:
+    metadata:
+      labels:
+        app: neo4j
+    spec:
+      containers:
+        - name: neo4j
+          image: neo4j:5.23-community
+          ports:
+            - containerPort: 7687
+              name: bolt
+            - containerPort: 7474
+              name: http
+          envFrom:
+            - configMapRef:
+                name: neo4j-config
+          volumeMounts:
+            - name: neo4j-data
+              mountPath: /data
+            - name: neo4j-logs
+              mountPath: /logs
+          resources:
+            requests:
+              memory: "2Gi"
+              cpu: "500m"
+            limits:
+              memory: "4Gi"
+              cpu: "2000m"
+          livenessProbe:
+            tcpSocket:
+              port: 7687
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 7474
+            initialDelaySeconds: 30
+            periodSeconds: 5
+  volumeClaimTemplates:
+    - meta
+        name: neo4j-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 20Gi
+    - meta
+        name: neo4j-logs
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi
