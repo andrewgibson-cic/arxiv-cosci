@@ -763,5 +763,307 @@ def db_stats() -> None:
     console.print(table)
 
 
+@app.command()
+@click.option(
+    "--node-limit",
+    "-n",
+    type=int,
+    default=1000,
+    help="Number of papers to train on",
+)
+@click.option("--epochs", "-e", type=int, default=50, help="Training epochs")
+@click.option("--hidden", type=int, default=256, help="Hidden layer dimension")
+@click.option("--output", type=int, default=128, help="Output embedding dimension")
+@click.option(
+    "--checkpoint-dir",
+    "-c",
+    type=click.Path(path_type=Path),
+    default=Path("data/models"),
+    help="Directory to save model checkpoints",
+)
+def train_predictor(
+    node_limit: int, epochs: int, hidden: int, output: int, checkpoint_dir: Path
+) -> None:
+    """Train GraphSAGE link prediction model on citation network.
+    
+    Trains a Graph Neural Network to predict missing citations between papers.
+    """
+    from packages.knowledge.neo4j_client import neo4j_client
+    from packages.knowledge.chromadb_client import chromadb_client
+    from packages.ml.prediction_pipeline import LinkPredictionPipeline
+
+    async def run_training() -> None:
+        try:
+            console.print(f"\n[bold]Training Link Prediction Model[/bold]")
+            console.print(f"  Papers: {node_limit}")
+            console.print(f"  Epochs: {epochs}")
+            console.print(f"  Hidden dim: {hidden}")
+            console.print(f"  Output dim: {output}\n")
+
+            await neo4j_client.connect()
+            
+            pipeline = LinkPredictionPipeline(neo4j_client, chromadb_client)
+            
+            with Progress(console=console) as progress:
+                task = progress.add_task("Training model...", total=epochs)
+                
+                results = await pipeline.run_full_pipeline(
+                    node_limit=node_limit,
+                    epochs=epochs,
+                    checkpoint_dir=checkpoint_dir,
+                    store_results=True,
+                )
+                
+                progress.update(task, completed=epochs)
+
+            # Display results
+            console.print("\n[green]Training Complete![/green]\n")
+            console.print(f"  Graph: {results['graph_stats']['num_nodes']} nodes, "
+                        f"{results['graph_stats']['num_edges']} edges")
+            console.print(f"  Predictions: {len(results['predictions'])}")
+            console.print(f"  Precision: {results['metrics']['precision']:.2%}")
+            console.print(f"  Coverage: {results['metrics']['coverage']:.2%}")
+            console.print(f"  Stored: {results['stored_count']} PREDICTED_CITATION edges")
+
+        except Exception as e:
+            console.print(f"[red]Training failed: {e}[/red]")
+        finally:
+            await neo4j_client.close()
+
+    asyncio.run(run_training())
+
+
+@app.command()
+@click.option(
+    "--type",
+    "-t",
+    "gap_type",
+    type=click.Choice(["paper", "concept", "temporal", "cross-domain", "all"]),
+    default="all",
+    help="Type of structural holes to detect",
+)
+@click.option("--limit", "-n", type=int, default=50, help="Maximum gaps per type")
+@click.option(
+    "--output",
+    "-o",
+    type=click.Path(path_type=Path),
+    default=None,
+    help="Save results to JSON file",
+)
+def find_gaps(gap_type: str, limit: int, output: Path | None) -> None:
+    """Find structural holes (research gaps) in the knowledge graph.
+    
+    Identifies missing connections between papers and concepts that should
+    be linked based on shared neighbors or co-occurrence patterns.
+    """
+    import json
+    from packages.knowledge.neo4j_client import neo4j_client
+    from packages.ml.structural_holes import StructuralHoleDetector
+
+    async def run_detection() -> None:
+        try:
+            await neo4j_client.connect()
+            detector = StructuralHoleDetector(neo4j_client.driver)
+
+            console.print(f"\n[bold]Detecting Structural Holes[/bold]")
+            console.print(f"  Type: {gap_type}")
+            console.print(f"  Limit: {limit} per type\n")
+
+            with Progress(console=console) as progress:
+                task = progress.add_task("Finding gaps...", total=None)
+
+                if gap_type == "all":
+                    results = await detector.find_all_gaps(limit_per_type=limit)
+                elif gap_type == "paper":
+                    results = {"paper_gaps": await detector.find_paper_gaps(limit=limit)}
+                elif gap_type == "concept":
+                    results = {"concept_gaps": await detector.find_concept_gaps(limit=limit)}
+                elif gap_type == "temporal":
+                    results = {"temporal_gaps": await detector.find_temporal_gaps(limit=limit)}
+                else:  # cross-domain
+                    results = {"cross_domain_gaps": await detector.find_cross_domain_gaps(limit=limit)}
+
+                progress.update(task, completed=True)
+
+            # Display results
+            total = sum(len(gaps) for gaps in results.values())
+            console.print(f"\n[green]Found {total} structural holes![/green]\n")
+
+            for gap_name, gaps in results.items():
+                if gaps:
+                    table = Table(title=gap_name.replace("_", " ").title())
+                    table.add_column("Source", style="cyan", max_width=40)
+                    table.add_column("Target", style="cyan", max_width=40)
+                    table.add_column("Score", justify="right", style="green")
+                    table.add_column("Reason", max_width=50)
+
+                    for gap in gaps[:10]:  # Show top 10
+                        table.add_row(
+                            gap.source_name[:40],
+                            gap.target_name[:40],
+                            f"{gap.score:.3f}",
+                            gap.reason[:50],
+                        )
+
+                    console.print(table)
+                    console.print(f"[dim]Showing 10 of {len(gaps)} gaps[/dim]\n")
+
+            # Save to file if requested
+            if output:
+                output.parent.mkdir(parents=True, exist_ok=True)
+                serializable = {
+                    name: [
+                        {
+                            "source_id": h.source_id,
+                            "target_id": h.target_id,
+                            "source_name": h.source_name,
+                            "target_name": h.target_name,
+                            "score": h.score,
+                            "reason": h.reason,
+                            "shared_neighbors": h.shared_neighbors,
+                            "metadata": h.metadata,
+                        }
+                        for h in holes
+                    ]
+                    for name, holes in results.items()
+                }
+                output.write_text(json.dumps(serializable, indent=2))
+                console.print(f"[green]Saved results to {output}[/green]")
+
+        except Exception as e:
+            console.print(f"[red]Gap detection failed: {e}[/red]")
+        finally:
+            await neo4j_client.close()
+
+    asyncio.run(run_detection())
+
+
+@app.command()
+@click.option(
+    "--gaps-file",
+    "-g",
+    type=click.Path(exists=True, path_type=Path),
+    default=None,
+    help="JSON file with structural holes (from find-gaps)",
+)
+@click.option("--max", "-n", type=int, default=10, help="Maximum hypotheses to generate")
+@click.option(
+    "--output",
+    "-o",
+    type=click.Path(path_type=Path),
+    default=Path("data/hypotheses.md"),
+    help="Output markdown file for hypotheses",
+)
+def generate_hypotheses(gaps_file: Path | None, max: int, output: Path) -> None:
+    """Generate research hypotheses from structural holes using LLM.
+    
+    Uses detected knowledge gaps to generate testable research hypotheses
+    with supporting rationale, research questions, and suggested methods.
+    """
+    import json
+    from packages.ai.factory import get_llm_client, close_client
+    from packages.knowledge.neo4j_client import neo4j_client
+    from packages.ml.structural_holes import StructuralHole, StructuralHoleDetector
+    from packages.ml.hypothesis_gen import HypothesisGenerator
+
+    async def run_generation() -> None:
+        try:
+            # Load or detect gaps
+            if gaps_file:
+                console.print(f"\n[bold]Loading gaps from:[/bold] {gaps_file}\n")
+                data = json.loads(gaps_file.read_text())
+                holes = []
+                for gap_type, gap_list in data.items():
+                    for g in gap_list:
+                        holes.append(StructuralHole(
+                            source_id=g["source_id"],
+                            target_id=g["target_id"],
+                            source_type=g.get("source_type", "Paper"),
+                            target_type=g.get("target_type", "Paper"),
+                            source_name=g["source_name"],
+                            target_name=g["target_name"],
+                            score=g["score"],
+                            shared_neighbors=g.get("shared_neighbors", []),
+                            reason=g["reason"],
+                            metadata=g.get("metadata", {}),
+                        ))
+            else:
+                console.print("\n[bold]Detecting structural holes...[/bold]\n")
+                await neo4j_client.connect()
+                detector = StructuralHoleDetector(neo4j_client.driver)
+                results = await detector.find_all_gaps(limit_per_type=25)
+                holes = []
+                for gaps in results.values():
+                    holes.extend(gaps)
+
+            if not holes:
+                console.print("[yellow]No structural holes found[/yellow]")
+                return
+
+            console.print(f"[green]Found {len(holes)} structural holes[/green]")
+            console.print(f"\n[bold]Generating hypotheses (max {max})...[/bold]\n")
+
+            # Check LLM availability
+            llm = get_llm_client()
+            if not await llm.is_available():
+                console.print("[red]LLM service not available[/red]")
+                console.print("[yellow]Check configuration (API key set?)[/yellow]")
+                return
+
+            generator = HypothesisGenerator(llm)
+
+            with Progress(console=console) as progress:
+                task = progress.add_task("Generating hypotheses...", total=max)
+
+                hypotheses = await generator.generate_batch(
+                    holes, max_hypotheses=max
+                )
+
+                progress.update(task, completed=max)
+
+            # Display results
+            console.print(f"\n[green]Generated {len(hypotheses)} hypotheses![/green]\n")
+
+            # Show summary table
+            table = Table(title="Generated Hypotheses")
+            table.add_column("Source", style="cyan", max_width=30)
+            table.add_column("Target", style="cyan", max_width=30)
+            table.add_column("Confidence", justify="right", style="green")
+            table.add_column("Hypothesis", max_width=50)
+
+            for h in hypotheses[:10]:
+                table.add_row(
+                    h.hole.source_name[:30],
+                    h.hole.target_name[:30],
+                    f"{h.confidence:.0%}",
+                    h.hypothesis[:50] + "...",
+                )
+
+            console.print(table)
+
+            # Save to markdown
+            output.parent.mkdir(parents=True, exist_ok=True)
+            with output.open("w") as f:
+                f.write("# Research Hypotheses\n\n")
+                f.write(f"Generated {len(hypotheses)} hypotheses from structural holes.\n\n")
+                f.write("---\n\n")
+                
+                for i, h in enumerate(hypotheses, 1):
+                    f.write(f"# Hypothesis {i}\n\n")
+                    f.write(generator.to_markdown(h))
+                    f.write("\n\n---\n\n")
+
+            console.print(f"\n[green]Saved detailed hypotheses to {output}[/green]")
+
+        except Exception as e:
+            console.print(f"[red]Hypothesis generation failed: {e}[/red]")
+        finally:
+            await close_client()
+            if not gaps_file:
+                await neo4j_client.close()
+
+    asyncio.run(run_generation())
+
+
 if __name__ == "__main__":
     app()
