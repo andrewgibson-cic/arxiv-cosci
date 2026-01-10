@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+meta
+  name: arxiv-cosci
+  labels:
+    name: arxiv-cosci
+    environment: production
