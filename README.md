@@ -11,7 +11,9 @@ A Scientific Intelligence Engine for physics and mathematics research. This tool
 - **AI Analysis**: Gemini API for summarization, entity extraction, and hypothesis generation
 - **Knowledge Graph**: Store papers and concepts in Neo4j with rich citation relationships
 - **Semantic Search**: Vector similarity search using ChromaDB
-- **Link Prediction**: GraphSAGE-based prediction of future citations (planned)
+- **Link Prediction**: GraphSAGE-based GNN predicts missing citations between papers ✨ NEW!
+- **Structural Hole Detection**: Identify research gaps across 4 dimensions (paper/concept/temporal/cross-domain) ✨ NEW!
+- **Hypothesis Generation**: LLM-powered research hypotheses from detected knowledge gaps ✨ NEW!
 - **Real-time Data**: Always current via API (no static snapshots)
 - **Visualization**: Interactive graph UI with React + Sigma.js (planned)
 
@@ -238,20 +240,28 @@ See [.claude/plan.md](.claude/plan.md) for:
 
 ## Status
 
-**Current:** Phase 1-4 Complete + Phase 2 PDF Parsing (Jan 2026)
-- ✅ Semantic Scholar API client (S2Client)
-- ✅ Multi-provider LLM support (Gemini, Groq, Ollama)
-- ✅ Neo4j knowledge graph setup
-- ✅ ChromaDB semantic search
-- ✅ CLI commands for fetch, search, summarize, extract, ingest
-- ✅ **Phase 2: PDF parsing pipeline (Marker + Grobid + PyMuPDF fallback)**
-- ✅ **LaTeX extraction (equations, theorems, conjectures, constants)**
-- ✅ **Semantic chunking with section-aware segmentation**
-- ✅ **Parsing quality metrics and validation**
+**Current:** Phase 1-5 Complete - ML Predictions Operational (Jan 2026) 🎉
+
+**Completed (71% of project):**
+- ✅ **Phase 1**: Semantic Scholar API client, Multi-provider LLM (Gemini/Groq/Ollama)
+- ✅ **Phase 2**: PDF parsing pipeline (Marker + Grobid), LaTeX extraction, Semantic chunking
+- ✅ **Phase 3**: Neo4j knowledge graph, ChromaDB semantic search, ML dependencies
+- ✅ **Phase 4**: AI analysis (summarization, entity extraction, citation classification)
+- ✅ **Phase 5**: ML predictions ✨
+  - GraphSAGE link prediction (473 lines)
+  - End-to-end prediction pipeline (448 lines)
+  - Structural hole detection - 4 strategies (469 lines)
+  - LLM-powered hypothesis generation (436 lines)
+  - Precision/coverage evaluation metrics
+  - Model checkpointing and persistence
+
+**In Progress:**
 - ⏳ Phase 2b: CLI commands for parsing (parse, parse-batch, validate)
-- ⏳ Phase 3: Knowledge graph ingestion and hybrid search
-- ⏳ Phase 5: Link prediction and hypothesis generation
-- ⏳ Phase 6-7: Frontend and production hardening
+- ⏳ Phase 3b: Hybrid search (vector + graph traversal)
+
+**Planned:**
+- 📋 Phase 6: Frontend (FastAPI + React + Sigma.js visualization)
+- 📋 Phase 7: Production hardening (Docker, monitoring, optimization)
 
 ## License
 
