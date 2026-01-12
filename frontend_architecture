@@ -1,0 +1,52 @@
+graph TD
+    subgraph "Browser Runtime"
+        direction TB
+        
+        subgraph "React Layer (The Shell)"
+            App[App Component]
+            Store[Global State Store<br/>(Zustand/Context)]
+            HUD[Heads-Up Display]
+            
+            subgraph "UI Components"
+                Omnibox[Search / Omnibox]
+                Inspector[Inspector Panel]
+                Controls[Layout Controls]
+            end
+        end
+
+        subgraph "WebGL Layer (The Engine)"
+            Canvas[HTML5 Canvas Element]
+            Sigma[Sigma.js Instance]
+            Graphology[Graphology Data Model]
+            Layout[ForceAtlas2 Worker]
+        end
+
+        %% Data Flow
+        App --> Store
+        Store --> HUD
+        HUD --> Omnibox
+        HUD --> Inspector
+        
+        %% Integration Points
+        App -- "useRef / useEffect" --> Canvas
+        Graphology -- "Renders" --> Sigma
+        Sigma -- "Draws to" --> Canvas
+        Layout -- "Updates positions" --> Graphology
+
+        %% Interaction Loop
+        Sigma -- "clickNode Event" --> App
+        App -- "Update Selection" --> Store
+        Store -- "Re-render Info" --> Inspector
+        
+        %% Control Loop
+        Controls -- "Update Layout" --> Layout
+        Omnibox -- "FlyTo Animation" --> Sigma
+    end
+
+    subgraph "Backend API"
+        API[FastAPI Server]
+        Neo4j[Neo4j Database]
+    end
+
+    App -- "Fetch JSON" --> API
+    API -- "Graph Data" --> App

@@ -1,0 +1,3944 @@
+[
+  {
+    "id": "2309.08743",
+    "submitter": null,
+    "authors": "Himanshu Thakur, Soumitri Chattopadhyay",
+    "title": "Active Learning for Fine-Grained Sketch-Based Image Retrieval",
+    "comments": "This work proposes a novel active learning sampling technique that drastically minimises the need for drawing photo sketches by utilising the relationship between the existing photo-sketch pair to a photo that does not have its sketch and augmenting this relation with its intermediate representations.",
+    "journal_ref": null,
+    "doi": "10.48550/arXiv.2309.08743",
+    "report_no": null,
+    "categories": "",
+    "license": null,
+    "abstract": "The ability to retrieve a photo by mere free-hand sketching highlights the immense potential of Fine-grained sketch-based image retrieval (FG-SBIR). However, its rapid practical adoption, as well as scalability, is limited by the expense of acquiring faithful sketches for easily available photo counterparts. A solution to this problem is Active Learning, which could minimise the need for labeled sketches while maximising performance. Despite extensive studies in the field, there exists no work that utilises it for reducing sketching effort in FG-SBIR tasks. To this end, we propose a novel active learning sampling technique that drastically minimises the need for drawing photo sketches. Our proposed approach tackles the trade-off between uncertainty and diversity by utilising the relationship between the existing photo-sketch pair to a photo that does not have its sketch and augmenting this relation with its intermediate representations. Since our approach relies only on the underlying data distribution, it is agnostic of the modelling approach and hence is applicable to other cross-modal instance-level retrieval tasks as well. With experimentation over two publicly available fine-grained SBIR datasets ChairV2 and ShoeV2, we validate our approach and reveal its superiority over adapted baselines.",
+    "versions": [],
+    "update_date": "2023",
+    "authors_parsed": [],
+    "citations": [
+      {
+        "citing_paper_id": "21ad624c44008fcab16ccc0c1e9fbb485b62af5a",
+        "title": "Deep Attribute Decoupling Fine-Grained Retrieval Method Based on Hash Algorithm",
+        "year": 2025,
+        "authors": [
+          "Hongwei Ding",
+          "Tao Ning",
+          "Qidong Hou"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "57deb5cd43389faa95369c4e0b9a2849c5da306b",
+        "title": "Pseudo Triplet Guided Few-shot Composed Image Retrieval",
+        "year": 2024,
+        "authors": [
+          "Bohan Hou",
+          "Haoqiang Lin",
+          "Haokun Wen",
+          "Meng Liu",
+          "Xuemeng Song"
+        ],
+        "citation_count": 5
+      },
+      {
+        "citing_paper_id": "fcaa45ebc26edeb339ca0d24dde8f06dee02996f",
+        "title": "How to Handle Sketch-Abstraction in Sketch-Based Image Retrieval?",
+        "year": 2024,
+        "authors": [
+          "Subhadeep Koley",
+          "A. Bhunia",
+          "Aneeshan Sain",
+          "Pinaki Nath Chowdhury",
+          "Tao Xiang",
+          "Yi-Zhe Song"
+        ],
+        "citation_count": 13
+      }
+    ],
+    "references": [
+      {
+        "paper_id": "e4d11ed9498db68041108ec37d72b32ae2951fb0",
+        "title": "Exploiting Unlabelled Photos for Stronger Fine-Grained SBIR",
+        "year": 2023,
+        "authors": [
+          "Aneeshan Sain",
+          "A. Bhunia",
+          "Subhadeep Koley",
+          "Pinaki Nath Chowdhury",
+          "Soumitri Chattopadhyay",
+          "Tao Xiang",
+          "Yi-Zhe Song"
+        ],
+        "arxiv_id": "2303.13779",
+        "doi": "10.1109/CVPR52729.2023.00664"
+      },
+      {
+        "paper_id": "3bee6efbd60fdc13bce78a2a0f92bc3af119108e",
+        "title": "CLIP for All Things Zero-Shot Sketch-Based Image Retrieval, Fine-Grained or Not",
+        "year": 2023,
+        "authors": [
+          "Aneeshan Sain",
+          "A. Bhunia",
+          "Pinaki Nath Chowdhury",
+          "Subhadeep Koley",
+          "Tao Xiang",
+          "Yi-Zhe Song"
+        ],
+        "arxiv_id": "2303.13440",
+        "doi": "10.1109/CVPR52729.2023.00271"
+      },
+      {
+        "paper_id": "67152d20a7dab943abe41f3f24e9e131f9d7981d",
+        "title": "Sketch3T: Test-Time Training for Zero-Shot SBIR",
+        "year": 2022,
+        "authors": [
+          "Aneeshan Sain",
+          "A. Bhunia",
+          "Vaishnav Potlapalli",
+          "Pinaki Nath Chowdhury",
+          "T. Xiang",
+          "Yi-Zhe Song"
+        ],
+        "arxiv_id": "2203.14691",
+        "doi": "10.1109/CVPR52688.2022.00731"
+      },
+      {
+        "paper_id": "48eb6c59a61cde3f1a8d2feedcd0bc79ea7d8f5d",
+        "title": "Strongly Supervised Mitosis Detection In Breast Histopathology Images Using Weak Labels",
+        "year": 2021,
+        "authors": [
+          "Zihan Wu",
+          "Rongbo Shen",
+          "Junzhou Huang",
+          "Liansheng Wang",
+          "Jianhua Yao"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1109/ISBI48211.2021.9433810"
+      },
+      {
+        "paper_id": "52bffd428b3f0c14509d6e68699ece7c46f7cf0b",
+        "title": "StyleMeUp: Towards Style-Agnostic Sketch-Based Image Retrieval",
+        "year": 2021,
+        "authors": [
+          "Aneeshan Sain",
+          "A. Bhunia",
+          "Yongxin Yang",
+          "T. Xiang",
+          "Yi-Zhe Song"
+        ],
+        "arxiv_id": "2103.15706",
+        "doi": "10.1109/CVPR46437.2021.00840"
+      },
+      {
+        "paper_id": "ee3ec7893003ba55175a183b13baad845e5375e1",
+        "title": "More Photos are All You Need: Semi-Supervised Learning for Fine-Grained Sketch Based Image Retrieval",
+        "year": 2021,
+        "authors": [
+          "A. Bhunia",
+          "Pinaki Nath Chowdhury",
+          "Aneeshan Sain",
+          "Yongxin Yang",
+          "T. Xiang",
+          "Yi-Zhe Song"
+        ],
+        "arxiv_id": "2103.13990",
+        "doi": "10.1109/CVPR46437.2021.00423"
+      },
+      {
+        "paper_id": "199bae678f2b21f93996ef02e08cbe30603b1411",
+        "title": "DEAL: Difficulty-aware Active Learning for Semantic Segmentation",
+        "year": 2020,
+        "authors": [
+          "Shuai Xie",
+          "Zunlei Feng",
+          "Ying Chen",
+          "Songtao Sun",
+          "Chao Ma",
+          "Mingli Song"
+        ],
+        "arxiv_id": "2010.08705",
+        "doi": "10.1007/978-3-030-69525-5_40"
+      },
+      {
+        "paper_id": "179eefc6086e7d54c987939d90d4f296a493bcda",
+        "title": "Deep Active Learning for Joint Classification & Segmentation with Weak Annotator",
+        "year": 2020,
+        "authors": [
+          "Soufiane Belharbi",
+          "Ismail Ben Ayed",
+          "Luke McCaffrey",
+          "Eric Granger"
+        ],
+        "arxiv_id": "2010.04889",
+        "doi": "10.1109/WACV48630.2021.00338"
+      },
+      {
+        "paper_id": "f1f1c40d01ea3edfb2411e29bfe239f3715a6af2",
+        "title": "Active Learning for Bayesian 3D Hand Pose Estimation",
+        "year": 2020,
+        "authors": [
+          "Razvan Caramalau",
+          "Binod Bhattarai",
+          "Tae-Kyun Kim"
+        ],
+        "arxiv_id": "2010.00694",
+        "doi": "10.1109/WACV48630.2021.00346"
+      },
+      {
+        "paper_id": "94eb8e46767ae77e265b0a20dcc0d9f69d2d6e2b",
+        "title": "A Survey of Deep Active Learning",
+        "year": 2020,
+        "authors": [
+          "Pengzhen Ren",
+          "Yun Xiao",
+          "Xiaojun Chang",
+          "Po-Yao (Bernie) Huang",
+          "Zhihui Li",
+          "Xiaojiang Chen",
+          "Xin Wang"
+        ],
+        "arxiv_id": "2009.00236",
+        "doi": "10.1145/3472291"
+      },
+      {
+        "paper_id": "c78094362d566c3411dc7b7dcbd70b4527bcc974",
+        "title": "Cross-Modal Hierarchical Modelling for Fine-Grained Sketch Based Image Retrieval",
+        "year": 2020,
+        "authors": [
+          "Aneeshan Sain",
+          "A. Bhunia",
+          "Yongxin Yang",
+          "T. Xiang",
+          "Yi-Zhe Song"
+        ],
+        "arxiv_id": "2007.15103",
+        "doi": "10.5244/c.34.28"
+      },
+      {
+        "paper_id": "8ac8179dbdd256e514700b076673b6d5b9083251",
+        "title": "Active Learning for Video Description With Cluster-Regularized Ensemble Ranking",
+        "year": 2020,
+        "authors": [
+          "David Chan",
+          "Sudheendra Vijayanarasimhan",
+          "David A. Ross",
+          "J. Canny"
+        ],
+        "arxiv_id": "2007.13913",
+        "doi": "10.1007/978-3-030-69541-5_27"
+      },
+      {
+        "paper_id": "910ad17250a239feac3983f806a82ae91d94816a",
+        "title": "Solving Mixed-Modal Jigsaw Puzzle for Fine-Grained Sketch-Based Image Retrieval",
+        "year": 2020,
+        "authors": [
+          "Kaiyue Pang",
+          "Yongxin Yang",
+          "Timothy M. Hospedales",
+          "T. Xiang",
+          "Yi-Zhe Song"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1109/cvpr42600.2020.01036"
+      },
+      {
+        "paper_id": "4f9a4afc0ba500d839f7ee245513af9b87add8be",
+        "title": "Audio-Visual Instance Discrimination with Cross-Modal Agreement",
+        "year": 2020,
+        "authors": [
+          "Pedro Morgado",
+          "N. Vasconcelos",
+          "Ishan Misra"
+        ],
+        "arxiv_id": "2004.12943",
+        "doi": "10.1109/CVPR46437.2021.01229"
+      },
+      {
+        "paper_id": "0759957ba70673541859381fd9712dac759e8ab2",
+        "title": "State-Relabeling Adversarial Active Learning",
+        "year": 2020,
+        "authors": [
+          "Beichen Zhang",
+          "Liang Li",
+          "Shijie Yang",
+          "Shuhui Wang",
+          "Zhengjun Zha",
+          "Qingming Huang"
+        ],
+        "arxiv_id": "2004.04943",
+        "doi": "10.1109/cvpr42600.2020.00878"
+      },
+      {
+        "paper_id": "0eb5efbb1d95cf90ed353e1ad05f21d3796e5dff",
+        "title": "VaB-AL: Incorporating Class Imbalance and Difficulty with Variational Bayes for Active Learning",
+        "year": 2020,
+        "authors": [
+          "Jongwon Choi",
+          "K. M. Yi",
+          "Jihoon Kim",
+          "Jincho Choo",
+          "Byoungjip Kim",
+          "Jin-Yeop Chang",
+          "Youngjune Gwon",
+          "H. Chang"
+        ],
+        "arxiv_id": "2003.11249",
+        "doi": "10.1109/CVPR46437.2021.00668"
+      },
+      {
+        "paper_id": "9be971c031e034feee6e49af27acada5ddde79d3",
+        "title": "Sketch Less for More: On-the-Fly Fine-Grained Sketch-Based Image Retrieval",
+        "year": 2020,
+        "authors": [
+          "A. Bhunia",
+          "Yongxin Yang",
+          "Timothy M. Hospedales",
+          "T. Xiang",
+          "Yi-Zhe Song"
+        ],
+        "arxiv_id": "2002.10310",
+        "doi": "10.1109/CVPR42600.2020.00980"
+      },
+      {
+        "paper_id": "4ac423a13184ce3f3505853dd92e9ab79518eadd",
+        "title": "Task-Aware Variational Adversarial Active Learning",
+        "year": 2020,
+        "authors": [
+          "Kwanyoung Kim",
+          "Dongwon Park",
+          "K. Kim",
+          "S. Chun"
+        ],
+        "arxiv_id": "2002.04709",
+        "doi": "10.1109/CVPR46437.2021.00807"
+      },
+      {
+        "paper_id": "0c2534965af57e4104aaad63828c25bc8a0bccc3",
+        "title": "ViewAL: Active Learning With Viewpoint Entropy for Semantic Segmentation",
+        "year": 2019,
+        "authors": [
+          "Yawar Siddiqui",
+          "Julien P. C. Valentin",
+          "M. Nie\u00dfner"
+        ],
+        "arxiv_id": "1911.11789",
+        "doi": "10.1109/cvpr42600.2020.00945"
+      },
+      {
+        "paper_id": "755774c14c6b344596ae5025e00e678c08136b4c",
+        "title": "A Survey on Active Learning and Human-in-the-Loop Deep Learning for Medical Image Analysis",
+        "year": 2019,
+        "authors": [
+          "Samuel Budd",
+          "E. Robinson",
+          "Bernhard Kainz"
+        ],
+        "arxiv_id": "1910.02923",
+        "doi": "10.1016/j.media.2021.102062"
+      }
+    ]
+  },
+  {
+    "id": "2310.12345",
+    "submitter": null,
+    "authors": "G. Hakim, David Osowiechi, Mehrdad Noori, Milad Cheraghalikhani, Ismail Ben Ayed, Christian Desrosiers",
+    "title": "ClusT3: Information Invariant Test-Time Training",
+    "comments": "This work proposes a novel unsupervised TTT technique based on the maximization of Mutual Information between multi-scale feature maps and a discrete latent representation, which can be integrated to the standard training as an auxiliary clustering task.",
+    "journal_ref": null,
+    "doi": "10.1109/ICCV51070.2023.00564",
+    "report_no": null,
+    "categories": "",
+    "license": null,
+    "abstract": "Deep Learning models have shown remarkable performance in a broad range of vision tasks. However, they are often vulnerable to domain shifts at test-time. Test-time training (TTT) methods have been developed in an attempt to mitigate these vulnerabilities, where a secondary task is solved at training time, simultaneously with the main task, to be later used as an self-supervised proxy task at test-time. In this work, we propose a novel unsupervised TTT technique based on the maximization of Mutual Information between multi-scale feature maps and a discrete latent representation, which can be integrated to the standard training as an auxiliary clustering task. Experimental results demonstrate competitive classification performance on different popular test-time adaptation benchmarks. The code can be found at: https://github.com/dosowiechi/ClusT3.git",
+    "versions": [],
+    "update_date": "2023",
+    "authors_parsed": [],
+    "citations": [
+      {
+        "citing_paper_id": "aade8848daf0e3b3c36b17873ecda399e1e02e79",
+        "title": "Adaptive Test-Time Training for Predicting Need for Invasive Mechanical Ventilation in Multi-Center Cohorts",
+        "year": 2025,
+        "authors": [
+          "Xiaolei Lu",
+          "Shamim Nemati"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "059c7be744e8f636e5f730bf1032e3f2fd3d1e58",
+        "title": "Test-Time Alignment with State Space Model for Tracking User Interest Shifts in Sequential Recommendation",
+        "year": 2025,
+        "authors": [
+          "Changshuo Zhang",
+          "Xiao Zhang",
+          "Teng Shi",
+          "Jun Xu",
+          "Ji-rong Wen"
+        ],
+        "citation_count": 1
+      },
+      {
+        "citing_paper_id": "0180d3daaf936091378c754d6ef9eece475b66c5",
+        "title": "Adaptive Dual Uncertainty Optimization: Boosting Monocular 3D Object Detection under Test-Time Shifts",
+        "year": 2025,
+        "authors": [
+          "Zixuan Hu",
+          "Dongxiao Li",
+          "Xinzhu Ma",
+          "Shixiang Tang",
+          "Xiaotong Li",
+          "Wenhan Yang",
+          "Ling-Yu Duan"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "0b91243e579c4a46516507e09db3467f9c48cb75",
+        "title": "Towards Alignment-Centric Paradigm: A Survey of Instruction Tuning in Large Language Models",
+        "year": 2025,
+        "authors": [
+          "Xudong Han",
+          "Junjie Yang",
+          "Tianyang Wang",
+          "Ziqian Bi",
+          "Junfeng Hao",
+          "Jun-Jie Song"
+        ],
+        "citation_count": 5
+      },
+      {
+        "citing_paper_id": "e237c28eb2a3ac0acca02dde7ed0f9c7978966e4",
+        "title": "Test-Time Training with Diversified Local Aggregation Consistency for Mortality Prediction using Clinical Time Series",
+        "year": 2025,
+        "authors": [
+          "Jingwen Xu",
+          "Fei Lyu",
+          "Pongchi Yuen"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "7ea225a8d3bc6de26e2238eb59b44f8598028968",
+        "title": "Explainable Random Forest Framework for Real-Time Indoor Air-Quality Prediction at Airports Using SCD30 Sensor Data",
+        "year": 2025,
+        "authors": [
+          "Moinul Islam",
+          "Tawhidur Rahman",
+          "Md Miskat Hossain",
+          "Sayma Sultana",
+          "Karib Shams",
+          "Mohammad Rifat",
+          "Ahmmad Rashid",
+          "Raihan Ul Islam",
+          "M. Saddam",
+          "Hossain Khan"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "5497501578531c91b6748c5efe27fa97435997d7",
+        "title": "Synchronizing Task Behavior: Aligning Multiple Tasks during Test-Time Training",
+        "year": 2025,
+        "authors": [
+          "Wooseong Jeong",
+          "Jegyeong Cho",
+          "Youngho Yoon",
+          "Kuk-Jin Yoon"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "1e7661a17845bf599d0f7919d53fce3de09967f7",
+        "title": "CTA: Cross-Task Alignment for Better Test Time Training",
+        "year": 2025,
+        "authors": [
+          "Samuel Barbeau",
+          "Pedram Fekri",
+          "David Osowiechi",
+          "Ali Bahri",
+          "Moslem Yazdanpanah",
+          "Masih Aminbeidokhti",
+          "Christian Desrosiers"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "24a217d34cb7cf963d0a645c803bb97af04ec931",
+        "title": "SCE-TTT: Test-Time Training with Semantic Center Embedding",
+        "year": 2025,
+        "authors": [
+          "Zhaojie Wang",
+          "Jiahao Dong",
+          "Jingyang Xue",
+          "Ruixian Su",
+          "Zhao Shi",
+          "Shijian Dong"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "8014fd7314ec4710c26a391676ac81b1e467fcc0",
+        "title": "Test-Time Adaptation of Vision-Language Models for Open-Vocabulary Semantic Segmentation",
+        "year": 2025,
+        "authors": [
+          "Mehrdad Noori",
+          "David Osowiechi",
+          "G. Hakim",
+          "Ali Bahri",
+          "Moslem Yazdanpanah",
+          "Sahar Dastani",
+          "Farzad Beizaee",
+          "Ismail Ben Ayed",
+          "Christian Desrosiers"
+        ],
+        "citation_count": 3
+      },
+      {
+        "citing_paper_id": "eca56d754a7c69f6049e1dfd8d47d051a4323730",
+        "title": "Beyond Entropy: Region Confidence Proxy for Wild Test-Time Adaptation",
+        "year": 2025,
+        "authors": [
+          "Zixuan Hu",
+          "Yichun Hu",
+          "Xiaotong Li",
+          "Shixiang Tang",
+          "Ling-Yu Duan"
+        ],
+        "citation_count": 5
+      },
+      {
+        "citing_paper_id": "204236ae4258bbd4943458655ea6fe3bb06bf94e",
+        "title": "Test-Time Alignment for Tracking User Interest Shifts in Sequential Recommendation",
+        "year": 2025,
+        "authors": [
+          "Changshuo Zhang",
+          "Xiao Zhang",
+          "Teng Shi",
+          "Jun Xu",
+          "Jirong Wen"
+        ],
+        "citation_count": 10
+      },
+      {
+        "citing_paper_id": "7edebc6a07456938db2e4c3ab171a2df293ee121",
+        "title": "Centaur: Robust End-to-End Autonomous Driving with Test-Time Training",
+        "year": 2025,
+        "authors": [
+          "Chonghao Sima",
+          "Kashyap Chitta",
+          "Zhiding Yu",
+          "Shiyi Lan",
+          "Ping Luo",
+          "Andreas Geiger",
+          "Hongyang Li",
+          "Jos\u00e9 M. \u00c1lvarez"
+        ],
+        "citation_count": 21
+      },
+      {
+        "citing_paper_id": "8a5c213b144c7d815e3b75e028fa90f649e773f3",
+        "title": "Q-PART: Quasi-Periodic Adaptive Regression with Test-time Training for Pediatric Left Ventricular Ejection Fraction Regression",
+        "year": 2025,
+        "authors": [
+          "Jie Liu",
+          "Tiexin Qin",
+          "Hui Liu",
+          "Yilei Shi",
+          "Lichao Mou",
+          "Xiao Xiang Zhu",
+          "Shiqi Wang",
+          "Haoliang Li"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "1480f2372258a42449b0d5dfefcfe38dabfb4eca",
+        "title": "Structural Alignment Improves Graph Test-Time Adaptation",
+        "year": 2025,
+        "authors": [
+          "Hans Hao-Hsun Hsu",
+          "Shikun Liu",
+          "Han Zhao",
+          "Pan Li"
+        ],
+        "citation_count": 1
+      },
+      {
+        "citing_paper_id": "8851a058bbde115fdec640ba07ba99e21588d3a2",
+        "title": "ReC- Ttt: Contrastive Feature Reconstruction for Test-Time Training",
+        "year": 2024,
+        "authors": [
+          "Marco Colussi",
+          "S. Mascetti",
+          "J. Dolz",
+          "Christian Desrosiers"
+        ],
+        "citation_count": 4
+      },
+      {
+        "citing_paper_id": "6363937028a22304e35e930f88294046e48bbef2",
+        "title": "Pretext Tasks in Test Time Adaptation Under Distribution Shifts-A Survey and Future Directions",
+        "year": 2024,
+        "authors": [
+          "Kai Liu",
+          "Jicong Zhang",
+          "Shiqi Wang"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "e93c0f1e3327d505b0c43c63c7d11e97adca3cc7",
+        "title": "Test-time Adaptation for Regression by Subspace Alignment",
+        "year": 2024,
+        "authors": [
+          "Kazuki Adachi",
+          "Shin'ya Yamaguchi",
+          "Atsutoshi Kumagai",
+          "T. Hamagami"
+        ],
+        "citation_count": 4
+      },
+      {
+        "citing_paper_id": "6729d7def8a0d15538820fc0273fc742f9518e44",
+        "title": "FDS: Feedback-Guided Domain Synthesis with Multi-Source Conditional Diffusion Models for Domain Generalization",
+        "year": 2024,
+        "authors": [
+          "Mehrdad Noori",
+          "Milad Cheraghalikhani",
+          "Ali Bahri",
+          "G. Hakim",
+          "David Osowiechi",
+          "Moslem Yazdanpanah",
+          "Ismail Ben Ayed",
+          "Christian Desrosiers"
+        ],
+        "citation_count": 5
+      },
+      {
+        "citing_paper_id": "7097e1bfbb6143574d2db30577e52a4a397ac4ae",
+        "title": "WATT: Weight Average Test-Time Adaptation of CLIP",
+        "year": 2024,
+        "authors": [
+          "David Osowiechi",
+          "Mehrdad Noori",
+          "G. Hakim",
+          "Moslem Yazdanpanah",
+          "Ali Bahri",
+          "Milad Cheraghalikhani",
+          "Sahar Dastani",
+          "Farzad Beizaee",
+          "Ismail Ben Ayed",
+          "Christian Desrosiers"
+        ],
+        "citation_count": 23
+      }
+    ],
+    "references": [
+      {
+        "paper_id": "12917e734dbe5dec7fcf3379231542cd5f283909",
+        "title": "TTTFlow: Unsupervised Test-Time Training with Normalizing Flow",
+        "year": 2022,
+        "authors": [
+          "David Osowiechi",
+          "G. Hakim",
+          "Mehrdad Noori",
+          "Milad Cheraghalikhani",
+          "Ismail Ben Ayed",
+          "Christian Desrosiers"
+        ],
+        "arxiv_id": "2210.11389",
+        "doi": "10.48550/arXiv.2210.11389"
+      },
+      {
+        "paper_id": "2fe24fa62c5d57c5bd4c93b25740d0779530987f",
+        "title": "Surgical Fine-Tuning Improves Adaptation to Distribution Shifts",
+        "year": 2022,
+        "authors": [
+          "Yoonho Lee",
+          "Annie S. Chen",
+          "Fahim Tajwar",
+          "Ananya Kumar",
+          "Huaxiu Yao",
+          "Percy Liang",
+          "Chelsea Finn"
+        ],
+        "arxiv_id": "2210.11466",
+        "doi": "10.48550/arXiv.2210.11466"
+      },
+      {
+        "paper_id": "9bc2c47859d90a26e7f3fcedc1dbfe45d7ec9528",
+        "title": "Test-Time Training with Masked Autoencoders",
+        "year": 2022,
+        "authors": [
+          "Yossi Gandelsman",
+          "Yu Sun",
+          "Xinlei Chen",
+          "Alexei A. Efros"
+        ],
+        "arxiv_id": "2209.07522",
+        "doi": "10.48550/arXiv.2209.07522"
+      },
+      {
+        "paper_id": "e0bffb70cd8b5b5ecdc74e1f730dd7298ecc787b",
+        "title": "A Broad Study of Pre-training for Domain Generalization and Adaptation",
+        "year": 2022,
+        "authors": [
+          "Donghyun Kim",
+          "Kaihong Wang",
+          "S. Sclaroff",
+          "Kate Saenko"
+        ],
+        "arxiv_id": "2203.11819",
+        "doi": "10.48550/arXiv.2203.11819"
+      },
+      {
+        "paper_id": "170676e3d7a8cd5606a7643ff72948e502af0e49",
+        "title": "Parameter-free Online Test-time Adaptation",
+        "year": 2022,
+        "authors": [
+          "Malik Boudiaf",
+          "Romain Mueller",
+          "Ismail Ben Ayed",
+          "Luca Bertinetto"
+        ],
+        "arxiv_id": "2201.05718",
+        "doi": "10.1109/CVPR52688.2022.00816"
+      },
+      {
+        "paper_id": "e0cecb1fc81785acd8abfdbbf05e69afea523b90",
+        "title": "SITA: Single Image Test-time Adaptation",
+        "year": 2021,
+        "authors": [
+          "Ansh Khurana",
+          "S. Paul",
+          "Piyush Rai",
+          "Soma Biswas",
+          "G. Aggarwal"
+        ],
+        "arxiv_id": "2112.02355",
+        "doi": null
+      },
+      {
+        "paper_id": "6351ebb4a3287f5f3e1273464b3b91e5df5a16d7",
+        "title": "Masked Autoencoders Are Scalable Vision Learners",
+        "year": 2021,
+        "authors": [
+          "Kaiming He",
+          "Xinlei Chen",
+          "Saining Xie",
+          "Yanghao Li",
+          "Piotr Doll'ar",
+          "Ross B. Girshick"
+        ],
+        "arxiv_id": "2111.06377",
+        "doi": "10.1109/CVPR52688.2022.01553"
+      },
+      {
+        "paper_id": "4f6eafafc9563a5b904535078df7e74afe39ef59",
+        "title": "Domain Generalization with MixStyle",
+        "year": 2021,
+        "authors": [
+          "Kaiyang Zhou",
+          "Yongxin Yang",
+          "Y. Qiao",
+          "T. Xiang"
+        ],
+        "arxiv_id": "2104.02008",
+        "doi": null
+      },
+      {
+        "paper_id": "93884d89dfc8c3886f642018227a43fb7b58044f",
+        "title": "Generalizing to Unseen Domains: A Survey on Domain Generalization",
+        "year": 2021,
+        "authors": [
+          "Jindong Wang",
+          "Cuiling Lan",
+          "Chang Liu",
+          "Yidong Ouyang",
+          "Tao Qin"
+        ],
+        "arxiv_id": "2103.03097",
+        "doi": "10.1109/TKDE.2022.3178128"
+      },
+      {
+        "paper_id": "268d347e8a55b5eb82fb5e7d2f800e33c75ab18a",
+        "title": "An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale",
+        "year": 2020,
+        "authors": [
+          "Alexey Dosovitskiy",
+          "Lucas Beyer",
+          "Alexander Kolesnikov",
+          "Dirk Weissenborn",
+          "Xiaohua Zhai",
+          "Thomas Unterthiner",
+          "Mostafa Dehghani",
+          "M. Minderer",
+          "G. Heigold",
+          "S. Gelly",
+          "Jakob Uszkoreit",
+          "N. Houlsby"
+        ],
+        "arxiv_id": "2010.11929",
+        "doi": null
+      },
+      {
+        "paper_id": "1252cf714b3a4d6977496269248b2a91955aa447",
+        "title": "Transductive Information Maximization For Few-Shot Learning",
+        "year": 2020,
+        "authors": [
+          "Malik Boudiaf",
+          "Imtiaz Masud Ziko",
+          "J\u00e9r\u00f4me Rony",
+          "J. Dolz",
+          "P. Piantanida",
+          "Ismail Ben Ayed"
+        ],
+        "arxiv_id": "2008.11297",
+        "doi": null
+      },
+      {
+        "paper_id": "69bad7481b4c7dab2f0ac7c518c2be7256e699bf",
+        "title": "Evaluating Prediction-Time Batch Normalization for Robustness under Covariate Shift",
+        "year": 2020,
+        "authors": [
+          "Zachary Nado",
+          "Shreyas Padhy",
+          "D. Sculley",
+          "A. D'Amour",
+          "Balaji Lakshminarayanan",
+          "Jasper Snoek"
+        ],
+        "arxiv_id": "2006.10963",
+        "doi": null
+      },
+      {
+        "paper_id": "6e1bb490ae54b42f13d14d69b2012edda4664949",
+        "title": "Do We Really Need to Access the Source Data? Source Hypothesis Transfer for Unsupervised Domain Adaptation",
+        "year": 2020,
+        "authors": [
+          "Jian Liang",
+          "Dapeng Hu",
+          "Jiashi Feng"
+        ],
+        "arxiv_id": "2002.08546",
+        "doi": null
+      },
+      {
+        "paper_id": "7af72a461ed7cda180e7eab878efd5f35d79bbf4",
+        "title": "A Simple Framework for Contrastive Learning of Visual Representations",
+        "year": 2020,
+        "authors": [
+          "Ting Chen",
+          "Simon Kornblith",
+          "Mohammad Norouzi",
+          "Geoffrey E. Hinton"
+        ],
+        "arxiv_id": "2002.05709",
+        "doi": null
+      },
+      {
+        "paper_id": "a436e41141a9d9c5dfc44d16fade67b9a3b76778",
+        "title": "Test-Time Training with Self-Supervision for Generalization under Distribution Shifts",
+        "year": 2019,
+        "authors": [
+          "Yu Sun",
+          "X. Wang",
+          "Zhuang Liu",
+          "John Miller",
+          "Alexei A. Efros",
+          "Moritz Hardt"
+        ],
+        "arxiv_id": null,
+        "doi": null
+      },
+      {
+        "paper_id": "41fcef711faca9013fd0980a9f6ec1d23c9c76c8",
+        "title": "On Mutual Information Maximization for Representation Learning",
+        "year": 2019,
+        "authors": [
+          "Michael Tschannen",
+          "J. Djolonga",
+          "Paul K. Rubenstein",
+          "S. Gelly",
+          "Mario Lucic"
+        ],
+        "arxiv_id": "1907.13625",
+        "doi": null
+      },
+      {
+        "paper_id": "49b64383fe36268410c430352637ed23b16820c5",
+        "title": "Benchmarking Neural Network Robustness to Common Corruptions and Perturbations",
+        "year": 2019,
+        "authors": [
+          "Dan Hendrycks",
+          "Thomas G. Dietterich"
+        ],
+        "arxiv_id": "1903.12261",
+        "doi": null
+      },
+      {
+        "paper_id": "4e0bb8c1c683b43357c5d5216f6b74ff2cb32434",
+        "title": "Do ImageNet Classifiers Generalize to ImageNet?",
+        "year": 2019,
+        "authors": [
+          "B. Recht",
+          "R. Roelofs",
+          "Ludwig Schmidt",
+          "Vaishaal Shankar"
+        ],
+        "arxiv_id": "1902.10811",
+        "doi": null
+      },
+      {
+        "paper_id": "185c5278c741c98bea3201866b6c68265a6e1af4",
+        "title": "Structured Domain Randomization: Bridging the Reality Gap by Context-Aware Synthetic Data",
+        "year": 2018,
+        "authors": [
+          "Aayush Prakash",
+          "Shaad Boochoon",
+          "M. Brophy",
+          "David Acuna",
+          "Eric Cameracci",
+          "Gavriel State",
+          "Omer Shapira",
+          "Stan Birchfield"
+        ],
+        "arxiv_id": "1810.10093",
+        "doi": "10.1109/ICRA.2019.8794443"
+      },
+      {
+        "paper_id": "a6379c0c3fb0d8fbbbd4a15808cd3efa7521ecee",
+        "title": "Deep Clustering: On the Link Between Discriminative Models and K-Means",
+        "year": 2018,
+        "authors": [
+          "Mohammed Jabi",
+          "Marco Pedersoli",
+          "A. Mitiche",
+          "Ismail Ben Ayed"
+        ],
+        "arxiv_id": "1810.04246",
+        "doi": "10.1109/TPAMI.2019.2962683"
+      }
+    ]
+  },
+  {
+    "id": "2311.18805",
+    "submitter": null,
+    "authors": "Qi Cao, Takeshi Kojima, Yutaka Matsuo, Yusuke Iwasawa",
+    "title": "Unnatural Error Correction: GPT-4 Can Almost Perfectly Handle Unnatural Scrambled Text",
+    "comments": "Novel experimental insights are presented into the resilience of LLMs, particularly GPT-4, when subjected to extensive character-level permutations, and it is counter-intuitive that LLMs can exhibit such resilience despite severe disruption to input tokenization caused by scrambled text.",
+    "journal_ref": null,
+    "doi": "10.48550/arXiv.2311.18805",
+    "report_no": null,
+    "categories": "",
+    "license": null,
+    "abstract": "While Large Language Models (LLMs) have achieved remarkable performance in many tasks, much about their inner workings remains unclear. In this study, we present novel experimental insights into the resilience of LLMs, particularly GPT-4, when subjected to extensive character-level permutations. To investigate this, we first propose the Scrambled Bench, a suite designed to measure the capacity of LLMs to handle scrambled input, in terms of both recovering scrambled sentences and answering questions given scrambled context. The experimental results indicate that most powerful LLMs demonstrate the capability akin to typoglycemia, a phenomenon where humans can understand the meaning of words even when the letters within those words are scrambled, as long as the first and last letters remain in place. More surprisingly, we found that only GPT-4 nearly flawlessly processes inputs with unnatural errors, even under the extreme condition, a task that poses significant challenges for other LLMs and often even for humans. Specifically, GPT-4 can almost perfectly reconstruct the original sentences from scrambled ones, decreasing the edit distance by 95%, even when all letters within each word are entirely scrambled. It is counter-intuitive that LLMs can exhibit such resilience despite severe disruption to input tokenization caused by scrambled text.",
+    "versions": [],
+    "update_date": "2023",
+    "authors_parsed": [],
+    "citations": [
+      {
+        "citing_paper_id": "6dafe154ab71645b1cbab54da0ce4f388067425a",
+        "title": "Concept than Document: Context Compression via AMR-based Conceptual Entropy",
+        "year": 2025,
+        "authors": [
+          "Kaize Shi",
+          "Xueyao Sun",
+          "Xiaohui Tao",
+          "Lin Li",
+          "Qika Lin",
+          "Guandong Xu"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "a72b482d385038bc2e14c995cf4b2fce65b6448c",
+        "title": "Typoglycemia under the Hood: Investigating Language Models' Understanding of Scrambled Words",
+        "year": 2025,
+        "authors": [
+          "Gianluca Sperduti",
+          "Alejandro Moreo"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "a3e16a32fda18fb2cc10a4073c44339be013e9f9",
+        "title": "EvolKV: Evolutionary KV Cache Compression for LLM Inference",
+        "year": 2025,
+        "authors": [
+          "Bohan Yu",
+          "Yekun Chai"
+        ],
+        "citation_count": 2
+      },
+      {
+        "citing_paper_id": "8147a33a7bcb94b029a21ecf5a51ba3e15f50e25",
+        "title": "Understanding Subword Compositionality of Large Language Models",
+        "year": 2025,
+        "authors": [
+          "Qiwei Peng",
+          "Yekun Chai",
+          "Anders Sogaard"
+        ],
+        "citation_count": 1
+      },
+      {
+        "citing_paper_id": "484bdefe5a7fc2c5f07566fc40a633514f7467bb",
+        "title": "A Comprehensive Polish Medical Speech Dataset for Enhancing Automatic Medical Dictation",
+        "year": 2025,
+        "authors": [
+          "A. Czy\u017cewski",
+          "Sebastian Cygert",
+          "Karolina Marciniuk",
+          "M. Szczodrak",
+          "Arkadiusz Harasimiuk",
+          "Piotr Odya",
+          "M. Galanina",
+          "Piotr Szczuko",
+          "Bo\u017cena Kostek",
+          "Beata Graff",
+          "Dariusz Szplit",
+          "Mariusz Budzisz",
+          "Krzysztof Narkiewicz"
+        ],
+        "citation_count": 2
+      },
+      {
+        "citing_paper_id": "9e075d9b83b41dd1bc3ba782e070b60b61ab0ce0",
+        "title": "Train It and Forget It: Merge Lists are Unnecessary for BPE Inference in Language Models",
+        "year": 2025,
+        "authors": [
+          "Tomohiro Sawada",
+          "Kartik Goyal"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "66a3e94c185560ec9d8e88c9c662731c40eb08f2",
+        "title": "Revisiting Compositional Generalization Capability of Large Language Models Considering Instruction Following Ability",
+        "year": 2025,
+        "authors": [
+          "Yusuke Sakai",
+          "Hidetaka Kamigaito",
+          "Taro Watanabe"
+        ],
+        "citation_count": 3
+      },
+      {
+        "citing_paper_id": "42cb951d8cd8b7a83c2d92656c9999948c40f950",
+        "title": "TrafficFormer: An Efficient Pre-trained Model for Traffic Data",
+        "year": 2025,
+        "authors": [
+          "Guangmeng Zhou",
+          "Xiongwen Guo",
+          "Zhuotao Liu",
+          "Tong Li",
+          "Qi Li",
+          "Ke Xu"
+        ],
+        "citation_count": 23
+      },
+      {
+        "citing_paper_id": "d5dc708d77bfc42f42a7594e47989a680cad1302",
+        "title": "Forging Robust Cognition Resilience in Large Language Models: The Self-Correction Reflection Paradigm Against Input Perturbations",
+        "year": 2025,
+        "authors": [
+          "Hua Wu",
+          "Haotian Hong",
+          "Jiayu Mao",
+          "Zhexun Yin",
+          "Yanxiong Wu",
+          "Xiaojing Bai",
+          "Li Sun",
+          "Mengyang Pu",
+          "Juncheng Liu",
+          "Yihuan Li"
+        ],
+        "citation_count": 2
+      },
+      {
+        "citing_paper_id": "ecf61427b59b8da33f4d63d9b5dd1b3bef75d744",
+        "title": "Word Form Matters: LLMs' Semantic Reconstruction under Typoglycemia",
+        "year": 2025,
+        "authors": [
+          "Chenxi Wang",
+          "Tianle Gu",
+          "Zhongyu Wei",
+          "Lang Gao",
+          "Zirui Song",
+          "Xiuying Chen"
+        ],
+        "citation_count": 8
+      },
+      {
+        "citing_paper_id": "65f829a0943f4c5d9bc995077d5c85175dd1c39e",
+        "title": "MLLM-CTT:A Multimodal Large Language Model for Chart-to-Text Generation Based on LoRA Fine-Tuning",
+        "year": 2025,
+        "authors": [
+          "Kunmin Zhou",
+          "Songlin Chen",
+          "Yajun Du",
+          "Xiaoliang Chen"
+        ],
+        "citation_count": 1
+      },
+      {
+        "citing_paper_id": "055d06784fa60f721113bab9cf26500929a8ed8a",
+        "title": "Order Doesn't Matter, But Reasoning Does: Training LLMs with Order-Centric Augmentation",
+        "year": 2025,
+        "authors": [
+          "Qianxi He",
+          "Qi He",
+          "Jiaqing Liang",
+          "Yanghua Xiao",
+          "Weikang Zhou",
+          "Zeye Sun",
+          "Fei Yu"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "2a4f140a58dd377bb174a7623a01492cc2d19e83",
+        "title": "Exploring the Limits of Large Language Models: A Systematic Evaluation of Masked Text Processing Ability through MskQA and MskCal",
+        "year": 2024,
+        "authors": [
+          "Haru-Tada Sato",
+          "Fuka Matsuzaki"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "8132c1a1f3fce9696ef955fd3e83830c764b6df7",
+        "title": "LinFormer: A Linear-Based Lightweight Transformer Architecture for Time-Aware MIMO Channel Prediction",
+        "year": 2024,
+        "authors": [
+          "Yanliang Jin",
+          "Yifan Wu",
+          "Yuan Gao",
+          "Shunqing Zhang",
+          "Shugong Xu",
+          "Cheng-Xiang Wang"
+        ],
+        "citation_count": 14
+      },
+      {
+        "citing_paper_id": "3cebcaae3e3c20bbff0bd487488e0558d63c842b",
+        "title": "From Tokens to Words: On the Inner Lexicon of LLMs",
+        "year": 2024,
+        "authors": [
+          "Guy Kaplan",
+          "Matanel Oren",
+          "Yuval Reif",
+          "Roy Schwartz"
+        ],
+        "citation_count": 29
+      },
+      {
+        "citing_paper_id": "8f95d540dcf39c03218a10d8a5f21d9568a44d80",
+        "title": "Mind Scramble: Unveiling Large Language Model Psychology Via Typoglycemia",
+        "year": 2024,
+        "authors": [
+          "Miao Yu",
+          "Junyuan Mao",
+          "Guibin Zhang",
+          "Jingheng Ye",
+          "Junfeng Fang",
+          "Aoxiao Zhong",
+          "Yang Liu",
+          "Yuxuan Liang",
+          "Kun Wang",
+          "Qingsong Wen"
+        ],
+        "citation_count": 5
+      },
+      {
+        "citing_paper_id": "820e168ebed70a236cd18558568a35b7f33a2bc1",
+        "title": "EXCGEC: A Benchmark for Edit-Wise Explainable Chinese Grammatical Error Correction",
+        "year": 2024,
+        "authors": [
+          "Jingheng Ye",
+          "Shang Qin",
+          "Yinghui Li",
+          "Xuxin Cheng",
+          "Libo Qin",
+          "Hai-Tao Zheng",
+          "Ying Shen",
+          "Peng Xing",
+          "Zishan Xu",
+          "Guo Cheng",
+          "Wenhao Jiang"
+        ],
+        "citation_count": 1
+      },
+      {
+        "citing_paper_id": "c669f991632b2c9697d274dba3b7bab0ef87eee4",
+        "title": "Tokenization Falling Short: On Subword Robustness in Large Language Models",
+        "year": 2024,
+        "authors": [
+          "Yekun Chai",
+          "Yewei Fang",
+          "Qiwei Peng",
+          "Xuhong Li"
+        ],
+        "citation_count": 16
+      },
+      {
+        "citing_paper_id": "643980a504f676fbc5ba87a277dd50e136616efd",
+        "title": "LongSkywork: A Training Recipe for Efficiently Extending Context Length in Large Language Models",
+        "year": 2024,
+        "authors": [
+          "Liang Zhao",
+          "Tianwen Wei",
+          "Liang Zeng",
+          "Cheng Cheng",
+          "Liu Yang",
+          "Peng Cheng",
+          "Lijie Wang",
+          "Chenxia Li",
+          "X. Wu",
+          "Bo Zhu",
+          "Y. Gan",
+          "Rui Hu",
+          "Shuicheng Yan",
+          "Han Fang",
+          "Yahui Zhou"
+        ],
+        "citation_count": 14
+      },
+      {
+        "citing_paper_id": "ddea71bb0d42a0ec0c490cabf7c9e48850b7d610",
+        "title": "Compressing Long Context for Enhancing RAG with AMR-based Concept Distillation",
+        "year": 2024,
+        "authors": [
+          "Kaize Shi",
+          "Xueyao Sun",
+          "Qing Li",
+          "Guandong Xu"
+        ],
+        "citation_count": 21
+      }
+    ],
+    "references": [
+      {
+        "paper_id": "104b0bb1da562d53cbda87aec79ef6a2827d191a",
+        "title": "Llama 2: Open Foundation and Fine-Tuned Chat Models",
+        "year": 2023,
+        "authors": [
+          "Hugo Touvron",
+          "Louis Martin",
+          "Kevin R. Stone",
+          "Peter Albert",
+          "Amjad Almahairi",
+          "Yasmine Babaei",
+          "Niko-lay Bashlykov",
+          "Soumya Batra",
+          "Prajjwal Bhargava",
+          "Shruti Bhosale",
+          "D. Bikel",
+          "Lukas Blecher",
+          "Cristian Canton Ferrer",
+          "Moya Chen",
+          "Guillem Cucurull",
+          "David Esiobu",
+          "Jude Fernandes",
+          "J. Fu",
+          "Wenyin Fu",
+          "Brian Fuller",
+          "Cynthia Gao",
+          "Vedanuj Goswami",
+          "Naman Goyal",
+          "A. Hartshorn",
+          "Saghar Hosseini",
+          "Rui Hou",
+          "Hakan Inan",
+          "Marcin Kardas",
+          "Viktor Kerkez",
+          "Madian Khabsa",
+          "Isabel M. Kloumann",
+          "A. Korenev",
+          "Punit Singh Koura",
+          "M. Lachaux",
+          "Thibaut Lavril",
+          "Jenya Lee",
+          "Diana Liskovich",
+          "Yinghai Lu",
+          "Yuning Mao",
+          "Xavier Martinet",
+          "Todor Mihaylov",
+          "Pushkar Mishra",
+          "Igor Molybog",
+          "Yixin Nie",
+          "Andrew Poulton",
+          "J. Reizenstein",
+          "Rashi Rungta",
+          "Kalyan Saladi",
+          "A. Schelten",
+          "Ruan Silva",
+          "Eric Michael Smith",
+          "R. Subramanian",
+          "Xia Tan",
+          "Binh Tang",
+          "Ross Taylor",
+          "Adina Williams",
+          "Jian Xiang Kuan",
+          "Puxin Xu",
+          "Zhengxu Yan",
+          "Iliyan Zarov",
+          "Yuchen Zhang",
+          "Angela Fan",
+          "M. Kambadur",
+          "Sharan Narang",
+          "Aur'elien Rodriguez",
+          "Robert Stojnic",
+          "Sergey Edunov",
+          "Thomas Scialom"
+        ],
+        "arxiv_id": "2307.09288",
+        "doi": null
+      },
+      {
+        "paper_id": "a2ce9963f1f072d578b1a1f1b995fec75e8c2247",
+        "title": "PromptRobust: Towards Evaluating the Robustness of Large Language Models on Adversarial Prompts",
+        "year": 2023,
+        "authors": [
+          "Kaijie Zhu",
+          "Jindong Wang",
+          "Jiaheng Zhou",
+          "Zichen Wang",
+          "Hao Chen",
+          "Yidong Wang",
+          "Linyi Yang",
+          "Weirong Ye",
+          "N. Gong",
+          "Yue Zhang",
+          "Xingxu Xie"
+        ],
+        "arxiv_id": "2306.04528",
+        "doi": "10.1145/3689217.3690621"
+      },
+      {
+        "paper_id": "7a1e71cb1310c4a873e7a4e54d1a6dab0553adce",
+        "title": "The RefinedWeb Dataset for Falcon LLM: Outperforming Curated Corpora with Web Data, and Web Data Only",
+        "year": 2023,
+        "authors": [
+          "Guilherme Penedo",
+          "Quentin Malartic",
+          "Daniel Hesslow",
+          "Ruxandra-Aim\u00e9e Cojocaru",
+          "Alessandro Cappelli",
+          "Hamza Alobeidli",
+          "B. Pannier",
+          "Ebtesam Almazrouei",
+          "Julien Launay"
+        ],
+        "arxiv_id": "2306.01116",
+        "doi": "10.48550/arXiv.2306.01116"
+      },
+      {
+        "paper_id": "32ac52069e562d4f900afee70bdca63f53461481",
+        "title": "QLoRA: Efficient Finetuning of Quantized LLMs",
+        "year": 2023,
+        "authors": [
+          "Tim Dettmers",
+          "Artidoro Pagnoni",
+          "Ari Holtzman",
+          "Luke Zettlemoyer"
+        ],
+        "arxiv_id": "2305.14314",
+        "doi": "10.48550/arXiv.2305.14314"
+      },
+      {
+        "paper_id": "5c7353fac22a8fdc43fc2f5c006b5d6902c47e75",
+        "title": "On the Robustness of ChatGPT: An Adversarial and Out-of-distribution Perspective",
+        "year": 2023,
+        "authors": [
+          "Jindong Wang",
+          "Xixu Hu",
+          "Wenxin Hou",
+          "Hao Chen",
+          "Runkai Zheng",
+          "Yidong Wang",
+          "Linyi Yang",
+          "Haojun Huang",
+          "Weirong Ye",
+          "Xiubo Geng",
+          "Binxing Jiao",
+          "Yue Zhang",
+          "Xingxu Xie"
+        ],
+        "arxiv_id": "2302.12095",
+        "doi": "10.48550/arXiv.2302.12095"
+      },
+      {
+        "paper_id": "873a581320d928249609d3c07229d5af182a379c",
+        "title": "Is ChatGPT a General-Purpose Natural Language Processing Task Solver?",
+        "year": 2023,
+        "authors": [
+          "Chengwei Qin",
+          "Aston Zhang",
+          "Zhuosheng Zhang",
+          "Jiaao Chen",
+          "Michihiro Yasunaga",
+          "Diyi Yang"
+        ],
+        "arxiv_id": "2302.06476",
+        "doi": "10.18653/v1/2023.emnlp-main.85"
+      },
+      {
+        "paper_id": "55bb3b68aafa120d88c354817a62c1461d998a90",
+        "title": "An Error-Guided Correction Model for Chinese Spelling Error Correction",
+        "year": 2023,
+        "authors": [
+          "Ruiyong Sun",
+          "Xiuyu Wu",
+          "Yunfang Wu"
+        ],
+        "arxiv_id": "2301.06323",
+        "doi": "10.48550/arXiv.2301.06323"
+      },
+      {
+        "paper_id": "cdbd4f9b6ab2e2fd1ddf5400d5ed2c18960635d1",
+        "title": "Scaling Instruction-Finetuned Language Models",
+        "year": 2022,
+        "authors": [
+          "Hyung Won Chung",
+          "Le Hou",
+          "S. Longpre",
+          "Barret Zoph",
+          "Yi Tay",
+          "W. Fedus",
+          "Eric Li",
+          "Xuezhi Wang",
+          "Mostafa Dehghani",
+          "Siddhartha Brahma",
+          "Albert Webson",
+          "S. Gu",
+          "Zhuyun Dai",
+          "Mirac Suzgun",
+          "Xinyun Chen",
+          "A. Chowdhery",
+          "Dasha Valter",
+          "Sharan Narang",
+          "Gaurav Mishra",
+          "Adams Wei Yu",
+          "Vincent Zhao",
+          "Yanping Huang",
+          "Andrew M. Dai",
+          "Hongkun Yu",
+          "Slav Petrov",
+          "Ed H. Chi",
+          "J. Dean",
+          "Jacob Devlin",
+          "Adam Roberts",
+          "Denny Zhou",
+          "Quoc V. Le",
+          "Jason Wei"
+        ],
+        "arxiv_id": "2210.11416",
+        "doi": "10.48550/arXiv.2210.11416"
+      },
+      {
+        "paper_id": "dc5518e1db565a8c52084f27353461df474403d8",
+        "title": "RealTime QA: What's the Answer Right Now?",
+        "year": 2022,
+        "authors": [
+          "Jungo Kasai",
+          "Keisuke Sakaguchi",
+          "Yoichi Takahashi",
+          "Ronan Le Bras",
+          "Akari Asai",
+          "Xinyan Velocity Yu",
+          "Dragomir R. Radev",
+          "Noah A. Smith",
+          "Yejin Choi",
+          "Kentaro Inui"
+        ],
+        "arxiv_id": "2207.13332",
+        "doi": "10.48550/arXiv.2207.13332"
+      },
+      {
+        "paper_id": "bd1331b233e84bab7eba503abc60b31ac08e7881",
+        "title": "Beyond the Imitation Game: Quantifying and extrapolating the capabilities of language models",
+        "year": 2022,
+        "authors": [
+          "Aarohi Srivastava",
+          "Abhinav Rastogi",
+          "Abhishek Rao",
+          "Abu Awal Md Shoeb",
+          "Abubakar Abid",
+          "Adam Fisch",
+          "Adam R. Brown",
+          "Adam Santoro",
+          "Aditya Gupta",
+          "Adri\u00e0 Garriga-Alonso",
+          "Agnieszka Kluska",
+          "Aitor Lewkowycz",
+          "Akshat Agarwal",
+          "Alethea Power",
+          "Alex Ray",
+          "Alex Warstadt",
+          "Alexander W. Kocurek",
+          "Ali Safaya",
+          "Ali Tazarv",
+          "Alice Xiang",
+          "Alicia Parrish",
+          "Allen Nie",
+          "Aman Hussain",
+          "Amanda Askell",
+          "A. Dsouza",
+          "Ambrose Slone",
+          "Ameet Rahane",
+          "Anantharaman S. Iyer",
+          "Anders Andreassen",
+          "Andrea Madotto",
+          "Andrea Santilli",
+          "Andreas Stuhlmuller",
+          "Andrew M. Dai",
+          "A. La",
+          "Andrew Kyle Lampinen",
+          "Andy Zou",
+          "Angela Jiang",
+          "Angelica Chen",
+          "Anh Vuong",
+          "Animesh Gupta",
+          "Anna Gottardi",
+          "Antonio Norelli",
+          "Anu Venkatesh",
+          "Arash Gholamidavoodi",
+          "A. Tabassum",
+          "Arul Menezes",
+          "Arun Kirubarajan",
+          "A. Mullokandov",
+          "Ashish Sabharwal",
+          "Austin Herrick",
+          "Avia Efrat",
+          "Aykut Erdem",
+          "Ayla Karakacs",
+          "B. R. Roberts",
+          "B. S. Loe",
+          "Barret Zoph",
+          "Bartlomiej Bojanowski",
+          "Batuhan Ozyurt",
+          "Behnam Hedayatnia",
+          "Behnam Neyshabur",
+          "Benjamin Inden",
+          "Benno Stein",
+          "Berk Ekmekci",
+          "Bill Yuchen Lin",
+          "B. Howald",
+          "Bryan Orinion",
+          "Cameron Diao",
+          "Cameron Dour",
+          "Catherine Stinson",
+          "Cedrick Argueta",
+          "C'esar Ferri Ram'irez",
+          "Chandan Singh",
+          "Charles Rathkopf",
+          "Chenlin Meng",
+          "Chitta Baral",
+          "Chiyu Wu",
+          "Chris Callison-Burch",
+          "Chris Waites",
+          "Christian Voigt",
+          "Christopher D. Manning",
+          "Christopher Potts",
+          "Cindy Ramirez",
+          "Clara E. Rivera",
+          "Clemencia Siro",
+          "Colin Raffel",
+          "Courtney Ashcraft",
+          "Cristina Garbacea",
+          "Damien Sileo",
+          "Dan Garrette",
+          "Dan Hendrycks",
+          "D. Kilman",
+          "Dan Roth",
+          "Daniel Freeman",
+          "Daniel Khashabi",
+          "Daniel Levy",
+          "D. Gonz'alez",
+          "Danielle R. Perszyk",
+          "Danny Hernandez",
+          "Danqi Chen",
+          "Daphne Ippolito",
+          "Dar Gilboa",
+          "David Dohan",
+          "D. Drakard",
+          "David Jurgens",
+          "Debajyoti Datta",
+          "Deep Ganguli",
+          "Denis Emelin",
+          "Denis Kleyko",
+          "Deniz Yuret",
+          "Derek Chen",
+          "Derek Tam",
+          "Dieuwke Hupkes",
+          "Diganta Misra",
+          "Dilyar Buzan",
+          "Dimitri Coelho Mollo",
+          "Diyi Yang",
+          "Dong-Ho Lee",
+          "Dylan Schrader",
+          "Ekaterina Shutova",
+          "E. D. Cubuk",
+          "Elad Segal",
+          "Eleanor Hagerman",
+          "Elizabeth Barnes",
+          "Elizabeth Donoway",
+          "Ellie Pavlick",
+          "E. Rodol\u00e0",
+          "Emma Lam",
+          "Eric Chu",
+          "Eric Tang",
+          "Erkut Erdem",
+          "Ernie Chang",
+          "Ethan A. Chi",
+          "Ethan Dyer",
+          "E. Jerzak",
+          "Ethan Kim",
+          "Eunice Engefu Manyasi",
+          "Evgenii Zheltonozhskii",
+          "Fanyue Xia",
+          "Fatemeh Siar",
+          "Fernando Mart'inez-Plumed",
+          "Francesca Happ'e",
+          "Fran\u00e7ois Chollet",
+          "Frieda Rong",
+          "Gaurav Mishra",
+          "Genta Indra Winata",
+          "Gerard de Melo",
+          "Germ\u00e1n Kruszewski",
+          "Giambattista Parascandolo",
+          "Giorgio Mariani",
+          "Gloria Xinyue Wang",
+          "Gonzalo Jaimovitch-L'opez",
+          "Gregor Betz",
+          "Guy Gur-Ari",
+          "Hana Galijasevic",
+          "Hannah Kim",
+          "Hannah Rashkin",
+          "Hannaneh Hajishirzi",
+          "Harsh Mehta",
+          "H. Bogar",
+          "Henry Shevlin",
+          "Hinrich Schutze",
+          "H. Yakura",
+          "Hongming Zhang",
+          "Hugh Mee Wong",
+          "Ian Ng",
+          "Isaac Noble",
+          "Jaap Jumelet",
+          "Jack Geissinger",
+          "John Kernion",
+          "Jacob Hilton",
+          "Jaehoon Lee",
+          "J. Fisac",
+          "James B. Simon",
+          "James Koppel",
+          "James Zheng",
+          "James Zou",
+          "Jan Koco'n",
+          "Jana Thompson",
+          "Janelle Wingfield",
+          "Jared Kaplan",
+          "Jarema Radom",
+          "Jascha Narain Sohl-Dickstein",
+          "Jason Phang",
+          "Jason Wei",
+          "J. Yosinski",
+          "Jekaterina Novikova",
+          "Jelle Bosscher",
+          "Jennifer Marsh",
+          "Jeremy Kim",
+          "Jeroen Taal",
+          "Jesse Engel",
+          "Jesujoba Oluwadara Alabi",
+          "Jiacheng Xu",
+          "Jiaming Song",
+          "Jillian Tang",
+          "Jane W Waweru",
+          "John Burden",
+          "John Miller",
+          "John U. Balis",
+          "Jonathan Batchelder",
+          "Jonathan Berant",
+          "Jorg Frohberg",
+          "Jos Rozen",
+          "J. Hern\u00e1ndez-Orallo",
+          "Joseph Boudeman",
+          "J. Guerr",
+          "Joseph Jones",
+          "Joshua B. Tenenbaum",
+          "Joshua S. Rule",
+          "Joyce Chua",
+          "Kamil Kanclerz",
+          "Karen Livescu",
+          "K. Krauth",
+          "Karthik Gopalakrishnan",
+          "Katerina Ignatyeva",
+          "K. Markert",
+          "Kaustubh D. Dhole",
+          "Kevin Gimpel",
+          "Kevin Omondi",
+          "K. Mathewson",
+          "Kristen Chiafullo",
+          "Ksenia Shkaruta",
+          "Kumar Shridhar",
+          "Kyle McDonell",
+          "Kyle Richardson",
+          "Laria Reynolds",
+          "Leo Gao",
+          "Li Zhang",
+          "Liam Dugan",
+          "Lianhui Qin",
+          "Lidia Contreras-Ochando",
+          "Louis-philippe Morency",
+          "Luca Moschella",
+          "Luca Lam",
+          "Lucy Noble",
+          "Ludwig Schmidt",
+          "Luheng He",
+          "Luis Oliveros Col'on",
+          "Luke Metz",
+          "Lutfi Kerem cSenel",
+          "Maarten Bosma",
+          "Maarten Sap",
+          "Maartje ter Hoeve",
+          "Maheen Farooqi",
+          "Manaal Faruqui",
+          "Mantas Mazeika",
+          "Marco Baturan",
+          "Marco Marelli",
+          "Marco Maru",
+          "Maria Jose Ram\u2019irez Quintana",
+          "M. Tolkiehn",
+          "Mario Giulianelli",
+          "Martha Lewis",
+          "Martin Potthast",
+          "Matthew L. Leavitt",
+          "Matthias Hagen",
+          "M. Schubert",
+          "Medina Baitemirova",
+          "Melody Arnaud",
+          "M. McElrath",
+          "Michael A. Yee",
+          "Michael Cohen",
+          "Michael Gu",
+          "Michael Ivanitskiy",
+          "Michael Starritt",
+          "M. Strube",
+          "Michal Swkedrowski",
+          "Michele Bevilacqua",
+          "Michihiro Yasunaga",
+          "Mihir Kale",
+          "Mike Cain",
+          "Mimee Xu",
+          "Mirac Suzgun",
+          "Mitch Walker",
+          "Monica Tiwari",
+          "Mohit Bansal",
+          "Moin Aminnaseri",
+          "Mor Geva",
+          "Mozhdeh Gheini",
+          "T. MukundVarma",
+          "Nanyun Peng",
+          "Nathan A. Chi",
+          "Nayeon Lee",
+          "Neta Gur-Ari Krakover",
+          "Nicholas Cameron",
+          "Nicholas Roberts",
+          "Nick Doiron",
+          "Nicole Martinez",
+          "Nikita Nangia",
+          "Niklas Deckers",
+          "Niklas Muennighoff",
+          "N. Keskar",
+          "Niveditha Iyer",
+          "Noah Constant",
+          "Noah Fiedel",
+          "Nuan Wen",
+          "Oliver Zhang",
+          "Omar Agha",
+          "Omar Elbaghdadi",
+          "Omer Levy",
+          "Owain Evans",
+          "Pablo Antonio Moreno Casares",
+          "P. Doshi",
+          "Pascale Fung",
+          "Paul Pu Liang",
+          "Paul Vicol",
+          "Pegah Alipoormolabashi",
+          "Peiyuan Liao",
+          "Percy Liang",
+          "Peter Chang",
+          "P. Eckersley",
+          "Phu Mon Htut",
+          "P. Hwang",
+          "P. Milkowski",
+          "P. Patil",
+          "Pouya Pezeshkpour",
+          "Priti Oli",
+          "Qiaozhu Mei",
+          "Qing Lyu",
+          "Qinlang Chen",
+          "Rabin Banjade",
+          "Rachel Etta Rudolph",
+          "Raefer Gabriel",
+          "Rahel Habacker",
+          "Ramon Risco",
+          "Raphael Milliere",
+          "Rhythm Garg",
+          "Richard Barnes",
+          "R. Saurous",
+          "Riku Arakawa",
+          "Robbe Raymaekers",
+          "Robert Frank",
+          "Rohan Sikand",
+          "Roman Novak",
+          "Roman Sitelew",
+          "Ronan Le Bras",
+          "Rosanne Liu",
+          "Rowan Jacobs",
+          "Rui Zhang",
+          "R. Salakhutdinov",
+          "Ryan Chi",
+          "Ryan Lee",
+          "Ryan Stovall",
+          "R. Teehan",
+          "Rylan Yang",
+          "Sahib Singh",
+          "Saif Mohammad",
+          "Sajant Anand",
+          "Sam Dillavou",
+          "Sam Shleifer",
+          "Sam Wiseman",
+          "Samuel Gruetter",
+          "Samuel R. Bowman",
+          "S. Schoenholz",
+          "Sanghyun Han",
+          "Sanjeev Kwatra",
+          "Sarah A. Rous",
+          "Sarik Ghazarian",
+          "Sayan Ghosh",
+          "Sean Casey",
+          "Sebastian Bischoff",
+          "Sebastian Gehrmann",
+          "Sebastian Schuster",
+          "Sepideh Sadeghi",
+          "Shadi S. Hamdan",
+          "Sharon Zhou",
+          "Shashank Srivastava",
+          "Sherry Shi",
+          "Shikhar Singh",
+          "Shima Asaadi",
+          "S. Gu",
+          "Shubh Pachchigar",
+          "Shubham Toshniwal",
+          "Shyam Upadhyay",
+          "Shyamolima Debnath",
+          "Siamak Shakeri",
+          "Simon Thormeyer",
+          "S. Melzi",
+          "Siva Reddy",
+          "S. Makini",
+          "Soo-Hwan Lee",
+          "Spencer Bradley Torene",
+          "Sriharsha Hatwar",
+          "S. Dehaene",
+          "Stefan Divic",
+          "Stefano Ermon",
+          "Stella Biderman",
+          "Stephanie Lin",
+          "Stephen Prasad",
+          "Steven T Piantadosi",
+          "Stuart M. Shieber",
+          "Summer Misherghi",
+          "S. Kiritchenko",
+          "Swaroop Mishra",
+          "Tal Linzen",
+          "Tal Schuster",
+          "Tao Li",
+          "Tao Yu",
+          "Tariq Ali",
+          "Tatsunori Hashimoto",
+          "Te-Lin Wu",
+          "T. Desbordes",
+          "Theodore Rothschild",
+          "Thomas Phan",
+          "Tianle Wang",
+          "Tiberius Nkinyili",
+          "Timo Schick",
+          "T. Kornev",
+          "T. Tunduny",
+          "Tobias Gerstenberg",
+          "T. Chang",
+          "Trishala Neeraj",
+          "Tushar Khot",
+          "Tyler Shultz",
+          "Uri Shaham",
+          "Vedant Misra",
+          "Vera Demberg",
+          "Victoria Nyamai",
+          "Vikas Raunak",
+          "V. Ramasesh",
+          "Vinay Uday Prabhu",
+          "Vishakh Padmakumar",
+          "Vivek Srikumar",
+          "W. Fedus",
+          "W. Saunders",
+          "William Zhang",
+          "Wout Vossen",
+          "Xiang Ren",
+          "Xiaoyu Tong",
+          "Xinran Zhao",
+          "Xinyi Wu",
+          "Xudong Shen",
+          "Yadollah Yaghoobzadeh",
+          "Yair Lakretz",
+          "Yangqiu Song",
+          "Yasaman Bahri",
+          "Yejin Choi",
+          "Yichi Yang",
+          "Yiding Hao",
+          "Yifu Chen",
+          "Yonatan Belinkov",
+          "Yu Hou",
+          "Yu Hou",
+          "Yuntao Bai",
+          "Zachary Seid",
+          "Zhuoye Zhao",
+          "Zijian Wang",
+          "Zijie J. Wang",
+          "Zirui Wang",
+          "Ziyi Wu"
+        ],
+        "arxiv_id": "2206.04615",
+        "doi": null
+      },
+      {
+        "paper_id": "b21670e8061a06ab97e7d6052c9345a326e84ff8",
+        "title": "UL2: Unifying Language Learning Paradigms",
+        "year": 2022,
+        "authors": [
+          "Yi Tay",
+          "Mostafa Dehghani",
+          "Vinh Q. Tran",
+          "Xavier Garc\u00eda",
+          "Jason Wei",
+          "Xuezhi Wang",
+          "Hyung Won Chung",
+          "Dara Bahri",
+          "Tal Schuster",
+          "H. Zheng",
+          "Denny Zhou",
+          "N. Houlsby",
+          "Donald Metzler"
+        ],
+        "arxiv_id": "2205.05131",
+        "doi": null
+      },
+      {
+        "paper_id": "d2c730502ab895c18bb241261f1efc4268008767",
+        "title": "Word Order Does Matter and Shuffled Language Models Know It",
+        "year": 2022,
+        "authors": [
+          "Vinit Ravishankar",
+          "Mostafa Abdou",
+          "Artur Kulmizev",
+          "Anders S\u00f8gaard"
+        ],
+        "arxiv_id": "2203.10995",
+        "doi": "10.48550/arXiv.2203.10995"
+      },
+      {
+        "paper_id": "44ef6cf919250001836ed73c0d58b20ea1e2d308",
+        "title": "ByT5: Towards a Token-Free Future with Pre-trained Byte-to-Byte Models",
+        "year": 2021,
+        "authors": [
+          "Linting Xue",
+          "Aditya Barua",
+          "Noah Constant",
+          "Rami Al-Rfou",
+          "Sharan Narang",
+          "Mihir Kale",
+          "Adam Roberts",
+          "Colin Raffel"
+        ],
+        "arxiv_id": "2105.13626",
+        "doi": "10.1162/tacl_a_00461"
+      },
+      {
+        "paper_id": "4e00843bc5f60d2b9116abc4320af6d184422291",
+        "title": "Masked Language Modeling and the Distributional Hypothesis: Order Word Matters Pre-training for Little",
+        "year": 2021,
+        "authors": [
+          "Koustuv Sinha",
+          "Robin Jia",
+          "Dieuwke Hupkes",
+          "J. Pineau",
+          "Adina Williams",
+          "Douwe Kiela"
+        ],
+        "arxiv_id": "2104.06644",
+        "doi": "10.18653/v1/2021.emnlp-main.230"
+      },
+      {
+        "paper_id": "776a49616c84d52e8fff9911c561e3bac90910eb",
+        "title": "Out of Order: How important is the sequential order of words in a sentence in Natural Language Understanding tasks?",
+        "year": 2020,
+        "authors": [
+          "Thang M. Pham",
+          "Trung Bui",
+          "Long Mai",
+          "Anh Totti Nguyen"
+        ],
+        "arxiv_id": "2012.15180",
+        "doi": "10.18653/v1/2021.findings-acl.98"
+      },
+      {
+        "paper_id": "6e44f3b06a2a92b91ed526471d3debd0bd69f488",
+        "title": "UnNatural Language Inference",
+        "year": 2020,
+        "authors": [
+          "Koustuv Sinha",
+          "Prasanna Parthasarathi",
+          "Joelle Pineau",
+          "Adina Williams"
+        ],
+        "arxiv_id": "2101.00010",
+        "doi": "10.18653/v1/2021.acl-long.569"
+      },
+      {
+        "paper_id": "90abbc2cf38462b954ae1b772fac9532e2ccd8b0",
+        "title": "Language Models are Few-Shot Learners",
+        "year": 2020,
+        "authors": [
+          "Tom B. Brown",
+          "Benjamin Mann",
+          "Nick Ryder",
+          "Melanie Subbiah",
+          "J. Kaplan",
+          "Prafulla Dhariwal",
+          "Arvind Neelakantan",
+          "Pranav Shyam",
+          "Girish Sastry",
+          "Amanda Askell",
+          "Sandhini Agarwal",
+          "Ariel Herbert-Voss",
+          "Gretchen Krueger",
+          "T. Henighan",
+          "R. Child",
+          "A. Ramesh",
+          "Daniel M. Ziegler",
+          "Jeff Wu",
+          "Clemens Winter",
+          "Christopher Hesse",
+          "Mark Chen",
+          "Eric Sigler",
+          "Ma-teusz Litwin",
+          "Scott Gray",
+          "Benjamin Chess",
+          "Jack Clark",
+          "Christopher Berner",
+          "Sam McCandlish",
+          "Alec Radford",
+          "I. Sutskever",
+          "Dario Amodei"
+        ],
+        "arxiv_id": "2005.14165",
+        "doi": null
+      },
+      {
+        "paper_id": "ea099dc45506580de966803e4305e705f96e45e2",
+        "title": "Correcting the Autocorrect: Context-Aware Typographical Error Correction via Training Data Augmentation",
+        "year": 2020,
+        "authors": [
+          "Kshitij Shah",
+          "Gerard de Melo"
+        ],
+        "arxiv_id": "2005.01158",
+        "doi": null
+      },
+      {
+        "paper_id": "6c4b76232bb72897685d19b3d264c6ee3005bc2b",
+        "title": "Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer",
+        "year": 2019,
+        "authors": [
+          "Colin Raffel",
+          "Noam Shazeer",
+          "Adam Roberts",
+          "Katherine Lee",
+          "Sharan Narang",
+          "Michael Matena",
+          "Yanqi Zhou",
+          "Wei Li",
+          "Peter J. Liu"
+        ],
+        "arxiv_id": "1910.10683",
+        "doi": null
+      },
+      {
+        "paper_id": "97906df07855b029b7aae7c2a1c6c5e8df1d531c",
+        "title": "BERT Rediscovers the Classical NLP Pipeline",
+        "year": 2019,
+        "authors": [
+          "Ian Tenney",
+          "Dipanjan Das",
+          "Ellie Pavlick"
+        ],
+        "arxiv_id": "1905.05950",
+        "doi": "10.18653/v1/P19-1452"
+      }
+    ]
+  },
+  {
+    "id": "2312.09876",
+    "submitter": null,
+    "authors": "Aditya Parikh",
+    "title": "Automatic Image Colourizer",
+    "comments": null,
+    "journal_ref": null,
+    "doi": "10.48550/arXiv.2312.09876",
+    "report_no": null,
+    "categories": "",
+    "license": null,
+    "abstract": "In this project we have designed and described a model which colourize a gray-scale image, with no human intervention. We propose a fully automatic process of colouring and re-colouring faded or gray-scale image with vibrant and pragmatic colours. We have used Convolutional Neural Network to hallucinate input images and feed-forwarded by training thousands of images. This approach results in trailblazing results.",
+    "versions": [],
+    "update_date": "2023",
+    "authors_parsed": [],
+    "citations": [],
+    "references": [
+      {
+        "paper_id": "9154033e990a1dd8f8bb6bc2ad4c18ea7b284fdc",
+        "title": "Edison",
+        "year": 2020,
+        "authors": [
+          "Daniel W. Weeks"
+        ],
+        "arxiv_id": null,
+        "doi": "10.14713/njs.v6i2.217"
+      },
+      {
+        "paper_id": "6286a82f72f632672c1890f3dd6bbb15b8e5168b",
+        "title": "Object Bank: A High-Level Image Representation for Scene Classification & Semantic Feature Sparsification",
+        "year": 2010,
+        "authors": [
+          "Li-Jia Li",
+          "Hao Su",
+          "E. Xing",
+          "Li Fei-Fei"
+        ],
+        "arxiv_id": null,
+        "doi": null
+      },
+      {
+        "paper_id": "40bb05c3f65fbce3d0b3f56a401892ddca164cd0",
+        "title": "Colorization by example",
+        "year": 2005,
+        "authors": [
+          "Revital Ironi",
+          "D. Cohen-Or",
+          "Dani Lischinski"
+        ],
+        "arxiv_id": null,
+        "doi": "10.2312/EGWR/EGSR05/201-210"
+      },
+      {
+        "paper_id": "bad97714e7b7ca4f8e49dd1fefc05e7d9bea6658",
+        "title": "Colorization using optimization",
+        "year": 2004,
+        "authors": [
+          "Anat Levin",
+          "Dani Lischinski",
+          "Yair Weiss"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1145/1186562.1015780"
+      },
+      {
+        "paper_id": "90d6e7f2202f754d8588f9536e3f5b4a24701f24",
+        "title": "Representing and Recognizing the Visual Appearance of Materials using Three-dimensional Textons",
+        "year": 2001,
+        "authors": [
+          "Thomas K. Leung",
+          "Jitendra Malik"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1023/A:1011126920638"
+      },
+      {
+        "paper_id": null,
+        "title": "Dataset used (all result Images) : LabelMe",
+        "year": null,
+        "authors": [],
+        "arxiv_id": null,
+        "doi": null
+      }
+    ]
+  },
+  {
+    "id": "2401.12345",
+    "submitter": null,
+    "authors": "Shixiong Wang, Wei Dai, Geoffrey Ye Li",
+    "title": "Distributionally Robust Receive Combining",
+    "comments": "It is proved that the ridge and kernel ridge regression methods in machine learning are distributionally robust against diagonal perturbation in feature covariance, which reveals that channel estimation is not a necessary operation.",
+    "journal_ref": null,
+    "doi": "10.1109/TSP.2025.3582082",
+    "report_no": null,
+    "categories": "",
+    "license": null,
+    "abstract": "This article investigates signal estimation in wireless transmission (i.e., receive combining) from the perspective of statistical machine learning, where the transmit signals may be from an integrated sensing and communication system; that is, 1) signals may be not only discrete constellation points but also arbitrary complex values; 2) signals may be spatially correlated. Particular attention is paid to handling various uncertainties such as the uncertainty of the transmit signal covariance, the uncertainty of the channel matrix, the uncertainty of the channel noise covariance, the existence of channel impulse noises, the non-ideality of the power amplifiers, and the limited sample size of pilots. To proceed, a distributionally robust receive combining framework that is insensitive to the above uncertainties is proposed, which reveals that channel estimation is not a necessary operation. For optimal linear estimation, the proposed framework includes several existing combiners as special cases such as diagonal loading and eigenvalue thresholding. For optimal nonlinear estimation, estimators are limited in reproducing kernel Hilbert spaces and neural network function spaces, and corresponding uncertainty-aware solutions (e.g., kernelized diagonal loading) are derived. In addition, we prove that the ridge and kernel ridge regression methods in machine learning are distributionally robust against diagonal perturbation in feature covariance.",
+    "versions": [],
+    "update_date": "2024",
+    "authors_parsed": [],
+    "citations": [
+      {
+        "citing_paper_id": "f4fb3deef99c9ac94671e025089018a0aaa540ff",
+        "title": "Joint AP Selection and Power Allocation for Unicast\u2013Multicast Cell-Free Massive MIMO",
+        "year": 2025,
+        "authors": [
+          "Mustafa S. Abbas",
+          "Z. Mobini",
+          "H. Ngo",
+          "Hyundung Shin",
+          "Michail Matthaiou"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "be095b41af37d13a368ffacb3c75cbc3286a1958",
+        "title": "Zassenhaus Expansion in Solving the Schr\\\"odinger Equation",
+        "year": 2025,
+        "authors": [
+          "Molena Nguyen",
+          "Naihuan Jing"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "cd40f92970bd3bbf473fa3543f5537a9c9f21826",
+        "title": "Distributionally Robust Adaptive Beamforming",
+        "year": 2024,
+        "authors": [
+          "Shixiong Wang",
+          "Wei Dai",
+          "Geoffrey Ye Li"
+        ],
+        "citation_count": 2
+      },
+      {
+        "citing_paper_id": "e1155207beeb489dbaf2623a51409f1a9a466061",
+        "title": "Machine Learning in Communications: A Road to Intelligent Transmission and Processing",
+        "year": 2024,
+        "authors": [
+          "Shixiong Wang",
+          "Geoffrey Ye Li"
+        ],
+        "citation_count": 2
+      },
+      {
+        "citing_paper_id": "eb883e69c9c8e401b1fadc24dba8171162a98b57",
+        "title": "Sparse Prototype-Based Framework for Deepfake Detection Using Class-Specific Dictionary Learning",
+        "year": 2025,
+        "authors": [
+          "Fatima Khalid",
+          "Usman Haider",
+          "Muhammad Hanif",
+          "Ahmer Rashid",
+          "Akhtar Khalil"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "a2e8352e69035a07f60549d273c8f5771e88c49c",
+        "title": "Multi-Dataset Training Strategy for Robust Polyp Detection With Clinical Validation Insights",
+        "year": 2025,
+        "authors": [
+          "Alben Mert",
+          "Ali Hakan B\u00fcy\u00fckl\u00fc",
+          "Bulent Bayram",
+          "Semra Erpolat Ta\u015fabat"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "0a3738f1e32b4600f1a9818bb4cc60e612b7c17d",
+        "title": "TOPOSegNet: Road Crack Extraction Network Based on Topological Relationship Modeling",
+        "year": 2025,
+        "authors": [
+          "Rufei Liu",
+          "ZheDong Zhao",
+          "Kun Cheng",
+          "Yi Zhang",
+          "Zhanwen Su"
+        ],
+        "citation_count": 0
+      }
+    ],
+    "references": [
+      {
+        "paper_id": "7665b9ff2ccb4705a25bfa75b7789e4556697d85",
+        "title": "Deep Learning Aided Low Complex Breadth-First Tree Search for MIMO Detection",
+        "year": 2024,
+        "authors": [
+          "Jieyu Liao",
+          "Junhui Zhao",
+          "Feifei Gao",
+          "Geoffrey Ye Li"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1109/TWC.2023.3330816"
+      },
+      {
+        "paper_id": "a1de14ec6dee45e5e43cb80f9e29cc1429250628",
+        "title": "Twenty-Five Years of Advances in Beamforming: From convex and nonconvex optimization to learning techniques",
+        "year": 2022,
+        "authors": [
+          "Ahmet M. Elbir",
+          "K. Mishra",
+          "S. Vorobyov",
+          "R. Heath"
+        ],
+        "arxiv_id": "2211.02165",
+        "doi": "10.1109/MSP.2023.3262366"
+      },
+      {
+        "paper_id": "f64186a5f9aa80ae56037e95c6842f35080b026d",
+        "title": "Transfer Learning for Signal Detection in Wireless Networks",
+        "year": 2022,
+        "authors": [
+          "Nguyen Van Huynh",
+          "Geoffrey Y. Li"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1109/LWC.2022.3202117"
+      },
+      {
+        "paper_id": "f80cd5e6728c5d2d789df51b1de0ee51d1619341",
+        "title": "Tikhonov Regularization is Optimal Transport Robust under Martingale Constraints",
+        "year": 2022,
+        "authors": [
+          "Jiajin Li",
+          "Si-Jian Lin",
+          "J. Blanchet",
+          "Viet Anh Nguyen"
+        ],
+        "arxiv_id": "2210.01413",
+        "doi": "10.48550/arXiv.2210.01413"
+      },
+      {
+        "paper_id": "0e35ffe70223eabe2bc18417c290704b2219e64e",
+        "title": "Robust Adaptive Beamforming via Worst-Case SINR Maximization With Nonconvex Uncertainty Sets",
+        "year": 2022,
+        "authors": [
+          "Yongwei Huang",
+          "Hao Fu",
+          "S. Vorobyov",
+          "Z. Luo"
+        ],
+        "arxiv_id": "2206.06001",
+        "doi": "10.1109/TSP.2023.3240312"
+      },
+      {
+        "paper_id": "ed4e132afb4f0b99642aec163a94802c9d9b5e0f",
+        "title": "On the Fundamental Tradeoff of Integrated Sensing and Communications Under Gaussian Channels",
+        "year": 2022,
+        "authors": [
+          "Yifeng Xiong",
+          "F. Liu",
+          "Yuanhao Cui",
+          "W. Yuan",
+          "T. Han",
+          "G. Caire"
+        ],
+        "arxiv_id": "2204.06938",
+        "doi": "10.1109/TIT.2023.3284449"
+      },
+      {
+        "paper_id": "ff0f7cbcf4bf35022584ecfbf21d68a20427014e",
+        "title": "Robust Adaptive Beamforming Maximizing the Worst-Case SINR Over Distributional Uncertainty Sets for Random INC Matrix And Signal Steering Vector",
+        "year": 2021,
+        "authors": [
+          "Yongwei Huang",
+          "Wenzheng Yang",
+          "S. Vorobyov"
+        ],
+        "arxiv_id": "2110.08444",
+        "doi": "10.1109/icassp43922.2022.9746616"
+      },
+      {
+        "paper_id": "6e445400471d1b336df53d327e5eb87db9521c37",
+        "title": "An Overview of Signal Processing Techniques for Joint Communication and Radar Sensing",
+        "year": 2021,
+        "authors": [
+          "J. A. Zhang",
+          "Fan Liu",
+          "C. Masouros",
+          "R. Heath",
+          "Zhiyong Feng",
+          "Le Zheng",
+          "A. Petropulu"
+        ],
+        "arxiv_id": "2102.12780",
+        "doi": "10.1109/JSTSP.2021.3113120"
+      },
+      {
+        "paper_id": "0a614c46b2fababc0a9781501917e256922c99ba",
+        "title": "Model-Driven Deep Learning for MIMO Detection",
+        "year": 2020,
+        "authors": [
+          "Hengtao He",
+          "Chao-Kai Wen",
+          "Shi Jin",
+          "Geoffrey Y. Li"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1109/TSP.2020.2976585"
+      },
+      {
+        "paper_id": "a5b36d28937d4e14c5207b53af1a1d31a320bd22",
+        "title": "Lossless Dimension Reduction for Integer Least Squares With Application to Sphere Decoding",
+        "year": 2019,
+        "authors": [
+          "M. Neinavaie",
+          "M. Derakhtian",
+          "S. Vorobyov"
+        ],
+        "arxiv_id": "1911.13172",
+        "doi": "10.1109/TSP.2020.3037708"
+      },
+      {
+        "paper_id": "4a0d35989d91b3b7d2318802b1de6d10e4e6e830",
+        "title": "Wasserstein Distributionally Robust Optimization: Theory and Applications in Machine Learning",
+        "year": 2019,
+        "authors": [
+          "D. Kuhn",
+          "Peyman Mohajerin Esfahani",
+          "Viet Anh Nguyen",
+          "Soroosh Shafieezadeh-Abadeh"
+        ],
+        "arxiv_id": "1908.08729",
+        "doi": "10.1287/EDUC.2019.0198"
+      },
+      {
+        "paper_id": "a841650d7ba3a425a4118f206abcd64f64d36508",
+        "title": "Frameworks and Results in Distributionally Robust Optimization",
+        "year": 2019,
+        "authors": [
+          "Hamed Rahimian",
+          "Sanjay Mehrotra"
+        ],
+        "arxiv_id": "1908.05659",
+        "doi": "10.5802/ojmo.15"
+      },
+      {
+        "paper_id": "3813b88a4ec3c63919df47e9694b577f4691f7e5",
+        "title": "A survey on Image Data Augmentation for Deep Learning",
+        "year": 2019,
+        "authors": [
+          "Connor Shorten",
+          "T. Khoshgoftaar"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1186/s40537-019-0197-0"
+      },
+      {
+        "paper_id": "72e0763428b55a788ffa16b7d206f8d3e20a9db9",
+        "title": "Distributionally Robust Optimization and Generalization in Kernel Methods",
+        "year": 2019,
+        "authors": [
+          "Matthew Staib",
+          "S. Jegelka"
+        ],
+        "arxiv_id": "1905.10943",
+        "doi": null
+      },
+      {
+        "paper_id": "3c730bcb33745fb68fc42756c04df6920d6ddd66",
+        "title": "Sequence Noise Injected Training for End-to-end Speech Recognition",
+        "year": 2019,
+        "authors": [
+          "G. Saon",
+          "Zolt\u00e1n T\u00fcske",
+          "Kartik Audhkhasi",
+          "Brian Kingsbury"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1109/ICASSP.2019.8683706"
+      },
+      {
+        "paper_id": "3e255d8be9d38701c34017f922f2a2537881e74d",
+        "title": "Distributionally Robust Optimization",
+        "year": 2018,
+        "authors": [
+          "Jian Gao",
+          "Yida Xu",
+          "J. Barreiro\u2010Gomez",
+          "Massa Ndong",
+          "Michail Smyrnakis",
+          "Hamidou TembineJian Gao",
+          "M. Smyrnakis",
+          "H. Tembine"
+        ],
+        "arxiv_id": null,
+        "doi": "10.5772/INTECHOPEN.76686"
+      },
+      {
+        "paper_id": "abaf9a91f636542a230d32dec71206bfeba703e1",
+        "title": "Toward Dual-functional Radar-Communication Systems: Optimal Waveform Design",
+        "year": 2017,
+        "authors": [
+          "Fan Liu",
+          "Longfei Zhou",
+          "C. Masouros",
+          "Ang Li",
+          "Wu Luo",
+          "A. Petropulu"
+        ],
+        "arxiv_id": "1711.05220",
+        "doi": "10.1109/TSP.2018.2847648"
+      },
+      {
+        "paper_id": "7bdf0bb4adb6a884303597600398c6ef583f78c4",
+        "title": "Regularization via Mass Transportation",
+        "year": 2017,
+        "authors": [
+          "Soroosh Shafieezadeh-Abadeh",
+          "D. Kuhn",
+          "Peyman Mohajerin Esfahani"
+        ],
+        "arxiv_id": "1710.10016",
+        "doi": null
+      },
+      {
+        "paper_id": "0f5c57903d7ce4d7e7651d19b9bcd8243b003e16",
+        "title": "Power of Deep Learning for Channel Estimation and Signal Detection in OFDM Systems",
+        "year": 2017,
+        "authors": [
+          "Hao Ye",
+          "Geoffrey Y. Li",
+          "B. Juang"
+        ],
+        "arxiv_id": "1708.08514",
+        "doi": "10.1109/LWC.2017.2757490"
+      },
+      {
+        "paper_id": "352056cf4cf7e44fb8ebf863c4b632b759a39344",
+        "title": "Robust Wasserstein profile inference and applications to machine learning",
+        "year": 2016,
+        "authors": [
+          "J. Blanchet",
+          "Yang Kang",
+          "Karthyek Murthy"
+        ],
+        "arxiv_id": "1610.05627",
+        "doi": "10.1017/jpr.2019.49"
+      }
+    ]
+  },
+  {
+    "id": "2401.00001",
+    "submitter": null,
+    "authors": "Runjia Yang, Beining Shi",
+    "title": "Sector Rotation by Factor Model and Fundamental Analysis",
+    "comments": null,
+    "journal_ref": null,
+    "doi": null,
+    "report_no": null,
+    "categories": "",
+    "license": null,
+    "abstract": "This study presents an analytical approach to sector rotation, leveraging both factor models and fundamental metrics. We initiate with a systematic classification of sectors, followed by an empirical investigation into their returns. Through factor analysis, the paper underscores the significance of momentum and short-term reversion in dictating sectoral shifts. A subsequent in-depth fundamental analysis evaluates metrics such as PE, PB, EV-to-EBITDA, Dividend Yield, among others. Our primary contribution lies in developing a predictive framework based on these fundamental indicators. The constructed models, post rigorous training, exhibit noteworthy predictive capabilities. The findings furnish a nuanced understanding of sector rotation strategies, with implications for asset management and portfolio construction in the financial domain.",
+    "versions": [],
+    "update_date": "2023",
+    "authors_parsed": [],
+    "citations": [
+      {
+        "citing_paper_id": "5c5fb20da523ac78207b0cfebb6dcd48bdc470bd",
+        "title": "Privacy-Enhanced Social Proximity Matching Protocols for Decentralized Online Social Networks",
+        "year": 2025,
+        "authors": [
+          "Vishakha Salunkhe",
+          "Mayuri Satpute",
+          "Mayuri Shahir",
+          "Roshani V. Pawar"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "0515ca9f212d098fcebe58d2eb8918002f8e148d",
+        "title": "Enhanced YOLOv8 With VTR Integration: A Robust Solution for Automated Recognition of OCS Mast Number Plates",
+        "year": 2024,
+        "authors": [
+          "Xiaofeng Huang",
+          "Shuyao Yang",
+          "Ao Xiong",
+          "Yuqi Yang"
+        ],
+        "citation_count": 3
+      }
+    ],
+    "references": []
+  },
+  {
+    "id": "2401.00002",
+    "submitter": null,
+    "authors": "Carlos E. Navia, M. Oliveira, A. Nepomuceno",
+    "title": "Prompt Emission of Relativistic Protons up to GeV Energies from M6.4-Class Solar Flare on July 17, 2023",
+    "comments": null,
+    "journal_ref": null,
+    "doi": "10.1007/s13538-024-01629-1",
+    "report_no": null,
+    "categories": "",
+    "license": null,
+    "abstract": "We show evidence of particle acceleration at GeV energies associated directly with protons from the prompt emission of a long-duration M6-class solar flare on July 17, 2023, rather than from protons acceleration by shocks from its associated coronal mass ejection (CME), which erupted with a speed of 1342 km/s. Solar energetic particles (SEP) accelerated by the blast have reached Earth, up to an almost S3 (strong) category of a radiation storm on the NOAA scale. Also, we show a temporal correlation between the fast increase in the GOES-16 proton flux and the ground-level count rate excess of the New-Tupi muon detector, located in the central region of the South Atlantic Anomaly (SAA) an area where the Earth\u2019s magnetic field is anomalously weak. A Monte Carlo spectral analysis based on muon excess at New-Tupi is consistent with the acceleration of electrons and protons (ions) up to relativistic energies (GeV energy range) in the impulsive phase of the flare. In addition, we present another two marginal particle excesses (with low confidence) at ground-level detectors in correlation with the solar flare prompt emission.",
+    "versions": [],
+    "update_date": "2023",
+    "authors_parsed": [],
+    "citations": [
+      {
+        "citing_paper_id": "dfa7184add5335a891083a36495b262342744031",
+        "title": "Compton\u2013Getting Anisotropy in the South Atlantic Anomaly: Ground-Level Observations",
+        "year": 2025,
+        "authors": [
+          "R. de Aguiar",
+          "A. C. Fauth",
+          "C. Navia",
+          "A. A. Nepomuceno",
+          "M. N. de Oliveira"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "0515ca9f212d098fcebe58d2eb8918002f8e148d",
+        "title": "Enhanced YOLOv8 With VTR Integration: A Robust Solution for Automated Recognition of OCS Mast Number Plates",
+        "year": 2024,
+        "authors": [
+          "Xiaofeng Huang",
+          "Shuyao Yang",
+          "Ao Xiong",
+          "Yuqi Yang"
+        ],
+        "citation_count": 3
+      },
+      {
+        "citing_paper_id": "3240e69493b1bfd3807ff61ad5977834f65f9e03",
+        "title": "Solar energetic particle transport via the heliospheric current sheet: Evidence of a ground-level response on All Saints Day, 2014",
+        "year": null,
+        "authors": [
+          "Marcel Nogueira de Oliveira",
+          "Carlos E. Navia",
+          "A. Nepomuceno"
+        ],
+        "citation_count": 0
+      }
+    ],
+    "references": [
+      {
+        "paper_id": "c6aa7a8252094cad355a0bb0f7351493755480a3",
+        "title": "The CHAOS-7 geomagnetic field model and observed changes in the South Atlantic Anomaly",
+        "year": 2020,
+        "authors": [
+          "C. Finlay",
+          "C. Kloss",
+          "N. Olsen",
+          "M. Hammer",
+          "L. T\u00f8ffner\u2010Clausen",
+          "A. Grayver",
+          "A. Kuvshinov"
+        ],
+        "arxiv_id": "2010.11313",
+        "doi": "10.1186/s40623-020-01252-9"
+      },
+      {
+        "paper_id": "00a7f5d3af6009a659bc81554c7f3d5cbf0d6306",
+        "title": "The 2015 Summer Solstice Storm: One of the Major Geomagnetic Storms of Solar Cycle 24 Observed at Ground Level",
+        "year": 2018,
+        "authors": [
+          "C. Augusto",
+          "C. Navia",
+          "M. N. Oliveira",
+          "A. Nepomuceno",
+          "J. Raulin",
+          "E. Tueros",
+          "R. R. S. Mendon\u00e7a",
+          "A. Fauth",
+          "H. Vieira\u00a0de\u00a0Souza",
+          "V. Kopenkin",
+          "T. Sinzi"
+        ],
+        "arxiv_id": "1805.05277",
+        "doi": "10.1007/s11207-018-1303-8"
+      },
+      {
+        "paper_id": "7de9b4126f3700db7e112966c8cb597569042070",
+        "title": "Muon Excess at Sea Level during the Progress of a Geomagnetic Storm and High-Speed Stream Impact Near the Time of Earth\u2019s Heliospheric Sheet Crossing",
+        "year": 2017,
+        "authors": [
+          "C. Augusto",
+          "C. Navia",
+          "M. N. Oliveira",
+          "A. Nepomuceno",
+          "V. Kopenkin",
+          "T. Sinzi"
+        ],
+        "arxiv_id": "1706.00775",
+        "doi": "10.1007/s11207-017-1116-1"
+      },
+      {
+        "paper_id": "a53197857ce95cc1c14d17d3413b0df0e4192166",
+        "title": "The South Atlantic Anomaly: The Key for a Possible Geomagnetic Reversal",
+        "year": 2016,
+        "authors": [
+          "Luis Manuel",
+          "Alva Valdivia",
+          "F. Pav\u00f3n\u2010Carrasco",
+          "A. De Santis"
+        ],
+        "arxiv_id": null,
+        "doi": "10.3389/feart.2016.00040"
+      },
+      {
+        "paper_id": "e8f7c36d7d00dea87d5d9a625b7ed51398cd7935",
+        "title": "DOUBLE POWER LAWS IN THE EVENT-INTEGRATED SOLAR ENERGETIC PARTICLE SPECTRUM",
+        "year": 2016,
+        "authors": [
+          "Lulu Zhao",
+          "Ming Zhang",
+          "H. Rassoul"
+        ],
+        "arxiv_id": null,
+        "doi": "10.3847/0004-637X/821/1/62"
+      },
+      {
+        "paper_id": "3bb559949b499d2107c27cfdf85da7ed4cdcb698",
+        "title": "Signals at ground level of relativistic solar particles associated to the\"All Saints\"filament eruption on 2014",
+        "year": 2015,
+        "authors": [
+          "C. Augusto",
+          "C. Navia",
+          "M. N. Oliveira",
+          "H. Shigueoka",
+          "A. Nepomuceno",
+          "A. Fauth"
+        ],
+        "arxiv_id": "1507.03954",
+        "doi": "10.1093/pasj/psv111"
+      },
+      {
+        "paper_id": "fe04491e13a90b5773db402a2843d29eba81d4f4",
+        "title": "Calculations of temperature and barometric effects for cosmic ray flux on the Earth surface using the CORSIKA code",
+        "year": 2013,
+        "authors": [
+          "A. Kovylyaeva",
+          "A. Dmitrieva",
+          "N. V. Tolkacheva",
+          "E. Yakovleva"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1088/1742-6596/409/1/012128"
+      },
+      {
+        "paper_id": "4b11b4c9d53db50326af146de8358fd5e37a905f",
+        "title": "Astrophysics Source Code Library",
+        "year": 2012,
+        "authors": [
+          "Alice Allen",
+          "K. DuPrie",
+          "Bruce Berriman",
+          "R. J. Hanisch",
+          "J. Mink",
+          "P. Teuben"
+        ],
+        "arxiv_id": "1212.1916",
+        "doi": null
+      },
+      {
+        "paper_id": "29548e8342a242aefbf483f5aa2a88101297ecc1",
+        "title": "Space Weather and the Ground-Level Solar Proton Events of the 23rd Solar Cycle",
+        "year": 2012,
+        "authors": [
+          "M. Shea",
+          "D. Smart"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1007/S11214-012-9923-Z"
+      },
+      {
+        "paper_id": "0ad13d2063925313f1f9e49cd2ecdef0baec2d1d",
+        "title": "CORSIKA: An Air Shower Simulation Program",
+        "year": 2012,
+        "authors": [
+          "D. Heck",
+          "T. Pierog",
+          "J. Knapp"
+        ],
+        "arxiv_id": null,
+        "doi": null
+      },
+      {
+        "paper_id": "97d31d36c7c9358051dce50105c64d8f062a623c",
+        "title": "The Yangbajing Muon\u2013Neutron Telescope",
+        "year": 2010,
+        "authors": [
+          "J. Zhang",
+          "Y. Tan",
+          "Haidong Wang",
+          "H. Lu",
+          "X. Meng",
+          "Y. Muraki"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1016/J.NIMA.2010.08.091"
+      },
+      {
+        "paper_id": "457f0f93fa65a5bc22f9cbd6b7d63743c9358c47",
+        "title": "The east\u2010west effect in solar proton flux measurements in geostationary orbit: A new GOES capability",
+        "year": 2010,
+        "authors": [
+          "Juan V. Rodriguez",
+          "Terrance Onsager",
+          "J. E. Mazur"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1029/2010GL042531"
+      },
+      {
+        "paper_id": "591a273e1235aeaf7c5727de3058b15babe3c6ac",
+        "title": "Fifty years of progress in geomagnetic cutoff rigidity determinations",
+        "year": 2009,
+        "authors": [
+          "D. Smart",
+          "M. Shea"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1016/J.ASR.2009.07.005"
+      },
+      {
+        "paper_id": "d85495fbfd6c2be7c3956a2656f2041babb37441",
+        "title": "Cosmic ray measurements with Pamela experiment",
+        "year": 2009,
+        "authors": [
+          "M. Casolino",
+          "N. Simone",
+          "M. P. Pascale",
+          "V. Felice",
+          "L. Marcelli",
+          "M. Minori",
+          "P. Picozza",
+          "R. Sparvoli",
+          "G. Castellini",
+          "O. Adriani",
+          "L. Bonechi",
+          "M. Bongi",
+          "S. Bottai",
+          "D. Fedele",
+          "P. Papini",
+          "S. Ricciarini",
+          "P. Spillantini",
+          "E. Taddei",
+          "E. Vannuccini",
+          "G. Barbarino",
+          "D. Campana",
+          "R. Carbone",
+          "G. Rosa",
+          "G. Osteria",
+          "M. Boezio",
+          "V. Bonvicini",
+          "E. Mocchiutti",
+          "A. Vacchi",
+          "G. Zampa",
+          "N. Zampa",
+          "A. Bruno",
+          "F. Cafagna",
+          "M. Ricci",
+          "P. Hofverberg",
+          "M. Pearce",
+          "P. Carlson",
+          "\u00c9. Bogomolov",
+          "S. Krutkov",
+          "N. Nikonov",
+          "G. Vasilyev",
+          "W. Menn",
+          "M. Simon",
+          "A. Galper",
+          "L. Grishantseva",
+          "S. Koldashov",
+          "A. Leonov",
+          "V. Mikhailov",
+          "S. Voronov",
+          "Y. Yurkin",
+          "V. Zverev",
+          "G. Bazilevskaya",
+          "A. Kvashnin",
+          "O. Maksumov",
+          "Y. Stozhkov"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1016/J.NUCLPHYSBPS.2009.03.102"
+      },
+      {
+        "paper_id": "4c339d814d94349a353a90d84862e1c724cecc09",
+        "title": "Solar neutron events as a tool to study particle acceleration at the Sun",
+        "year": 2009,
+        "authors": [
+          "J. Vald\u00e9s-Galicia",
+          "Y. Muraki",
+          "K. Watanabe",
+          "Y. Matsubara",
+          "T. Sako",
+          "L. Gonz\u00e1lez",
+          "O. Musalem",
+          "A. Hurtado"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1016/J.ASR.2008.09.023"
+      },
+      {
+        "paper_id": "eb8f6f1f5308db4ca1f414322426f08eb42f13dc",
+        "title": "The hadronic models for cosmic ray physics: the FLUKA code solutions",
+        "year": 2006,
+        "authors": [
+          "G. Battistoni",
+          "F. Cerutti",
+          "A. Empl",
+          "A. Fass\u00f2",
+          "A. Ferrari",
+          "E. Gadioli",
+          "M. Garzelli",
+          "S. Muraro",
+          "M. Pelliccioni",
+          "L. Pinsky",
+          "J. Ranft",
+          "S. Roesler",
+          "P. Sala",
+          "R. Villari"
+        ],
+        "arxiv_id": "hep-ph/0612075",
+        "doi": "10.1016/j.nuclphysbps.2007.10.013"
+      },
+      {
+        "paper_id": "57ea96353f058bf90d6450d824011a03c0285519",
+        "title": "The Geostationary Operational Environmental Satellite (GOES) Product Generation System",
+        "year": 2004,
+        "authors": [
+          "S. Haines",
+          "R. Suggs",
+          "G. Jedlovec"
+        ],
+        "arxiv_id": null,
+        "doi": null
+      },
+      {
+        "paper_id": "7b6ac9586c343d0049f2000c516e0b32501b079c",
+        "title": "Design and co-Ordination of Multi-Station International Neutron Monitor Networks",
+        "year": 2000,
+        "authors": [
+          "Harm Moraal",
+          "A. Belov",
+          "J. Clem"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1007/978-94-017-1187-6_14"
+      },
+      {
+        "paper_id": "1078bb4828cf08668e337dd07e3a2947414e11d8",
+        "title": "The Cosmic Ray Nucleonic Component: The Invention and Scientific Uses of the Neutron Monitor \u2013 (Keynote Lecture)",
+        "year": 2000,
+        "authors": [
+          "J. Simpson"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1023/A:1026567706183"
+      },
+      {
+        "paper_id": "103e01e9e78f125bc2635c3f2b268dbff1bb4acf",
+        "title": "Electron, Proton, and Alpha Monitor on the Advanced Composition Explorer spacecraft",
+        "year": 1998,
+        "authors": [
+          "Robert E Gold",
+          "S. Krimigis",
+          "S. E. Hawkins",
+          "D. Haggerty",
+          "David A. Lohr",
+          "E. Fiore",
+          "T. Armstrong",
+          "Greg J. Holland",
+          "L. Lanzerotti"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1023/A:1005088115759"
+      }
+    ]
+  },
+  {
+    "id": "2401.00003",
+    "submitter": null,
+    "authors": "Wei Chen, Rachel Sun, Doksoo Lee, Carlos M. Portela, Wei Chen",
+    "title": "Generative Inverse Design of Metamaterials with Functional Responses by Interpretable Learning",
+    "comments": null,
+    "journal_ref": null,
+    "doi": "10.1002/aisy.202400611",
+    "report_no": null,
+    "categories": "",
+    "license": null,
+    "abstract": "Metamaterials with functional responses can exhibit varying properties under different conditions (e.g., wave\u2010based responses or deformation\u2010induced property variation). This work addresses rapid inverse design of such metamaterials to meet target qualitative functional behaviors, a challenge due to its intractability and nonunique solutions. Unlike data\u2010intensive and noninterpretable deep\u2010learning\u2010based methods, this work proposes the random\u2010forest\u2010based interpretable generative inverse design (RIGID), a single\u2010shot inverse design method for fast generation of metamaterials with on\u2010demand functional behaviors. RIGID leverages the interpretability of a random forest\u2010based \u201cdesign\u2009\u2192\u2009response\u201d forward model, eliminating the need for a more complex \u201cresponse\u2009\u2192\u2009design\u201d inverse model. Based on the likelihood of target satisfaction derived from the trained random forest, one can sample a desired number of design solutions using Markov chain Monte Carlo methods. RIGID is validated on acoustic and optical metamaterial design problems, each with fewer than 250 training samples. Compared to the genetic algorithm\u2010based design generation approach, RIGID generates satisfactory solutions that cover a broader range of the design space, allowing for better consideration of additional figures of merit beyond target satisfaction. This work offers a new perspective on solving on\u2010demand inverse design problems, showcasing the potential for incorporating interpretable machine learning into generative design under small data constraints.",
+    "versions": [],
+    "update_date": "2023",
+    "authors_parsed": [],
+    "citations": [
+      {
+        "citing_paper_id": "8e20cd3b09e1a8799e08cb5dfc62ea3b12b1b09f",
+        "title": "A Computational Framework to design 3D stiffness gradient acoustic metamaterials for impedance matching",
+        "year": 2026,
+        "authors": [
+          "Rayehe Karimi Mahabadi",
+          "Doksoo Lee",
+          "Alexander C. Ogren",
+          "Chiara Daraio",
+          "Wei Chen",
+          "Cynthia Rudin",
+          "L. C. Brinson"
+        ],
+        "citation_count": 1
+      },
+      {
+        "citing_paper_id": "8b7c26e86bc11770a6b810542140bf67fc39cc39",
+        "title": "GUIDe: Generative and Uncertainty-Informed Inverse Design for On-Demand Nonlinear Functional Responses",
+        "year": 2025,
+        "authors": [
+          "Haoxuan Mu",
+          "Ming Tang",
+          "Wei Gao",
+          "W. Chen"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "2b499448c69d0840157009c9e545b611b955d7cf",
+        "title": "MetaDiT: Enabling Fine-grained Constraints in High-degree-of Freedom Metasurface Design",
+        "year": 2025,
+        "authors": [
+          "Hao Li",
+          "Andrey Bogdanov"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "5bf29325f437c16f0e31e93799b303be749c9652",
+        "title": "A review on mechanical metamaterials: Exploring negative Poisson's ratio, energy absorption, failure mechanisms, and current research frontiers",
+        "year": 2025,
+        "authors": [
+          "F. Mwema",
+          "Ndivhuwo Ndou"
+        ],
+        "citation_count": 3
+      },
+      {
+        "citing_paper_id": "9df44461211693063b1d3c1b85ceba6e7b7e722a",
+        "title": "From Deterministic Physics-based to Probabilistic Data-driven Modeling: Diffusion-based Prediction of Strain Fields in Deep Drawing Processes",
+        "year": 2025,
+        "authors": [
+          "Paul P. Meyer",
+          "Dirk Mohr"
+        ],
+        "citation_count": 1
+      },
+      {
+        "citing_paper_id": "cdad95edfa7cdb4050f55e5f20b51064a1a50725",
+        "title": "High-Resolution Recommender System for Metamaterial Synthesis",
+        "year": 2025,
+        "authors": [
+          "Ismail Shittu",
+          "M. Abou-Khousa",
+          "Ibrahim Abe M. Elfadel"
+        ],
+        "citation_count": 1
+      },
+      {
+        "citing_paper_id": "0c297e6a4e9f7f518ba588be9ebd0d5b277922f4",
+        "title": "Design and Processing of Metamaterials",
+        "year": 2025,
+        "authors": [
+          "Andrei Teodor Matei",
+          "A. Vi\u0219an",
+          "G. Popescu-Pelin"
+        ],
+        "citation_count": 5
+      },
+      {
+        "citing_paper_id": "e43f5fdbaf3f4b7021cbfe254cb2eedbbc88deb9",
+        "title": "Populating cellular metamaterials on the extrema of attainable elasticity through neuroevolution",
+        "year": 2024,
+        "authors": [
+          "Maohua Yan",
+          "Ruicheng Wang",
+          "Ke Liu"
+        ],
+        "citation_count": 6
+      },
+      {
+        "citing_paper_id": "3e15b1e0ef8a619a90da6ec73437214924310600",
+        "title": "Inverse design of Non-parameterized Ventilated Acoustic Resonator via Variational Autoencoder with Acoustic Response-encoded Latent Space",
+        "year": 2024,
+        "authors": [
+          "Min Woo Cho",
+          "Seok Hyeon Hwang",
+          "Jun-Young Jang",
+          "Jin Yeong Song",
+          "S. Hwang",
+          "Kyoung Je Cha",
+          "Dong Yong Park",
+          "Kyungjun Song",
+          "S. Park"
+        ],
+        "citation_count": 2
+      },
+      {
+        "citing_paper_id": "0515ca9f212d098fcebe58d2eb8918002f8e148d",
+        "title": "Enhanced YOLOv8 With VTR Integration: A Robust Solution for Automated Recognition of OCS Mast Number Plates",
+        "year": 2024,
+        "authors": [
+          "Xiaofeng Huang",
+          "Shuyao Yang",
+          "Ao Xiong",
+          "Yuqi Yang"
+        ],
+        "citation_count": 3
+      }
+    ],
+    "references": [
+      {
+        "paper_id": "f19d5c0d4609a4e39c0deb0ee693099e00de9bbf",
+        "title": "Deep Neural Operator Enabled Concurrent Multitask Design for Multifunctional Metamaterials Under Heterogeneous Fields",
+        "year": 2023,
+        "authors": [
+          "Doksoo Lee",
+          "Lu Zhang",
+          "Yue Yu",
+          "Wei Chen"
+        ],
+        "arxiv_id": "2312.02403",
+        "doi": "10.1002/adom.202303087"
+      },
+      {
+        "paper_id": "1d57abcf5d01c51e3746984f116a5c3ef20a7182",
+        "title": "Dynamic Multifunctional Metasurfaces: Inverse Design Deep Learning Approach",
+        "year": 2023,
+        "authors": [
+          "zd Lei",
+          "Xu yi duo",
+          "Cheng Lei",
+          "Zhao Yan",
+          "Du Wang"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1364/prj.505991"
+      },
+      {
+        "paper_id": "8a9fd263be16296c2fa2c0f484af4e1d5ca11263",
+        "title": "Deep learning assisted inverse design of metamaterial microwave absorber",
+        "year": 2023,
+        "authors": [
+          "Chen Xie",
+          "Haonan Li",
+          "Chenyang Cui",
+          "Haodong Lei",
+          "Yingjie Sun",
+          "Chi Zhang",
+          "Yaqiang Zhang",
+          "Hongxing Dong",
+          "Long Zhang"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1063/5.0171437"
+      },
+      {
+        "paper_id": "008569e98f3ef3596eeeaa23725a0c9c0339802e",
+        "title": "Rapid inverse design of metamaterials based on prescribed mechanical behavior through machine learning",
+        "year": 2023,
+        "authors": [
+          "Chan Soo Ha",
+          "Desheng Yao",
+          "Zhenpeng Xu",
+          "Chenang Liu",
+          "Han Liu",
+          "Daniel Elkins",
+          "Matthew Kile",
+          "V. Deshpande",
+          "Zhenyu Kong",
+          "Mathieu Bauchy",
+          "X. Zheng"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1038/s41467-023-40854-1"
+      },
+      {
+        "paper_id": "962850df3465afdd6b57d6ac278e8ace7bfe0d1a",
+        "title": "Mechanical Fourier transform for programmable metamaterials",
+        "year": 2023,
+        "authors": [
+          "Xin Lin",
+          "Fei Pan",
+          "Yong Ma",
+          "Yuling Wei",
+          "Kang Yang",
+          "Zihong Wu",
+          "Juan Guan",
+          "Bin Ding",
+          "Bin Liu",
+          "Jinwu Xiang",
+          "Yu-Ling Chen"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1073/pnas.2305380120"
+      },
+      {
+        "paper_id": "0d2be9f1861955f1ee8596b50a9dab39681b600f",
+        "title": "Data\u2010Driven Design for Metamaterials and Multiscale Systems: A Review",
+        "year": 2023,
+        "authors": [
+          "Doksoo Lee",
+          "Wei Chen",
+          "Liwei Wang",
+          "Yu-Chin Chan",
+          "Wei Chen"
+        ],
+        "arxiv_id": "2307.05506",
+        "doi": "10.1002/adma.202305254"
+      },
+      {
+        "paper_id": "502195cecab51bb42684265474c9756077f1d564",
+        "title": "Deep Learning in Mechanical Metamaterials: From Prediction and Generation to Inverse Design",
+        "year": 2023,
+        "authors": [
+          "Xiaoyang Zheng",
+          "Xubo Zhang",
+          "Ta-Te Chen",
+          "I. Watanabe"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1002/adma.202302530"
+      },
+      {
+        "paper_id": "93be625e495c685301023774647d4446beeabc33",
+        "title": "Inverse design of nonlinear mechanical metamaterials via video denoising diffusion models",
+        "year": 2023,
+        "authors": [
+          "Jan-Hendrik Bastek",
+          "D. Kochmann"
+        ],
+        "arxiv_id": "2305.19836",
+        "doi": "10.1038/s42256-023-00762-x"
+      },
+      {
+        "paper_id": "970486e7dd0a353324f173165e38cdf08cf47e32",
+        "title": "Diffusion probabilistic model based accurate and high-degree-of-freedom metasurface inverse design",
+        "year": 2023,
+        "authors": [
+          "Zezhou Zhang",
+          "Chuan Yang",
+          "Yifeng Qin",
+          "Hao Feng",
+          "Jiqiang Feng",
+          "Hongbin Li"
+        ],
+        "arxiv_id": "2304.13038",
+        "doi": "10.1515/nanoph-2023-0292"
+      },
+      {
+        "paper_id": "74aae7eb0fde2f88a52e0fa4e99a255b068cf86b",
+        "title": "Single-shot forward and inverse hierarchical architected materials design for nonlinear mechanical properties using an Attention-Diffusion model",
+        "year": 2023,
+        "authors": [
+          "Andrew J. Lew",
+          "M. Buehler"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1016/j.mattod.2023.03.007"
+      },
+      {
+        "paper_id": "8420f863039c77f1158705633468209f7bb4af6e",
+        "title": "Software-defined nanophotonic devices and systems empowered by machine learning",
+        "year": 2023,
+        "authors": [
+          "Yihao Xu",
+          "Bo Xiong",
+          "Wei Ma",
+          "Yongmin Liu"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1016/j.pquantelec.2023.100469"
+      },
+      {
+        "paper_id": "5106d47ab29eda39201f1d5325240b0f99670b11",
+        "title": "High Absorptivity and Ultra-Wideband Solar Absorber Based on Ti-Al2O3 Cross Elliptical Disk Arrays",
+        "year": 2023,
+        "authors": [
+          "Yuanjian Zhang",
+          "Yingting Yi",
+          "Wenxin Li",
+          "Shiri Liang",
+          "Jing Ma",
+          "Shubo Cheng",
+          "Wenxing Yang",
+          "Yougen Yi"
+        ],
+        "arxiv_id": null,
+        "doi": "10.3390/coatings13030531"
+      },
+      {
+        "paper_id": "988a9e5b895cc3dab613eda6f5c07fd19a90ae60",
+        "title": "Denoising diffusion algorithm for inverse design of microstructures with fine-tuned nonlinear material properties",
+        "year": 2023,
+        "authors": [
+          "Nikolaos N. Vlassis",
+          "Waiching Sun"
+        ],
+        "arxiv_id": "2302.12881",
+        "doi": "10.1016/j.cma.2023.116126"
+      },
+      {
+        "paper_id": "5c377619ee12f830bd2030d73ab8a69930a13e12",
+        "title": "A deep autoencoder based approach for the inverse design of an acoustic-absorber",
+        "year": 2023,
+        "authors": [
+          "K. Mahesh",
+          "S. K. Ranjith",
+          "R. Mini"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1007/s00366-023-01789-9"
+      },
+      {
+        "paper_id": "4a8a2447aa561806fca9ac7063e6fda72c26f771",
+        "title": "On-demand inverse design of acoustic metamaterials using probabilistic generation network",
+        "year": 2023,
+        "authors": [
+          "Zeyan Wang",
+          "A. Chen",
+          "Zi-Xiang Xu",
+          "Jing Yang",
+          "B. Liang",
+          "Jian-chun Cheng"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1007/s11433-022-1984-1"
+      },
+      {
+        "paper_id": "df382cc417105fd709eb67bf219531d07814b8ea",
+        "title": "Nature-inspired architected materials using unsupervised deep learning",
+        "year": 2022,
+        "authors": [
+          "Sabrina C. Shen",
+          "M. Buehler"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1038/s44172-022-00037-0"
+      },
+      {
+        "paper_id": "3e3ab6dde73369674658ab16dbb01cc022da7b85",
+        "title": "Revisiting the Design Strategies for Metasurfaces: Fundamental Physics, Optimization, and Beyond",
+        "year": 2022,
+        "authors": [
+          "Sunae So",
+          "J. Mun",
+          "Junghyun Park",
+          "J. Rho"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1002/adma.202206399"
+      },
+      {
+        "paper_id": "aa0b6e72a455beecbd2974936d420f85d572940c",
+        "title": "Deep Learning-Accelerated Designs of Tunable Magneto-Mechanical Metamaterials.",
+        "year": 2022,
+        "authors": [
+          "Chunping Ma",
+          "Yilong Chang",
+          "Shuai Wu",
+          "R. Zhao"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1021/acsami.2c09052"
+      },
+      {
+        "paper_id": "fc7ab99887a3c8c47bdcbdca94ebb62606cc6716",
+        "title": "Flexible Metamaterial Electronics",
+        "year": 2022,
+        "authors": [
+          "Shan Jiang",
+          "Xuejun Liu",
+          "Jianpeng Liu",
+          "D. Ye",
+          "Y. Duan",
+          "Kan Li",
+          "Z. Yin",
+          "Yongan Huang"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1002/adma.202200070"
+      },
+      {
+        "paper_id": "1c22925bcc243de9232ad94c2ebe95dae033e77f",
+        "title": "Digital synthesis of free-form multimaterial structures for realization of arbitrary programmed mechanical responses",
+        "year": 2022,
+        "authors": [
+          "Weichen Li",
+          "Fengwen Wang",
+          "O. Sigmund",
+          "X. Zhang"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1073/pnas.2120563119"
+      }
+    ]
+  },
+  {
+    "id": "2401.00004",
+    "submitter": null,
+    "authors": "E. E. Vityaev",
+    "title": "Informational non-reductionist theory of consciousness that providing maximum accuracy of reality prediction",
+    "comments": null,
+    "journal_ref": null,
+    "doi": "10.48550/arXiv.2401.00004",
+    "report_no": null,
+    "categories": "",
+    "license": null,
+    "abstract": "The paper considers a non-reductionist theory of consciousness, which is not reducible to theories of reality and to physiological or psychological theories. Following D.I.Dubrovsky's\"informational approach\"to the\"Mind-Brain Problem\", we consider the reality through the prism of information about observed phenomena, which, in turn, is perceived by subjective reality through sensations, perceptions, feelings, etc., which, in turn, are information about the corresponding brain processes. Within this framework the following principle of the Information Theory of Consciousness (ITS) development is put forward: the brain discovers all possible causal relations in the external world and makes all possible inferences by them. The paper shows that ITS built on this principle: (1) also base on the information laws of the structure of external world; (2) explains the structure and functioning of the brain functional systems and cellular ensembles; (3) ensures maximum accuracy of predictions and the anticipation of reality; (4) resolves emerging contradictions and (5) is an information theory of the brain's reflection of reality.",
+    "versions": [],
+    "update_date": "2023",
+    "authors_parsed": [],
+    "citations": [
+      {
+        "citing_paper_id": "b78ff019fcfc71665fe730f69d585f58a1532e4e",
+        "title": "Don't Forget Imagination!",
+        "year": 2025,
+        "authors": [
+          "Evgenii Vityaev",
+          "Andrei Mantsivoda"
+        ],
+        "citation_count": 1
+      }
+    ],
+    "references": [
+      {
+        "paper_id": "857bbe281b0a9b3b86c5993ae33b6983a54cbc16",
+        "title": "Probabilistic Formal Concepts with Negation",
+        "year": 2014,
+        "authors": [
+          "Vityaev E E",
+          "Martinovich V V"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1007/978-3-662-46823-4_31"
+      },
+      {
+        "paper_id": "f106555e90f0785652a0a9c0bf71a9ad8600f9b0",
+        "title": "Our Mathematical Universe",
+        "year": 2014,
+        "authors": [
+          "J. Butterfield"
+        ],
+        "arxiv_id": "1406.4348",
+        "doi": null
+      },
+      {
+        "paper_id": "c15759b616c8a4d6f1b0a3569221082430452994",
+        "title": "From the Phenomenology to the Mechanisms of Consciousness: Integrated Information Theory 3.0",
+        "year": 2014,
+        "authors": [
+          "Masafumi Oizumi",
+          "Larissa Albantakis",
+          "G. Tononi"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1371/journal.pcbi.1003588"
+      },
+      {
+        "paper_id": "af272691a2aa967befda5ce6dc31a15f88f8aaea",
+        "title": "Probabilistic generalization of formal concepts",
+        "year": 2012,
+        "authors": [
+          "E. Vityaev",
+          "A. Demin",
+          "D. Ponomaryov"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1134/S0361768812050076"
+      },
+      {
+        "paper_id": "3a7bc97d248d101eb74335118350c00c1e642686",
+        "title": "Information integration: its relevance to brain function and consciousness.",
+        "year": 2010,
+        "authors": [
+          "G. Tononi"
+        ],
+        "arxiv_id": null,
+        "doi": "10.4449/AIB.V148I3.1224"
+      },
+      {
+        "paper_id": "e6ae27e0b605ad0a66b834ba891ddb8473bf2724",
+        "title": "THE LOGIC OF PREDICTION",
+        "year": 2006,
+        "authors": [
+          "E. Vityaev"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1142/9789812772749_0019"
+      },
+      {
+        "paper_id": "de0d2d7ed5afc0c9eeeb412378e8a341e1db5443",
+        "title": "Categorization as causal reasoning",
+        "year": 2003,
+        "authors": [
+          "B. Rehder"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1016/S0364-0213(03)00068-5"
+      },
+      {
+        "paper_id": "3cea0c3d350d78bd3d9bd557c1fe56c59c9bf0e2",
+        "title": "The organization of behavior.",
+        "year": 1992,
+        "authors": [
+          "E. Capaldi"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1901/JABA.1992.25-575"
+      },
+      {
+        "paper_id": "e2183abfd0bee40d51469334d77157b162381c14",
+        "title": "Causal Laws and Effective Strategies",
+        "year": 1979,
+        "authors": [
+          "N. Cartwright"
+        ],
+        "arxiv_id": null,
+        "doi": "10.2307/2215337"
+      },
+      {
+        "paper_id": "5c008657d03b09b5020ef1e290b3cac83cc43e99",
+        "title": "Biology and Neurophysiology of the Conditioned Reflex and Its Role in Adaptive Behavior",
+        "year": 1976,
+        "authors": [
+          "W. Gantt"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1001/ARCHNEUR.1976.00500040094031"
+      },
+      {
+        "paper_id": "1179341e309218928d56b738aa5617a9c88778f3",
+        "title": "Maximal Specificity and Lawlikeness in Probabilistic Explanation",
+        "year": 1968,
+        "authors": [
+          "C. Hempel"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1086/288197"
+      },
+      {
+        "paper_id": null,
+        "title": "How to predict consistently? Trends in Mathematics and Computational Intelligence",
+        "year": 2019,
+        "authors": [],
+        "arxiv_id": null,
+        "doi": null
+      },
+      {
+        "paper_id": "8ef606276fc80bc592975d0dfd86e359b1335953",
+        "title": "Purposefulness as a Principle of Brain Activity",
+        "year": 2015,
+        "authors": [
+          "E. Vityaev"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1007/978-3-319-19446-2_13"
+      },
+      {
+        "paper_id": "b5ea5348cb7254207ca8ff40b50dae4325cca750",
+        "title": "HOW CONSCIOUSNESS GETS RID OF CONTRADICTIONS",
+        "year": 2015,
+        "authors": [
+          "Viktor Allakhverdov",
+          "O. Naumenko",
+          "M. Filippova",
+          "O. Shcherbakova",
+          "M. Avanesyan",
+          "E. Voskresenskaya",
+          "Alexei S. Starodubtsev"
+        ],
+        "arxiv_id": null,
+        "doi": "10.22394/2412-9410-2015-1-1-165-181"
+      },
+      {
+        "paper_id": null,
+        "title": "Formalization of \"natural\" classification and systematics through fixed points of predictions",
+        "year": 2015,
+        "authors": [],
+        "arxiv_id": null,
+        "doi": null
+      },
+      {
+        "paper_id": "5a1179619d6bf4bf2d2cb18b35022100e27545b4",
+        "title": "Learning in a virtual model of the C. elegans nematode for locomotion and chemotaxis",
+        "year": 2014,
+        "authors": [
+          "A. Demin",
+          "E. Vityaev"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1016/J.BICA.2013.11.005"
+      },
+      {
+        "paper_id": null,
+        "title": "Logic of brain work",
+        "year": 2014,
+        "authors": [],
+        "arxiv_id": null,
+        "doi": null
+      },
+      {
+        "paper_id": null,
+        "title": "in search of a general theory of cognitive science",
+        "year": 2014,
+        "authors": [],
+        "arxiv_id": null,
+        "doi": null
+      },
+      {
+        "paper_id": "fa4538216f29cf49617f00c7edb757b531e12748",
+        "title": "A Formal Model of Neuron That Provides Consistent Predictions",
+        "year": 2012,
+        "authors": [
+          "E. E. Vityaev"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1007/978-3-642-34274-5_57"
+      },
+      {
+        "paper_id": null,
+        "title": "Formal model of perception and image as a fixed point of anticipation",
+        "year": 2012,
+        "authors": [],
+        "arxiv_id": null,
+        "doi": null
+      }
+    ]
+  },
+  {
+    "id": "2401.00005",
+    "submitter": null,
+    "authors": "E. Vityaev",
+    "title": "Consciousness as a logically consistent and prognostic model of reality",
+    "comments": "The paper analyses and solves the problem of statistical ambiguity and provides a formal model of causal relationships as probabilistic maximally specific rules and proves that the suggested formal model has a property of an unambiguous inference.",
+    "journal_ref": null,
+    "doi": "10.1016/j.cogsys.2019.09.021",
+    "report_no": null,
+    "categories": "",
+    "license": null,
+    "abstract": "",
+    "versions": [],
+    "update_date": "2020",
+    "authors_parsed": [],
+    "citations": [
+      {
+        "citing_paper_id": "b78ff019fcfc71665fe730f69d585f58a1532e4e",
+        "title": "Don't Forget Imagination!",
+        "year": 2025,
+        "authors": [
+          "Evgenii Vityaev",
+          "Andrei Mantsivoda"
+        ],
+        "citation_count": 1
+      },
+      {
+        "citing_paper_id": "3c8d14a5c29984226e5e294a7c89463fc91b2d41",
+        "title": "Interpretable logical-probabilistic approximation of neural networks",
+        "year": 2024,
+        "authors": [
+          "Evgenii Vityaev",
+          "Alexey Korolev"
+        ],
+        "citation_count": 4
+      },
+      {
+        "citing_paper_id": "4ad465b615c897241429b48996e98149e4f828bc",
+        "title": "Task-driven approach to artificial intelligence",
+        "year": 2023,
+        "authors": [
+          "E. Vityaev",
+          "S. Goncharov",
+          "D. Sviridenko"
+        ],
+        "citation_count": 3
+      },
+      {
+        "citing_paper_id": "2f28bfe465ab75042acb5e3cd8e82db8015b1af1",
+        "title": "Application of Cognitive System Model and Gestalt Psychology in Residential Healthy Environment Design",
+        "year": 2022,
+        "authors": [
+          "Jicheng Yang",
+          "Chao Yuan"
+        ],
+        "citation_count": 6
+      },
+      {
+        "citing_paper_id": "5e4f1a5de2a3045e9460c65c3ee7ed8ceaafde85",
+        "title": "The model of a simple self-reproducing system",
+        "year": 2021,
+        "authors": [
+          "D. Saakian",
+          "V. Red'ko"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "7247c4cecbc36c62771dbf3742f7eaab281e1d58",
+        "title": "Fantasy space modeling in English academic text",
+        "year": 2020,
+        "authors": [
+          "N. N. Menshakova",
+          "S. Shustova",
+          "E. Kostina",
+          "D. Mallaev"
+        ],
+        "citation_count": 0
+      },
+      {
+        "citing_paper_id": "2fd7284ee5f528e4aa461fdd9b7e267c6708b3ca",
+        "title": "Simple Model of Origin of Feeling of Causality",
+        "year": 2020,
+        "authors": [
+          "V. Red'ko"
+        ],
+        "citation_count": 0
+      }
+    ],
+    "references": [
+      {
+        "paper_id": "59106a37464634fda5697c62cf9b87d0942ea665",
+        "title": "A System Of Logic, Ratiocinative And Inductive",
+        "year": 2019,
+        "authors": [
+          "J. Mill"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1037/11967-000"
+      },
+      {
+        "paper_id": "0ec126f4319e2e18110e3ca8fbddca463a4efc96",
+        "title": "Integrated information theory: from consciousness to its physical substrate",
+        "year": 2016,
+        "authors": [
+          "G. Tononi",
+          "M. Boly",
+          "M. Massimini",
+          "C. Koch"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1038/nrn.2016.44"
+      },
+      {
+        "paper_id": "857bbe281b0a9b3b86c5993ae33b6983a54cbc16",
+        "title": "Probabilistic Formal Concepts with Negation",
+        "year": 2014,
+        "authors": [
+          "Vityaev E E",
+          "Martinovich V V"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1007/978-3-662-46823-4_31"
+      },
+      {
+        "paper_id": "c15759b616c8a4d6f1b0a3569221082430452994",
+        "title": "From the Phenomenology to the Mechanisms of Consciousness: Integrated Information Theory 3.0",
+        "year": 2014,
+        "authors": [
+          "Masafumi Oizumi",
+          "Larissa Albantakis",
+          "G. Tononi"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1371/journal.pcbi.1003588"
+      },
+      {
+        "paper_id": "da2bbdbb5cfe64f77aab21d5fc1e231e7dab5049",
+        "title": "After Pavlov. (Book Reviews: Biology and Neurophysiology of the Conditioned Reflex and Its Role in Adaptive Behavior)",
+        "year": 2013,
+        "authors": [
+          "P. K. Anokhin",
+          "S. A. Corson"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1016/c2013-0-02871-x"
+      },
+      {
+        "paper_id": "601e580797418e52d344eeeaf5f23888e4fec044",
+        "title": "Probabilistic dynamic logic of cognition",
+        "year": 2013,
+        "authors": [
+          "E. Vityaev",
+          "L. Perlovsky",
+          "Boris Kovalerchuk",
+          "Stanislav O. Speransky"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1016/J.BICA.2013.06.006"
+      },
+      {
+        "paper_id": "af272691a2aa967befda5ce6dc31a15f88f8aaea",
+        "title": "Probabilistic generalization of formal concepts",
+        "year": 2012,
+        "authors": [
+          "E. Vityaev",
+          "A. Demin",
+          "D. Ponomaryov"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1134/S0361768812050076"
+      },
+      {
+        "paper_id": "4dce5692fac1440f0d6d52782a2943cff3620ad8",
+        "title": "Theory-based causal induction.",
+        "year": 2009,
+        "authors": [
+          "T. Griffiths",
+          "J. Tenenbaum"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1037/a0017201"
+      },
+      {
+        "paper_id": "e6ae27e0b605ad0a66b834ba891ddb8473bf2724",
+        "title": "THE LOGIC OF PREDICTION",
+        "year": 2006,
+        "authors": [
+          "E. Vityaev"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1142/9789812772749_0019"
+      },
+      {
+        "paper_id": "c93798ad4d66738eccbeafee56b55b2bd1647a35",
+        "title": "An information integration theory of consciousness",
+        "year": 2004,
+        "authors": [
+          "G. Tononi"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1186/1471-2202-5-42"
+      },
+      {
+        "paper_id": "de0d2d7ed5afc0c9eeeb412378e8a341e1db5443",
+        "title": "Categorization as causal reasoning",
+        "year": 2003,
+        "authors": [
+          "B. Rehder"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1016/S0364-0213(03)00068-5"
+      },
+      {
+        "paper_id": "aefb105193f38c4a38ce8fcebcb1d0320fe71f82",
+        "title": "Causal Status as a Determinant of Feature Centrality",
+        "year": 2000,
+        "authors": [
+          "W. Ahn",
+          "Nancy S. Kim",
+          "M. Lassaline",
+          "Martin J. Dennis"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1006/cogp.2000.0741"
+      },
+      {
+        "paper_id": "ccaf829bffd0b1a55a67a6958dcfb7af4cd16641",
+        "title": "Formal Concept Analysis: Mathematical Foundations",
+        "year": 1998,
+        "authors": [
+          "B. Ganter",
+          "Rudolf Wille",
+          "C. Franzke"
+        ],
+        "arxiv_id": null,
+        "doi": null
+      },
+      {
+        "paper_id": "8b912dd8a1403189e1422aa1390eeb47b405ff1f",
+        "title": "Feature Centrality and Conceptual Coherence",
+        "year": 1998,
+        "authors": [
+          "S. Sloman",
+          "Bradley C. Love",
+          "W. Ahn"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1207/s15516709cog2202_2"
+      },
+      {
+        "paper_id": "ac40c59cc950959978c42fb0618b1458a93975a3",
+        "title": "From covariation to causation: A causal power theory.",
+        "year": 1997,
+        "authors": [
+          "P. Cheng"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1037/0033-295X.104.2.367"
+      },
+      {
+        "paper_id": "3cea0c3d350d78bd3d9bd557c1fe56c59c9bf0e2",
+        "title": "The organization of behavior.",
+        "year": 1992,
+        "authors": [
+          "E. Capaldi"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1901/JABA.1992.25-575"
+      },
+      {
+        "paper_id": "71f4bdd0b59d68076419d81cca12dda49edd3b81",
+        "title": "An Analysis of First-Order Logics of Probability",
+        "year": 1989,
+        "authors": [
+          "Joseph Y. Halpern"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1016/0004-3702(90)90019-V"
+      },
+      {
+        "paper_id": "2c05d131576d01668ef01156ac73e52c3152384a",
+        "title": "Basic objects in natural categories",
+        "year": 1976,
+        "authors": [
+          "E. Rosch",
+          "C. Mervis",
+          "Wayne D. Gray",
+          "D. M. Johnson",
+          "P. Boyes-Braem"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1016/0010-0285(76)90013-X"
+      },
+      {
+        "paper_id": "5c008657d03b09b5020ef1e290b3cac83cc43e99",
+        "title": "Biology and Neurophysiology of the Conditioned Reflex and Its Role in Adaptive Behavior",
+        "year": 1976,
+        "authors": [
+          "W. Gantt"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1001/ARCHNEUR.1976.00500040094031"
+      },
+      {
+        "paper_id": "1179341e309218928d56b738aa5617a9c88778f3",
+        "title": "Maximal Specificity and Lawlikeness in Probabilistic Explanation",
+        "year": 1968,
+        "authors": [
+          "C. Hempel"
+        ],
+        "arxiv_id": null,
+        "doi": "10.1086/288197"
+      }
+    ]
+  }
+]
