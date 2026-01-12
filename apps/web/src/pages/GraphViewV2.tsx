@@ -4,19 +4,29 @@ import { useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
 import { graphApi } from '../api/client';
 import { GraphCanvas } from '../components/Graph/GraphCanvas';
+import { ListView } from '../components/ListView';
 import { Omnibox } from '../components/HUD/Omnibox';
 import { Inspector } from '../components/HUD/Inspector';
 import { Controls } from '../components/HUD/Controls';
+import { ViewToggle } from '../components/HUD/ViewToggle';
+import { CategoryFilters } from '../components/HUD/CategoryFilters';
+import { TimeBar } from '../components/HUD/TimeBar';
 import { useGraphStore } from '../hooks/useGraphStore';
 
 /**
  * GraphViewV2 - The new architected graph visualization page
  * Implements the "Hybrid Architecture" with Engine (WebGL) + Shell (React)
+ * 
+ * New Features:
+ * - Fuzzy search with Fuse.js
+ * - Category filter chips
+ * - View toggle (Graph ↔ List)
+ * - Time range slider
  */
 
 export function GraphViewV2() {
   const { arxivId } = useParams<{ arxivId?: string }>();
-  const { setGraphData, setSelectedNodeId } = useGraphStore();
+  const { setGraphData, setSelectedNodeId, viewMode } = useGraphStore();
 
   // Fetch graph data from API
   const { data: network, isLoading, error } = useQuery({
@@ -33,8 +43,8 @@ export function GraphViewV2() {
           id: node.id,
           label: node.label,
           citation_count: node.citation_count,
-          category: undefined, // API doesn't provide this yet
-          year: undefined,
+          category: node.category || 'Unknown', // Try to get from API, fallback to Unknown
+          year: node.year || undefined,
         })),
         network.edges,
         network.center_paper
@@ -107,50 +117,78 @@ export function GraphViewV2() {
 
   return (
     <div className="fixed inset-0 bg-slate-50 dark:bg-slate-900">
-      {/* The Engine: WebGL Canvas */}
-      <GraphCanvas
-        nodes={network.nodes.map(node => ({
-          id: node.id,
-          label: node.label,
-          citation_count: node.citation_count,
-        }))}
-        edges={network.edges}
-        centerNodeId={network.center_paper}
-        onNodeClick={handleNodeClick}
-        onNodeHover={handleNodeHover}
-        className="absolute inset-0"
-      />
+      {/* Conditional Rendering: Graph or List View */}
+      {viewMode === 'graph' ? (
+        <>
+          {/* The Engine: WebGL Canvas */}
+          <GraphCanvas
+            nodes={network.nodes.map(node => ({
+              id: node.id,
+              label: node.label,
+              citation_count: node.citation_count,
+              category: node.category,
+              year: node.year,
+            }))}
+            edges={network.edges}
+            centerNodeId={network.center_paper}
+            onNodeClick={handleNodeClick}
+            onNodeHover={handleNodeHover}
+            className="absolute inset-0"
+          />
 
-      {/* The Shell: HUD Components */}
-      <Omnibox />
-      <Inspector />
-      <Controls />
+          {/* The Shell: HUD Components */}
+          <Omnibox />
+          <Inspector />
+          <Controls />
+          <CategoryFilters />
+          <TimeBar />
 
-      {/* Stats Overlay */}
-      <div className="fixed bottom-4 left-4 z-30">
-        <div className="glass-panel rounded-lg px-4 py-2">
-          <div className="flex items-center gap-4 text-sm">
-            <div>
-              <span className="text-slate-500 dark:text-slate-400">Nodes:</span>
-              <span className="ml-1 font-bold text-slate-900 dark:text-slate-100">
-                {network.total_nodes}
-              </span>
-            </div>
-            <div>
-              <span className="text-slate-500 dark:text-slate-400">Edges:</span>
-              <span className="ml-1 font-bold text-slate-900 dark:text-slate-100">
-                {network.total_edges}
-              </span>
-            </div>
-            <div>
-              <span className="text-slate-500 dark:text-slate-400">Depth:</span>
-              <span className="ml-1 font-bold text-slate-900 dark:text-slate-100">
-                {network.depth}
-              </span>
+          {/* View Toggle */}
+          <div className="fixed top-4 right-4 z-50">
+            <ViewToggle />
+          </div>
+
+          {/* Stats Overlay */}
+          <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-30">
+            <div className="glass-panel rounded-lg px-4 py-2">
+              <div className="flex items-center gap-4 text-sm">
+                <div>
+                  <span className="text-slate-500 dark:text-slate-400">Nodes:</span>
+                  <span className="ml-1 font-bold text-slate-900 dark:text-slate-100">
+                    {network.total_nodes}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-500 dark:text-slate-400">Edges:</span>
+                  <span className="ml-1 font-bold text-slate-900 dark:text-slate-100">
+                    {network.total_edges}
+                  </span>
+                </div>
+                <div>
+                  <span className="text-slate-500 dark:text-slate-400">Depth:</span>
+                  <span className="ml-1 font-bold text-slate-900 dark:text-slate-100">
+                    {network.depth}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      ) : (
+        <>
+          {/* List View */}
+          <ListView />
+          
+          {/* View Toggle */}
+          <div className="fixed top-4 right-4 z-50">
+            <ViewToggle />
+          </div>
+          
+          {/* Keep filters visible in list view too */}
+          <CategoryFilters />
+          <TimeBar />
+        </>
+      )}
     </div>
   );
 }

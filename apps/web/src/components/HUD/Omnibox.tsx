@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import { Search, Command } from 'lucide-react';
+import Fuse from 'fuse.js';
 import { useGraphStore } from '../../hooks/useGraphStore';
 import { GlassPanel } from '../shared/GlassPanel';
 import clsx from 'clsx';
@@ -7,6 +8,7 @@ import clsx from 'clsx';
 /**
  * Omnibox - Global search and navigation component
  * Supports keyboard shortcuts (Cmd+K) and "fly to" animations
+ * Uses Fuse.js for fuzzy search with typo tolerance
  */
 
 interface SearchResult {
@@ -32,6 +34,24 @@ export function Omnibox() {
   } = useGraphStore();
 
   /**
+   * Initialize Fuse.js with optimized configuration
+   */
+  const fuse = useMemo(() => {
+    return new Fuse(allNodes, {
+      keys: [
+        { name: 'label', weight: 0.7 },      // Title gets highest weight
+        { name: 'id', weight: 0.2 },         // ArXiv ID
+        { name: 'category', weight: 0.1 }    // Category
+      ],
+      threshold: 0.4,                        // Balance between fuzzy and exact
+      distance: 100,                         // How far to search for patterns
+      includeScore: true,                    // For relevance sorting
+      minMatchCharLength: 2,                 // Minimum chars to trigger search
+      ignoreLocation: true,                  // Don't penalize matches at end
+    });
+  }, [allNodes]);
+
+  /**
    * Handle keyboard shortcuts
    */
   useEffect(() => {
@@ -55,25 +75,24 @@ export function Omnibox() {
   }, []);
 
   /**
-   * Search logic - fuzzy match on paper titles
+   * Search logic - fuzzy match using Fuse.js
    */
   const performSearch = useCallback((searchQuery: string) => {
-    if (!searchQuery.trim()) {
+    if (!searchQuery.trim() || searchQuery.length < 2) {
       setResults([]);
       return;
     }
 
-    const lowerQuery = searchQuery.toLowerCase();
-    const matches = allNodes
-      .filter(node => 
-        node.label.toLowerCase().includes(lowerQuery) ||
-        node.id.toLowerCase().includes(lowerQuery)
-      )
-      .slice(0, 10); // Limit to 10 results
+    const fuseResults = fuse.search(searchQuery);
+    
+    // Extract items and limit to top 10 results
+    const matches = fuseResults
+      .slice(0, 10)
+      .map(result => result.item);
 
     setResults(matches);
     setSelectedIndex(0);
-  }, [allNodes]);
+  }, [fuse]);
 
   /**
    * Handle input change
@@ -176,7 +195,7 @@ export function Omnibox() {
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
               className="block w-full pl-10 pr-3 py-3 bg-transparent border-0 focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 text-lg"
-              placeholder="Search papers, authors, or topics..."
+              placeholder="Search papers, authors, or topics... (fuzzy search enabled)"
               autoFocus
             />
             <div className="absolute inset-y-0 right-0 pr-3 flex items-center gap-2">
@@ -207,9 +226,16 @@ export function Omnibox() {
                         <p className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">
                           {result.label}
                         </p>
-                        <p className="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5">
-                          {result.id}
-                        </p>
+                        <div className="flex items-center gap-2 mt-0.5">
+                          <p className="text-xs text-slate-500 dark:text-slate-400 font-mono">
+                            {result.id}
+                          </p>
+                          {result.category && (
+                            <span className="text-xs px-2 py-0.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400">
+                              {result.category}
+                            </span>
+                          )}
+                        </div>
                       </div>
                       {result.citation_count !== undefined && (
                         <span className="text-xs text-slate-500 dark:text-slate-400 whitespace-nowrap">
@@ -224,9 +250,17 @@ export function Omnibox() {
           )}
 
           {/* No results */}
-          {query && results.length === 0 && (
+          {query && results.length === 0 && query.length >= 2 && (
             <div className="mt-2 border-t border-slate-200 dark:border-slate-700 py-4 text-center text-slate-500 dark:text-slate-400">
-              No papers found
+              <p>No papers found</p>
+              <p className="text-xs mt-1">Try adjusting your search terms</p>
+            </div>
+          )}
+
+          {/* Search hint */}
+          {query.length > 0 && query.length < 2 && (
+            <div className="mt-2 border-t border-slate-200 dark:border-slate-700 py-4 text-center text-slate-400 dark:text-slate-500 text-xs">
+              Type at least 2 characters to search
             </div>
           )}
         </GlassPanel>

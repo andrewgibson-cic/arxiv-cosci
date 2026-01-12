@@ -200,13 +200,16 @@ Navigate to: `http://localhost:5173/graph/2301.12345`
 - [x] Inspector panel
 - [x] Layout engine
 
-### Phase 2 (Planned)
-- [ ] Fuzzy search with Fuse.js
-- [ ] Time slider for year filtering
-- [ ] Category filter chips
-- [ ] Edge bundling for dense graphs
+### Phase 2 (Completed) ✅
+- [x] Fuzzy search with Fuse.js
+- [x] Time slider for year filtering
+- [x] Category filter chips
+- [x] ViewToggle component (Graph ↔ List)
+- [x] ListView with sortable table
+- [ ] Edge bundling for dense graphs (deferred to Phase 3)
 
 ### Phase 3 (Future)
+- [ ] Edge bundling with opacity control
 - [ ] WebGPU support (100k+ nodes)
 - [ ] Collaborative features
 - [ ] Animation timeline playback
