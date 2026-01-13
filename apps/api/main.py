@@ -10,7 +10,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from apps.api.routers import papers, search, graph, predictions, health
+from apps.api.routers import papers, search, graph, predictions, health, ingestion
 from apps.api.dependencies import get_neo4j_client, get_chromadb_client
 from packages.observability import (
     configure_logging,
@@ -101,6 +101,7 @@ app.include_router(papers.router, prefix="/api/papers", tags=["Papers"])
 app.include_router(search.router, prefix="/api/search", tags=["Search"])
 app.include_router(graph.router, prefix="/api/graph", tags=["Graph"])
 app.include_router(predictions.router, prefix="/api/predictions", tags=["Predictions"])
+app.include_router(ingestion.router, prefix="/api", tags=["Ingestion"])
 
 
 @app.get("/")
