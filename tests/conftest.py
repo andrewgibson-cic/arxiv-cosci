@@ -5,9 +5,12 @@ import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
 
-@pytest.fixture(autouse=True)
+@pytest.fixture
 def mock_database_connections():
-    """Automatically mock all database connections for all tests."""
+    """
+    Mock database connections for tests that need it.
+    Not autouse - tests must explicitly request this fixture.
+    """
     # Mock Neo4j
     with patch("packages.knowledge.neo4j_client.Neo4jClient") as mock_neo4j_class:
         mock_neo4j = AsyncMock()
