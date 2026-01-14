@@ -4,6 +4,28 @@
 
 A zero-cost scientific intelligence platform that discovers, interprets, categorizes, connects, and predicts scientific content from arXiv. Built with Semantic Scholar API and Google Gemini for AI-powered analysis.
 
+## 🚀 **Quick Start**
+
+**Get started in 5 minutes:**
+
+```bash
+# 1. Clone and setup
+git clone https://github.com/pythymcpyface/arxiv-cosci.git
+cd arxiv-cosci
+cp .env.example .env
+
+# 2. Add your Gemini API key to .env file
+
+# 3. Start everything
+npm run start
+```
+
+✨ **That's it!** Your browser will open to the Dashboard where you can start collecting papers.
+
+📖 **See [QUICKSTART.md](QUICKSTART.md) for detailed 5-minute setup guide**
+
+---
+
 ## 🚀 Features
 
 ### Data & Parsing

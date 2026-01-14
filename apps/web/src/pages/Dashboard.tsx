@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { 
   Database, 
   Download, 
@@ -12,11 +13,20 @@ import {
   HardDrive,
   AlertCircle,
   CheckCircle2,
-  Clock
+  Clock,
+  Activity,
+  Server,
+  Cpu,
+  Network,
+  Eye,
+  Search
 } from 'lucide-react';
 import { ingestionApi, type IngestionConfig } from '../api/ingestion';
 import { GlassPanel } from '../components/shared/GlassPanel';
 import { Button } from '../components/shared/Button';
+import axios from 'axios';
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 /**
  * Dashboard - Paper Collection Management
@@ -89,21 +99,92 @@ export function Dashboard() {
     }
   };
 
+  const navigate = useNavigate();
+  
+  // Fetch system health
+  const { data: systemHealth } = useQuery({
+    queryKey: ['system-health'],
+    queryFn: async () => {
+      const response = await axios.get(`${API_BASE_URL}/api/system/health`);
+      return response.data;
+    },
+    refetchInterval: 10000, // Every 10 seconds
+  });
+
   const isRunning = status?.is_running || false;
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 p-6">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
-        <div>
-          <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-3">
-            <Database className="w-8 h-8" />
-            Paper Collection Dashboard
-          </h1>
-          <p className="text-slate-600 dark:text-slate-400 mt-1">
-            Manage and monitor your scientific paper database
-          </p>
+        <div className="flex justify-between items-start">
+          <div>
+            <h1 className="text-3xl font-bold text-slate-900 dark:text-slate-100 flex items-center gap-3">
+              <Database className="w-8 h-8" />
+              Paper Collection Dashboard
+            </h1>
+            <p className="text-slate-600 dark:text-slate-400 mt-1">
+              Manage and monitor your scientific paper database
+            </p>
+          </div>
+          
+          {/* Quick Navigation */}
+          <div className="flex gap-2">
+            <Button
+              variant="ghost"
+              onClick={() => navigate('/graph')}
+              className="flex items-center gap-2"
+            >
+              <Network className="w-4 h-4" />
+              View Graph
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => navigate('/search')}
+              className="flex items-center gap-2"
+            >
+              <Search className="w-4 h-4" />
+              Search
+            </Button>
+          </div>
         </div>
+
+        {/* System Health */}
+        {systemHealth && (
+          <GlassPanel>
+            <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-4 flex items-center gap-2">
+              <Activity className="w-5 h-5" />
+              System Health
+              <span className={`ml-auto text-sm px-3 py-1 rounded-full ${
+                systemHealth.status === 'healthy' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' :
+                systemHealth.status === 'degraded' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' :
+                'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+              }`}>
+                {systemHealth.status.toUpperCase()}
+              </span>
+            </h2>
+            
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {systemHealth.services?.map((service: any) => (
+                <div key={service.name} className="flex items-center gap-3 p-3 rounded-lg bg-slate-50 dark:bg-slate-800">
+                  {service.status === 'running' ? (
+                    <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
+                  ) : (
+                    <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0" />
+                  )}
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-slate-900 dark:text-slate-100 truncate">
+                      {service.name}
+                    </p>
+                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
+                      {service.details || service.status}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </GlassPanel>
+        )}
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
