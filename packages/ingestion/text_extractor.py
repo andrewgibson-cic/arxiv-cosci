@@ -11,8 +11,8 @@ Currently implements PyMuPDF as the baseline extractor.
 import re
 from datetime import datetime
 from pathlib import Path
+from typing import TYPE_CHECKING
 
-import fitz  # PyMuPDF
 import structlog
 
 from packages.ingestion.models import (
@@ -23,6 +23,15 @@ from packages.ingestion.models import (
     ParserType,
     Section,
 )
+
+# Lazy import of fitz to avoid requiring PyMuPDF in all contexts
+if TYPE_CHECKING:
+    import fitz
+else:
+    try:
+        import fitz  # PyMuPDF
+    except ImportError:
+        fitz = None  # type: ignore
 
 logger = structlog.get_logger()
 
@@ -65,6 +74,11 @@ class PyMuPDFExtractor:
     """
 
     def __init__(self) -> None:
+        if fitz is None:
+            raise ImportError(
+                "PyMuPDF (fitz) is not installed. "
+                "Install it with: pip install pymupdf"
+            )
         self.parser_type = ParserType.PYMUPDF
 
     def extract_text(self, pdf_path: Path) -> str:
