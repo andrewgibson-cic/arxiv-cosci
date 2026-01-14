@@ -14,6 +14,8 @@ import structlog
 from tqdm.asyncio import tqdm
 
 from packages.ingestion.models import ParsedPaper
+from packages.ingestion.s2_client import S2Client
+from packages.ingestion.text_extractor import parse_pdf_file
 from packages.knowledge.chromadb_client import chromadb_client
 from packages.knowledge.neo4j_client import neo4j_client
 
@@ -337,8 +339,6 @@ class PDFBatchParser:
         Returns:
             BatchResult with statistics
         """
-        from packages.ingestion.text_extractor import parse_pdf_file
-
         output_dir.mkdir(parents=True, exist_ok=True)
 
         async def parse_pdf(pdf_path: Path) -> None:
@@ -380,8 +380,6 @@ async def batch_fetch_from_s2(
     Returns:
         BatchResult with statistics
     """
-    from packages.ingestion.s2_client import S2Client
-
     config = BatchConfig(batch_size=10, max_concurrent=5)
     processor = BatchProcessor(config)
 

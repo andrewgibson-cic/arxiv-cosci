@@ -24,27 +24,64 @@ from packages.ingestion.models import Citation, CitationIntent, PaperMetadata
 class S2Client:
     """Async wrapper for Semantic Scholar API with rate limiting and retries."""
 
-    def __init__(self, api_key: str | None = None, timeout: int = 30):
+    def __init__(self, api_key: str | None = None, timeout: int = 30, max_retries: int = 3):
         """Initialize S2 client.
 
         Args:
             api_key: Optional S2 API key for higher rate limits (10 req/sec vs 1 req/sec)
             timeout: Request timeout in seconds
+            max_retries: Maximum number of retry attempts (for compatibility)
         """
         self.client = SemanticScholar(api_key=api_key, timeout=timeout)
         self.api_key = api_key
+        self.max_retries = max_retries
         self.base_url = "https://api.semanticscholar.org/graph/v1"
         self.session: aiohttp.ClientSession | None = None
+        self.headers = {"x-api-key": api_key} if api_key else {}
 
     async def __aenter__(self) -> "S2Client":
         """Context manager entry."""
-        self.session = aiohttp.ClientSession()
+        self.session = aiohttp.ClientSession(headers=self.headers)
         return self
 
     async def __aexit__(self, *args: Any) -> None:
         """Context manager exit."""
         if self.session:
             await self.session.close()
+
+    async def close(self) -> None:
+        """Close the client session."""
+        if self.session:
+            await self.session.close()
+            self.session = None
+
+    async def get(self, url: str, **kwargs: Any) -> aiohttp.ClientResponse:
+        """Make GET request using session.
+
+        Args:
+            url: URL to request
+            **kwargs: Additional request parameters
+
+        Returns:
+            Response object
+        """
+        if not self.session:
+            self.session = aiohttp.ClientSession(headers=self.headers)
+        return await self.session.get(url, **kwargs)
+
+    async def post(self, url: str, **kwargs: Any) -> aiohttp.ClientResponse:
+        """Make POST request using session.
+
+        Args:
+            url: URL to request
+            **kwargs: Additional request parameters
+
+        Returns:
+            Response object
+        """
+        if not self.session:
+            self.session = aiohttp.ClientSession(headers=self.headers)
+        return await self.session.post(url, **kwargs)
 
     @retry(
         stop=stop_after_attempt(3),
