@@ -1,13 +1,23 @@
 """
 Integration tests for startup consolidation system.
 Tests the unified startup script and system health endpoints.
+
+These tests verify the startup consolidation features but are skipped in CI
+since they require local services to be running.
 """
 
 import subprocess
 import time
 import requests
 import pytest
+import os
 from pathlib import Path
+
+# Skip all tests in this module in CI unless STARTUP_TESTS_ENABLED is set
+pytestmark = pytest.mark.skipif(
+    os.getenv("CI") == "true" and not os.getenv("STARTUP_TESTS_ENABLED"),
+    reason="Startup integration tests require local services - skipped in CI"
+)
 
 
 class TestStartupScripts:
