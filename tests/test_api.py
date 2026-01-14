@@ -9,32 +9,38 @@ from apps.api.main import app
 
 
 @pytest.fixture
-def client():
-    """Create test client."""
-    return TestClient(app)
-
-
-@pytest.fixture
 def mock_neo4j():
     """Mock Neo4j client."""
-    with patch("apps.api.dependencies.get_neo4j_client") as mock:
-        neo4j = AsyncMock()
-        neo4j.verify_connection = AsyncMock(return_value=True)
-        neo4j.execute_query = AsyncMock(return_value=[])
-        neo4j.close = AsyncMock()
-        mock.return_value = neo4j
-        yield neo4j
+    neo4j = AsyncMock()
+    neo4j.verify_connection = AsyncMock(return_value=True)
+    neo4j.execute_query = AsyncMock(return_value=[])
+    neo4j.close = AsyncMock()
+    return neo4j
 
 
 @pytest.fixture
 def mock_chroma():
     """Mock ChromaDB client."""
-    with patch("apps.api.dependencies.get_chromadb_client") as mock:
-        chroma = MagicMock()
-        chroma.get_or_create_collection = MagicMock(return_value="papers")
-        chroma.search = MagicMock(return_value={"ids": [[]], "distances": [[]]})
-        mock.return_value = chroma
-        yield chroma
+    chroma = MagicMock()
+    chroma.get_or_create_collection = MagicMock(return_value="papers")
+    chroma.search = MagicMock(return_value={"ids": [[]], "distances": [[]]})
+    return chroma
+
+
+@pytest.fixture
+def client(mock_neo4j, mock_chroma):
+    """Create test client with mocked dependencies."""
+    from apps.api.dependencies import get_neo4j_client, get_chromadb_client
+    
+    # Override dependencies
+    app.dependency_overrides[get_neo4j_client] = lambda: mock_neo4j
+    app.dependency_overrides[get_chromadb_client] = lambda: mock_chroma
+    
+    client = TestClient(app)
+    yield client
+    
+    # Clean up overrides
+    app.dependency_overrides.clear()
 
 
 class TestHealthEndpoints:
