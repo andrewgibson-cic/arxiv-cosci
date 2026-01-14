@@ -118,10 +118,29 @@ class TestNeo4jClient:
     def test_client_initialization(self) -> None:
         """Test client initializes with defaults."""
         from packages.knowledge.neo4j_client import Neo4jClient
+        import os
 
-        client = Neo4jClient()
-        assert client.uri == "bolt://127.0.0.1:7687"
-        assert client.auth == ("neo4j", "password")
+        # Save original env vars
+        original_uri = os.environ.get("NEO4J_URI")
+        original_user = os.environ.get("NEO4J_USER")
+        original_password = os.environ.get("NEO4J_PASSWORD")
+        
+        # Clear env vars for this test
+        for key in ["NEO4J_URI", "NEO4J_USER", "NEO4J_PASSWORD"]:
+            os.environ.pop(key, None)
+        
+        try:
+            client = Neo4jClient()
+            assert client.uri == "bolt://127.0.0.1:7687"
+            assert client.auth == ("neo4j", "password")
+        finally:
+            # Restore original env vars
+            if original_uri:
+                os.environ["NEO4J_URI"] = original_uri
+            if original_user:
+                os.environ["NEO4J_USER"] = original_user
+            if original_password:
+                os.environ["NEO4J_PASSWORD"] = original_password
 
     def test_client_custom_uri(self) -> None:
         """Test client with custom URI."""

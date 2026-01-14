@@ -65,12 +65,26 @@ class ChromaDBClient:
         """Get or create embedding function."""
         if self._embedding_fn is None:
             from chromadb.utils.embedding_functions import SentenceTransformerEmbeddingFunction
+            import torch
+
+            # Detect the best available device
+            if torch.cuda.is_available():
+                device = "cuda"
+            elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+                try:
+                    # Test if MPS actually works
+                    torch.tensor([1.0], device="mps")
+                    device = "mps"
+                except RuntimeError:
+                    device = "cpu"
+            else:
+                device = "cpu"
 
             self._embedding_fn = SentenceTransformerEmbeddingFunction(
                 model_name=self.embedding_model,
-                device="mps",  # Apple Silicon GPU
+                device=device,
             )
-            logger.info("embedding_fn_initialized", model=self.embedding_model)
+            logger.info("embedding_fn_initialized", model=self.embedding_model, device=device)
         return self._embedding_fn
 
     def _get_papers_collection(self) -> Any:
